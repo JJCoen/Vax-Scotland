@@ -4,9 +4,9 @@ project:
   
 website: 
   page-navigation: true
-  title: "Testing Quarto docs publishing" 
-  site-url: "https://jjcoen.github.io/quarto-docs" 
-  repo-url: https://github.com/jjcoen/quarto-docs 
+  title: "Excess Mortality in Scotland" 
+  site-url: "https://jjcoen.github.io/vax-scotland" 
+  repo-url: https://github.com/jjcoen/vax-scotland 
   repo-actions: [edit, issue]
   
   page-footer:
@@ -14,7 +14,7 @@ website:
     left: "&copy; CC-By Openscapes, 2022"
     
   sidebar:
-    logo: "images/openscapes_hex.png"
+    logo: "images/covid19_variant.jpeg"
     pinned: true
     align: center
     tools: 
@@ -22,8 +22,8 @@ website:
         href: https://openscapes.org
         text: "Openscapes.org"
       - icon: github
-        href: https://github.com/jjcoen/quarto-docs
-        text: "Quarto docs publishing"
+        href: https://github.com/jjcoen/vax-scotland
+        text: "Souce data and analysis"
 
     style: "docked"
     search: true

@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: docs
+  
+website: 
+  page-navigation: true
+  title: "Testing Quarto docs publishing" 
+  site-url: "https://jjcoen.github.io/quarto-docs" 
+  repo-url: https://github.com/jjcoen/quarto-docs 
+  repo-actions: [edit, issue]
+  
+  page-footer:
+    right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
+    left: "&copy; CC-By Openscapes, 2022"
+    
+  sidebar:
+    logo: "images/openscapes_hex.png"
+    pinned: true
+    align: center
+    tools: 
+      - icon: globe
+        href: https://openscapes.org
+        text: "Openscapes.org"
+      - icon: github
+        href: https://github.com/jjcoen/quarto-docs
+        text: "Quarto docs publishing"
+
+    style: "docked"
+    search: true
+    collapse-level: 1
+    contents:
+      - href: index.qmd
+        text: Welcome
+
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme.scss] # from https://github.com/sta210-s22/website/blob/main/_quarto.yml
+      dark: [cosmo, theme-dark.scss]
+    code-copy: true
+    code-overflow: wrap
+    toc: true
+
+
+filters:
+  - quarto
+
+  

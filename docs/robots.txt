@@ -1,1 +1,1 @@
-Sitemap: https://jjcoen.github.io/quarto-docs/sitemap.xml
+Sitemap: https://jjcoen.github.io/vax-scotland/sitemap.xml

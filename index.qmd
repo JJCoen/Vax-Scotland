@@ -1,7 +1,53 @@
 ---
-title: "Making shareable documents with Quarto"
-subtitle: "Create open-source tutorials, onboarding docs, and much more"
+title: "Change in Mortality Rates for Scotland"
+subtitle: "for the years 2011 to 2022"
 ---
+
+## Population Change
+
+```{r}
+#| include: false
+#| label: load_libraries
+
+library(data.table)
+library(kableExtra)
+library(ggplot2)
+```
+
+
+```{r}
+#| label: Load data
+#| include: false
+
+load(file = "./data/scot_Pop.RData")
+
+# add column for 2011 population counts
+pop_11_vec <- scot_pop11[, pop]
+scot_pop11_22 <- scot_pop22[, pop_11 := pop_11_vec] 
+```
+
+Plot comparison between 2022 and 2011 population counts
+
+```{r}
+#| echo: false
+#| fig-width: 5
+
+
+ggplot(scot_pop11_22, aes(age_cat, pop)) + 
+  geom_col(aes(fill = pop)) +
+  scale_fill_gradient(low = "white", high = "navy") +
+  labs(title = "Scotland Population 2022",
+       subtitle = "compared to 2011",
+       x = "Age 5yr", y = "Population") +
+  geom_line(aes(x = age_cat, y = pop_11,
+           group = 1), colour = "#FFCB05", linewidth = 1.2) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  theme(legend.position = "none") +    
+  annotate(geom = "text", x = 8, y = 400000, 
+           label = "2011", colour = "#FFCB05", size = 5,) +
+    coord_flip()
+```
+
 
 ## Welcome {#welcome}
 

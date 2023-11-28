@@ -3,7 +3,7 @@ title: "Change in Mortality Rates for Scotland"
 subtitle: "for the years 2011 to 2022"
 ---
 
-## Population Change
+## Population Change {#Population} 
 
 ```{r}
 #| include: false
@@ -26,7 +26,7 @@ pop_11_vec <- scot_pop11[, pop]
 scot_pop11_22 <- scot_pop22[, pop_11 := pop_11_vec] 
 ```
 
-Plot comparison between 2022 and 2011 population counts
+Population sub-group wave moving to older age categories.
 
 ```{r}
 #| echo: false
@@ -49,7 +49,7 @@ ggplot(scot_pop11_22, aes(age_cat, pop)) +
 ```
 
 
-## Welcome {#welcome}
+## Welcome 
 
 It's possible to create beautiful documentation to share online with [Quarto](https://quarto.org) that auto-updates with [GitHub](http://github.com). This is very new and incredibly cool. This tutorial is an example of a quarto website --- it is a really powerful way to create and share your work. You can communicate about science using the same reproducible workflow you and/or your colleagues use for analyses, whether or not you write code.
 

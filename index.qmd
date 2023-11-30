@@ -19,7 +19,7 @@ library(ggplot2)
 #| label: Load data
 #| include: false
 
-load(file = "./data-clean/scot_Pop.RData")
+load(file = "./data-clean/scot-Pop.RData")
 
 # add column for 2011 population counts
 pop_11_vec <- scot_pop11[, pop]

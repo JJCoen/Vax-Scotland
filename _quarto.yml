@@ -31,6 +31,8 @@ website:
     contents:
       - href: index.qmd
         text: Welcome
+      - href: getting-cleaning-data.qmd
+        text: Getting and Cleaning Data
       - data-sources.qmd
 
 

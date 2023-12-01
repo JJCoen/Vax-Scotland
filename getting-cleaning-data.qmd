@@ -36,6 +36,8 @@ In the source data, year of age and population numbers are stored in multiple co
 ![](images/NRS-2019-pop-by-age.png)
 
 ```{r}
+#| message: false
+
 source("./code/get-pop.R")
 file_year <- "./data/mid-year-pop-est-19-data.xlsx" 
 scot_pop19 <- get_pop_year(file_year)
@@ -74,7 +76,7 @@ scot_pop22 <- scot_pop22 %>%
         names_transform = readr::parse_number) |> 
     clean_names() |> 
     setDT()
-scot_pop22 
+head( scot_pop22 )
 ```
 
 -   There are 19 age categories in 5 year intervals.
@@ -133,12 +135,19 @@ scot_pop21[, c("Area name", "Area code", "Area type" ) := NULL]
 # remove "All ages" column and calculate totals after processing
 scot_pop21[, "All ages" := NULL]
 
-# Check the final column
-scot_pop21[, 92]
 ```
+
+**Inspect the Data**
 
 ```{r}
 scot_pop21[, 1:10]
+```
+
+Check the final column
+
+```{r}
+
+scot_pop21[, 92]
 ```
 
 This data has three variables:
@@ -152,7 +161,7 @@ This data has three variables:
 -   `names_to` gives the name of the variable that will be created from the data stored in the column names, i.e. year of age
 -   `values_to` gives the name of the variable that will be created from the data stored in the cell value, i.e. population count
 
-Entries in the `age` column are in *character* format. [`readr::parse_number()`](https://readr.tidyverse.org/reference/parse_number.html) extracts numeric values and automatically strips non-numeric components, so it can deal with the "90+" entry
+Entries in the `age` column are in character format. [`readr::parse_number()`](https://readr.tidyverse.org/reference/parse_number.html) extracts numeric values and automatically strips non-numeric components, so it can deal with the "90+" entry
 
 ```{r}
 scot_pop21 <- scot_pop21 %>%    
@@ -176,7 +185,7 @@ Separate the combined counts, which is given by the "Person" entries in the `sex
 scot_pop21 <- scot_pop21[sex == "Persons" ,]
 ```
 
-Need to combine rows of `age` to 5-year age categories and to sum the associated `num_deaths.` Bear in mind that the "90" entry refers to ages 90 and above. This means that there will be 18 age categories with an additional one for over 90.
+Need to combine rows of `age` to 5-year age categories and to sum the associated population numbers. Bear in mind that the "90" entry refers to ages 90 and above. This means that there will be 18 age categories with an additional one for over 90.
 
 ```{r}
 # "sex" column is no longer needed
@@ -275,6 +284,8 @@ scot_pop12 <- get_pop_year(file_year)
 
 ### 2011
 
+**Inspect the Data**
+
 ```{r}
 #| message: false
 
@@ -300,6 +311,8 @@ This data has two variables:
 -   `age` spread across the column names, and
 -   population numbers are stored in the cell values.
 
+Need to `pivot_longer` to create `age` column and to transpose age values from row to column format.
+
 ```{r}
 #| message: false
 
@@ -315,8 +328,7 @@ scot_pop11 <- scot_pop11 %>%
         names_transform = readr::parse_number) |> 
     clean_names() |> 
     setDT()
-scot_pop11 |> 
-    kable()
+head(scot_pop11, 10) 
 ```
 
 Aggregate rows for ages 90 and above into a single entry for compatibility with data for 2022 and 2021.

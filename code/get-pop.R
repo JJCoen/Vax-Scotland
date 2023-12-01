@@ -44,7 +44,7 @@ get_pop_year <- function(file) {
     # Check that total population number equals 
     # the sum of numbers in each age category:
     cat("\n total: ", total, "\n",
-        " sum of pop categories: ", scot_pop[, sum(pop)] )
+        "sum of pop categories: ", scot_pop[, sum(pop)] )
     
     return(scot_pop)
 }

@@ -1,0 +1,31 @@
+---
+title: "Data Sources"
+author: "JJC"
+format: html
+editor: visual
+---
+
+## Data Sources:
+
+### Population
+
+**Scotland's Census**
+
+[Scotland's Census, 2022](https://www.scotlandscensus.gov.uk/2022-results/scotland-s-census-2022-rounded-population-estimates/)
+
+[Scotland's Census, 2011](https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml)
+
+**National Records of Scotland:**
+
+[Mid-Year Population Estimates 2021, 2020](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates#lmye)
+
+[Mid-Year Population Estimates, Archive 2019-2012](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates/archive)
+
+### Mortality
+
+[National Records of Scotland, Vital Events 2022](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2022/list-of-data-tables#section5)\
+Section 5 contains mortality by age
+
+[Vital Events Reference Tables 2021](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2021)
+
+[Vital Events Archive - Historical data back to 2001](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/archive)

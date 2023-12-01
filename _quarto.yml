@@ -23,7 +23,7 @@ website:
         text: "Openscapes.org"
       - icon: github
         href: https://github.com/jjcoen/vax-scotland
-        text: "Souce data and analysis"
+        text: "Data and Analysis"
 
     style: "docked"
     search: true
@@ -31,6 +31,7 @@ website:
     contents:
       - href: index.qmd
         text: Welcome
+      - data-sources.qmd
 
 
 format:

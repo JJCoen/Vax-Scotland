@@ -17,17 +17,114 @@ editor: visual
 #| label: load_libraries
 
 library(data.table)
-library(janitor)
-library(readxl)
-library(tidyr)
-library(kableExtra)
+library(janitor)    # clean_names
+library(readxl)     # read_excel
+library(tidyr)      # pivot functions
+library(kableExtra) # kable
 library(gt)
-library(purrr)
+library(purrr)      # map
 library(Hmisc)      # grouping function "cut2"
 library(ggplot2)
+library(assertr)    # verify function
+library(docstring)  # function specification
 ```
 
-## Population
+# Population
+
+## Scotland's Census
+
+### **2022**
+
+```{r}
+#| code-summary: "Import excel sheet giving numbers of persons by 5-year age groups for year 2022" 
+#| echo: false
+
+source("./code/get-census-22.R")
+source("./code/make-groups.R")
+
+census22 <- get_census_22(is_plot=0)
+# Population counts are in 5-year age groups
+pop22_5yr <- census22[[1]]
+newborn22 <- census22[[2]]
+
+# age = 0 represents 0-4 year old group
+# separate out a new group for newborns
+# age = 0: newborns
+# age = 1: 1-4 year old group
+# Create new entry for age = 0
+pop0 <- data.table(age = 0, pop = newborn22)
+# Substract number of newborns from the 0 category
+# and convert this to the 1 category
+pop22_5yr[age == 0, `:=` (pop = pop - newborn22,
+                              age = 1)]
+pop22_5yr <- rbind(pop0, pop22_5yr)
+
+# Record age groupings for year 0 and for
+# 5-year categories after that
+group_5yr <- pop22_5yr[, age]
+
+# Convert age categories to HP grouping
+pop22 <- make_groups(pop22_5yr, is_pop = 1, cat_19 = FALSE)
+
+# cleanup
+rm(census22, pop0, pop22_5yr, newborn22, get_census_22)
+```
+
+### **2011**
+
+```{r}
+#| message: false    
+
+source("./code/get-census-11.R")   
+# Population counts for each year of age
+pop11_1yr <- get_census_11(is_plot = 0)  
+
+# Section age variable into the 7 HP age categories
+pop11 <- make_groups(pop11_1yr, is_pop = 1, cat_19 = FALSE)
+
+# cleanup
+rm(pop11_1yr, get_census_11)
+```
+
+## NRS Mid-Year Population Estimates
+
+### 2021
+
+```{r}
+#| code-summary: "Similar to Census 2011, population numbers are for each year of age"
+
+source("./code/get-pop-by-year.R")
+file_21 <- "./data/mid-year-pop-est-21-data.xlsx"
+sheet_21 <- "Table 1"
+range_21 <- "F4:CR5"
+
+pop21 <- get_pop_by_year(file_21, sheet_21, range_21)
+
+pop21 <- make_groups(pop21, is_pop = 1, cat_19 = FALSE)
+
+# cleanup
+rm(file_21, range_21, sheet_21)
+```
+
+### 2020
+
+```{r}
+#| message: false
+
+source("./code/get-pop.R")
+
+file_20 <- "./data/mid-year-pop-est-20-data.xlsx"
+sheet_20 <- "Table 1"
+range_20 <- "F4:CR5"
+
+pop20 <- get_pop(file_20, is_16 = 0)
+pop20[, age := group_5yr][, age_cat := NULL]
+
+pop20 <- make_groups(pop20, is_pop = 1, cat_19 = FALSE)
+rm(file_20, range_20, sheet_20)
+```
+
+### NRS Mid-Year Population Estimates - Archive
 
 ### 2019
 
@@ -36,179 +133,15 @@ In the source data, year of age and population numbers are stored in multiple co
 ![](images/NRS-2019-pop-by-age.png)
 
 ```{r}
-#| message: false
+#| message: false  
 
-source("./code/get-pop.R")
-file_year <- "./data/mid-year-pop-est-19-data.xlsx" 
-scot_pop19 <- get_pop_year(file_year)
-age_categories <- scot_pop19[, age_cat]
-```
+file_19 <- "./data/mid-year-pop-est-19-data.xlsx"  
 
-### 2022
+pop19 <- get_pop(file_19, is_16 = 0) 
+pop19[, age := group_5yr][, age_cat := NULL]
 
-```{r}
-
-# Table 3 contains Population by age category
-scot_pop22 <- read_excel("./data/scotland-s-census-2022-first-results-rounded-population-estimates-data.xlsx", 
-                         sheet = "Table 3",
-                         skip = 3, n_max = 3) |> 
-    setDT()
-# First 3 columns are superfluous
-scot_pop22[, c("Area name", "Area code", "Area type" ) := NULL]
-# remove "All ages" column and calculate totals after processing
-scot_pop22[, "All ages" := NULL]
-scot_pop22 |> 
-    kable()
-```
-
-This data has three variables:
-
--   `Sex`, stored in the rows,
--   `age_category` spread across the column names, and
--   population numbers are stored in the cell values.
-
-```{r}
-scot_pop22 <- scot_pop22 %>%    
-    pivot_longer(     
-        cols = !Sex, # reshape every column apart from "Sex" 
-        names_to = "age",      
-        values_to = "pop",
-        names_transform = readr::parse_number) |> 
-    clean_names() |> 
-    setDT()
-head( scot_pop22 )
-```
-
--   There are 19 age categories in 5 year intervals.
--   The last entry is for 90 years and older.
--   `sex` has three categories: *Persons, Males, Females.*
-
-Separate the combined counts, which is given by the "Person" entries in the `sex` variable
-
-```{r}
-
-# store Male and Female values for later analysis 
-# scot_pop22_MF <- scot_pop22[sex %in% c("Males","Females") ,]
-
-# All Persons
-scot_pop22 <- scot_pop22[sex == "Persons" ,]  
-
-# no longer need the "sex" variable
-scot_pop22[, sex := NULL]
-
-# add 'age_cat' column for compatibility with other years
-scot_pop22[, age_cat := age_categories][, age := NULL]
-setcolorder(scot_pop22, c("age_cat", "pop"))
-```
-
-Plot population counts by age category
-
-```{r}
-#| message: false
-
-# suppress scientific notation
-options(scipen=20)  
-library(scales)
-
-ggplot(scot_pop22, aes(age_cat, pop)) + 
-  geom_col(aes(fill = pop)) +
-  scale_fill_gradient(low = "white", high = "darkblue") +
-  labs(title = "Scotland Population 2022",
-       subtitle = "by 5-year age category",
-       x = "Age 5yr", y = "Population") +
-  scale_y_continuous(labels = scales::label_comma()) +
-  theme(legend.position = "none") +
-    coord_flip()
-```
-
-### 2021
-
-```{r}
-# Table 1 contains Population by each year of 
-scot_pop21 <- read_excel("./data/mid-year-pop-est-21-data.xlsx", 
-                         sheet = "Table 1",
-                         skip = 3, n_max = 3) |> 
-#    clean_names() |> 
-    setDT()
-# First 3 columns are superfluous
-scot_pop21[, c("Area name", "Area code", "Area type" ) := NULL]
-# remove "All ages" column and calculate totals after processing
-scot_pop21[, "All ages" := NULL]
-
-```
-
-**Inspect the Data**
-
-```{r}
-scot_pop21[, 1:10]
-```
-
-Check the final column
-
-```{r}
-
-scot_pop21[, 92]
-```
-
-This data has three variables:
-
--   `Sex`, stored in the rows,
--   `age` spread across the column names, and
--   population numbers are stored in the cell values.
-
-`pivot_longer:`
-
--   `names_to` gives the name of the variable that will be created from the data stored in the column names, i.e. year of age
--   `values_to` gives the name of the variable that will be created from the data stored in the cell value, i.e. population count
-
-Entries in the `age` column are in character format. [`readr::parse_number()`](https://readr.tidyverse.org/reference/parse_number.html) extracts numeric values and automatically strips non-numeric components, so it can deal with the "90+" entry
-
-```{r}
-scot_pop21 <- scot_pop21 %>%    
-    pivot_longer(     
-        cols = !Sex, # reshape every column apart from "Sex" 
-        names_to = "age",      
-        values_to = "pop",
-        names_transform = readr::parse_number) |> 
-    clean_names() |> 
-    setDT()
-```
-
-Separate the combined counts, which is given by the "Person" entries in the `sex` variable
-
-```{r}
-
-# store Male and Female values for later analysis
-# scot_pop21_MF <- scot_pop21[sex %in% c("Males","Females") ,]
-
-# counts for male + female
-scot_pop21 <- scot_pop21[sex == "Persons" ,]
-```
-
-Need to combine rows of `age` to 5-year age categories and to sum the associated population numbers. Bear in mind that the "90" entry refers to ages 90 and above. This means that there will be 18 age categories with an additional one for over 90.
-
-```{r}
-# "sex" column is no longer needed
-scot_pop21[, sex := NULL]
-over90 <- scot_pop21[91, pop]
-scot_pop21 <- scot_pop21[-91,]
-
-# Create a grouping variable
-scot_pop21[, age_cat := cut2(age, g = 18)]
-
-# sum the number of deaths in each age category
-scot_pop21_cats <- scot_pop21[, sum(pop), by = age_cat]
-scot_pop21_cats[, pop := V1][, V1 := NULL]
-
-# append an entry for the 90 plus group
-oldest <- data.table(age_cat = as.factor("90 plus"), 
-                     pop = over90)
-scot_pop21 <- rbind(scot_pop21_cats, oldest)
-
-# update "age_cat" column for compatibility with other years
-scot_pop21[, age_cat := age_categories]
-
-rm(scot_pop21_cats, oldest, over90)
+pop19 <- make_groups(pop19, is_pop = 1, cat_19 = FALSE)
+rm(file_19)
 ```
 
 ### 2018
@@ -216,9 +149,13 @@ rm(scot_pop21_cats, oldest, over90)
 ```{r}
 #| message: false
 
-file_year <- "./data/mid-year-pop-est-18-tabs.xlsx" 
+file_18 <- "./data/mid-year-pop-est-18-tabs.xlsx" 
 
-scot_pop18 <- get_pop_year(file_year)
+pop18 <- get_pop(file_18, is_16 = 0) 
+pop18[, age := group_5yr][, age_cat := NULL]
+
+pop18 <- make_groups(pop18, is_pop = 1, cat_19 = FALSE)
+rm(file_18)
 ```
 
 ### 2017
@@ -226,9 +163,13 @@ scot_pop18 <- get_pop_year(file_year)
 ```{r}
 #| message: false
 
-file_year <- "./data/mid-year-pop-est-17-all-tables-revised.xlsx" 
+file_17 <- "./data/mid-year-pop-est-17-all-tables-revised.xlsx" 
 
-scot_pop17 <- get_pop_year(file_year)
+pop17 <- get_pop(file_17, is_16 = 0) 
+pop17[, age := group_5yr][, age_cat := NULL]
+
+pop17 <- make_groups(pop17, is_pop = 1, cat_19 = FALSE)
+rm(file_17)
 ```
 
 ### 2016
@@ -236,10 +177,14 @@ scot_pop17 <- get_pop_year(file_year)
 ```{r}
 #| message: false
 
-source("./code/get-pop-16.R")
-file_year <- "./data/16-mid-year-pe-tab1.xlsx" 
+source("./code/get-pop.R")
+file_16 <- "./data/16-mid-year-pe-tab1.xlsx" 
 
-scot_pop16 <- get_pop_2016(file_year)
+pop16 <- get_pop(file_16, is_16 = 1)
+pop16[, age := group_5yr][, age_cat := NULL]
+
+pop16 <- make_groups(pop16, is_pop = 1, cat_19 = FALSE)
+rm(file_16)
 ```
 
 ### 2015
@@ -247,9 +192,13 @@ scot_pop16 <- get_pop_2016(file_year)
 ```{r}
 #| message: false
 
-file_year <- "./data/15mype-cahb-tab1.xlsx" 
+file_15 <- "./data/15mype-cahb-tab1.xlsx" 
 
-scot_pop15 <- get_pop_year(file_year)
+pop15 <- get_pop(file_15, is_16 = 0) 
+pop15[, age := group_5yr][, age_cat := NULL]
+
+pop15 <- make_groups(pop15, is_pop = 1, cat_19 = FALSE)
+rm(file_15)
 ```
 
 ### 2014
@@ -257,9 +206,13 @@ scot_pop15 <- get_pop_year(file_year)
 ```{r}
 #| message: false
 
-file_year <- "./data/14mype-cahb-all-tab.xlsx"  
+file_14 <- "./data/14mype-cahb-all-tab.xlsx"  
 
-scot_pop14 <- get_pop_year(file_year)
+pop14 <- get_pop(file_14, is_16 = 0) 
+pop14[, age := group_5yr][, age_cat := NULL]
+
+pop14 <- make_groups(pop14, is_pop = 1, cat_19 = FALSE)
+rm(file_14)
 ```
 
 ### 2013
@@ -267,9 +220,13 @@ scot_pop14 <- get_pop_year(file_year)
 ```{r}
 #| message: false
 
-file_year <- "./data/13mype-cahb-tab1.xlsx"  
+file_13 <- "./data/13mype-cahb-tab1.xlsx"  
 
-scot_pop13 <- get_pop_year(file_year)
+pop13 <- get_pop(file_13, is_16 = 0) 
+pop13[, age := group_5yr][, age_cat := NULL]
+
+pop13 <- make_groups(pop13, is_pop = 1, cat_19 = FALSE)
+rm(file_13)
 ```
 
 ### 2012
@@ -277,106 +234,55 @@ scot_pop13 <- get_pop_year(file_year)
 ```{r}
 #| message: false
 
-file_year <- "./data/12mype-cahb-tab1.xlsx"  
+file_12 <- "./data/12mype-cahb-tab1.xlsx"  
 
-scot_pop12 <- get_pop_year(file_year)
+pop12 <- get_pop(file_12, is_16 = 0) 
+pop12[, age := group_5yr][, age_cat := NULL]
+
+pop12 <- make_groups(pop12, is_pop = 1, cat_19 = FALSE)
+rm(file_12)
 ```
 
-### 2011
+### 2010
 
-**Inspect the Data**
+Mid-year population estimates, Scotland and its Council areas by single year of age and sex: 2002 to 2011
 
 ```{r}
 #| message: false
+#| code-line-numbers: false
+#| code-summary: "convert single year population numbers to age categories"
 
-# File contains a single sheet
-scot_pop11 <- read_excel("./data/scotland-census-2011.xlsx", 
-                         sheet = "Data Sheet 0",
-                         skip = 10, n_max = 3) |> 
-    setDT()
+source("./code/get-pop-by-year.R")
 
-# Second columns is superfluous
-scot_pop11[, c("...2" ) := NULL]
+file_10 <- "./data/council-rebased-02-11-sya.xls" 
+sheet_10 <- "2010"
+range_10 <- "C4:CO5"
 
-# remove "All people" column and calculate totals after processing
-scot_pop11[, c("All people", "Age") := NULL]
-# remove second row since it contains NAs
-scot_pop11 <- scot_pop11[2, ]
-scot_pop11 |> 
-    kable()
+pop10 <- get_pop_by_year(file_10, sheet_10, range_10)
+
+pop10 <- make_groups(pop10, is_pop = 1, cat_19 = FALSE)
+
+# cleanup
+rm(file_10, range_10, sheet_10)
 ```
-
-This data has two variables:
-
--   `age` spread across the column names, and
--   population numbers are stored in the cell values.
-
-Need to `pivot_longer` to create `age` column and to transpose age values from row to column format.
-
-```{r}
-#| message: false
-
-# Rename "Under 1" column to "0" 
-# to represent first year of life
-setnames(scot_pop11, "Under 1", "0")
-
-scot_pop11 <- scot_pop11 %>%    
-    pivot_longer(   
-        cols = "0":"100 and over",
-        names_to = "age",      
-        values_to = "pop",
-        names_transform = readr::parse_number) |> 
-    clean_names() |> 
-    setDT()
-head(scot_pop11, 10) 
-```
-
-Aggregate rows for ages 90 and above into a single entry for compatibility with data for 2022 and 2021.
 
 ```{r}
 
-over90 <- scot_pop11[91:101, sum(pop)]
-# remove rows for age 90 and above
-scot_pop11 <- scot_pop11[1:90, ]
+# pop_all <- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]
+# 
+# pop_dt <- rbind(pop10, pop11, pop12, pop13, pop14, pop15,
+#                  pop16, pop17, pop18, pop19, pop20, pop21, 
+#                  pop22)
+# 
+# saveRDS(pop_dt, file = "./data-clean/scot-pop.rds")
+# 
+# # Cleanup the environment
+# # keep 'group5yr' vector containing age categories
+# remove(list = pop_all)
+rm(get_pop, get_pop_by_year, total)
 ```
 
-Combine rows into 5-year age categories
-
-```{r}
-# Create a grouping variable
-scot_pop11[, age_cat := cut2(age, g = 18)]
-
-# sum the number of deaths in each age category
-scot_pop11_cats <- scot_pop11[, sum(pop), by = age_cat]
-
-scot_pop11_cats[, pop := V1][, V1 := NULL]
-
-# append an entry for the 90 plus group
-oldest <- data.table(age_cat = as.factor("90 plus"), 
-                     pop = over90)
-scot_pop11 <- rbind(scot_pop11_cats, oldest)
-
-# update "age_cat" for compatibility with other years
-scot_pop11[, age_cat := age_categories]
- 
-# Cleanup
-rm(scot_pop11_cats, oldest, over90)
-```
-
-Save cleaned data tables
-
-```{r}
-scot_all <- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]
-
-save(list = scot_all, file = "./data-clean/scot-pop.RData")
-
-# Cleanup the environment
-# keep 'age_categories' vector
-remove(list = scot_all)
-rm(get_pop_2016, get_pop_year, file_year, scot_all)
-```
-
-## Mortality
+# Mortality
 
 Table 5.02 contains deaths, by sex, age, and administrative area, Scotland
 
@@ -392,7 +298,23 @@ source("./code/get-mort-year.R")
 #| message: false
 
 file_year <- "./data/vital-events-22-ref-tabs-5.xlsx"
-scot_mort22 <- get_mort_year(file_year)
+mort22 <- get_mort_year(file_year, group_5yr)
+
+mort22 <- make_groups(mort22, is_pop = 0, cat_19 = FALSE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, sheet = 4,
+                    range = "C6:C6", col_names = FALSE)[[1]]
+verify(mort22, sum(mort) == total)
+mort22[, year := 2022]
+setcolorder(mort22, c("year", "age_cat", "mort"))
+```
+
+Calculate mortality rate by age category
+
+```{r}
+scot22 <- merge(mort22, pop22, by="age_cat" )
 ```
 
 ### 2021
@@ -401,7 +323,17 @@ scot_mort22 <- get_mort_year(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-21-ref-tabs-5.xlsx"
-scot_mort21 <- get_mort_year(file_year)
+mort21 <- get_mort_year(file_year, group_5yr)
+mort21 <- make_groups(mort21, is_pop = 0, cat_19 = FALSE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, sheet = 4,
+                    range = "C6:C6", col_names = FALSE)[[1]]
+verify(mort21, sum(mort) == total)
+mort21[, year := 2021]
+
+scot21 <- merge(mort21, pop21, by="age_cat" )
 ```
 
 ### 2020
@@ -410,7 +342,17 @@ scot_mort21 <- get_mort_year(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-20-ref-tabs-5.xlsx"
-scot_mort20 <- get_mort_year(file_year)
+mort20 <- get_mort_year(file_year, group_5yr)
+mort20 <- make_groups(mort20, is_pop = 0, cat_19 = FALSE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, sheet = 4,
+                    range = "C6:C6", col_names = FALSE)[[1]]
+verify(mort20, sum(mort) == total)
+mort20[, year := 2020]
+
+scot20 <- merge(mort20, pop20, by="age_cat" )
 ```
 
 ### 2019
@@ -419,7 +361,17 @@ scot_mort20 <- get_mort_year(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-19-ref-tabs-5.xlsx"
-scot_mort19 <- get_mort_year(file_year)
+mort19 <- get_mort_year(file_year, group_5yr)
+mort19 <- make_groups(mort19, is_pop = 0, cat_19 = FALSE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, sheet = 4,
+                    range = "C6:C6", col_names = FALSE)[[1]]
+verify(mort19, sum(mort) == total)
+mort19[, year := 2019]
+
+scot19 <- merge(mort19, pop19, by="age_cat" )
 ```
 
 ### 2018
@@ -428,7 +380,17 @@ scot_mort19 <- get_mort_year(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-18-ref-tabs-5.xlsx"
-scot_mort18 <- get_mort_year(file_year)
+mort18 <- get_mort_year(file_year, group_5yr)
+mort18<- make_groups(mort18, is_pop = 0, cat_19 = FALSE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, sheet = 4,
+                    range = "C6:C6", col_names = FALSE)[[1]]
+verify(mort18, sum(mort) == total)
+mort18[, year := 2018]
+
+scot18 <- merge(mort18, pop18, by="age_cat" )
 ```
 
 ### 2017
@@ -437,7 +399,17 @@ scot_mort18 <- get_mort_year(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-17-ref-tabs-5.xlsx"
-scot_mort17 <- get_mort_year(file_year)
+mort17 <- get_mort_year(file_year, group_5yr)
+mort17 <- make_groups(mort17, is_pop = 0, cat_19 = FALSE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, sheet = 4,
+                    range = "C6:C6", col_names = FALSE)[[1]]
+verify(mort17, sum(mort) == total)
+mort17[, year := 2017]
+
+scot17 <- merge(mort17, pop17, by="age_cat" )
 ```
 
 ### 2016
@@ -446,8 +418,19 @@ scot_mort17 <- get_mort_year(file_year)
 #| message: false
 
 source("./code/get-mort-5-2.R")
+
 file_year <- "./data/vital-events-16-ref-tabs-5-2.xlsx"
-scot_mort16 <- get_mort_5_2(file_year)
+mort16 <- get_mort_5_2(file_year, group_5yr, yr=16)
+mort16 <- make_groups(mort16, is_pop = 0, cat_19 = FALSE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, range = "C6:C6", 
+                    col_names = FALSE)[[1]]
+verify(mort16, sum(mort) == total)
+mort16[, year := 2016]
+
+scot16 <- merge(mort16, pop16, by="age_cat" )
 ```
 
 ### 2015
@@ -456,7 +439,17 @@ scot_mort16 <- get_mort_5_2(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-15-ref-tabs-5-2.xlsx"
-scot_mort15 <- get_mort_5_2(file_year)
+mort15 <- get_mort_5_2(file_year, group_5yr, 15)
+mort15 <- make_groups(mort15, is_pop = 0, cat_19 = TRUE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, range = "C6:C6", 
+                    col_names = FALSE)[[1]]
+verify(mort15, sum(mort) == total)
+mort15[, year := 2015]
+
+scot15 <- merge(mort15, pop15, by="age_cat" )
 ```
 
 ### 2014
@@ -465,7 +458,17 @@ scot_mort15 <- get_mort_5_2(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-14-ref-tabs-5-2.xlsx"
-scot_mort14 <- get_mort_5_2(file_year)
+mort14 <- get_mort_5_2(file_year, group_5yr, yr = 14)
+mort14 <- make_groups(mort14, is_pop = 0, cat_19 = TRUE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, range = "C6:C6", 
+                    col_names = FALSE)[[1]]
+verify(mort14, sum(mort) == total)
+mort14[, year := 2014]
+
+scot14 <- merge(mort14, pop14, by="age_cat" )
 ```
 
 ### 2013
@@ -474,7 +477,17 @@ scot_mort14 <- get_mort_5_2(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-13-ref-tabs-5-2.xls"
-scot_mort13 <- get_mort_5_2(file_year)
+mort13 <- get_mort_5_2(file_year, group_5yr, yr = 13)
+mort13 <- make_groups(mort13, is_pop = 0, cat_19 = TRUE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, range = "C6:C6", 
+                    col_names = FALSE)[[1]]
+verify(mort13, sum(mort) == total)
+mort13[, year := 2013]
+
+scot13 <- merge(mort13, pop13, by="age_cat" )
 ```
 
 ### 2012
@@ -483,7 +496,17 @@ scot_mort13 <- get_mort_5_2(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-12-ref-tabs-5-2.xls"
-scot_mort12 <- get_mort_5_2(file_year)
+mort12 <- get_mort_5_2(file_year, group_5yr, yr = 12)
+mort12 <- make_groups(mort12, is_pop = 0, cat_19 = TRUE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, range = "C6:C6", 
+                    col_names = FALSE)[[1]]
+verify(mort12, sum(mort) == total)
+mort12[, year := 2012]
+
+scot12 <- merge(mort12, pop12, by="age_cat" )
 ```
 
 ### 2011
@@ -492,18 +515,57 @@ scot_mort12 <- get_mort_5_2(file_year)
 #| message: false
 
 file_year <- "./data/vital-events-11-ref-tabs-5-2.xls"
-scot_mort11 <- get_mort_5_2(file_year)
+mort11 <- get_mort_5_2(file_year, group_5yr, yr = 11)
+mort11 <- make_groups(mort11, is_pop = 0, cat_19 = TRUE)
+
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, range = "C5:C5", 
+                    col_names = FALSE)[[1]]
+verify(mort11, sum(mort) == total)
+mort11[, year := 2011]
+
+scot11 <- merge(mort11, pop11, by="age_cat" )
 ```
 
-Save data tables that are in "tidy data" format
+### 2010
 
 ```{r}
-mort_all <- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]
+#| message: false
 
-save(list = mort_all, file = "./data-clean/scot-mort.RData")
+file_year <- "./data/vital-events-10-t5-2.xls"
+mort10 <- get_mort_5_2(file_year, group_5yr, yr = 10)
+mort10 <- make_groups(mort10, is_pop = 0, cat_19 = TRUE)
 
-# Cleanup the environment
-# keep 'age_categories' vector
-remove(list = mort_all)
-rm(get_mort_year, get_mort_5_2, file_year, mort_all)
+# Check that sum of age categories equals the recorded total
+# in source data
+total <- read_excel(file_year, range = "C5:C5", 
+                    col_names = FALSE)[[1]]
+verify(mort10, sum(mort) == total)
+mort10[, year := 2010]
+
+scot10 <- merge(mort10, pop10, by="age_cat" )
+```
+
+Combine mortality data tables, ordered by year
+
+```{r}
+
+# mort_all <- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]
+# 
+scot_dt <- rbind(scot10, scot11, scot12, scot13, scot14, scot15,
+                 scot16, scot17, scot18, scot19, scot20, scot21,
+                 scot22)
+saveRDS(scot_dt, file = "./data-clean/scot_dt.rds")
+```
+
+Save the combined data table that are in "tidy data" format
+
+```{r}
+
+# saveRDS(mort_dt, file = "./data-clean/scot-mort.rds")
+# 
+# # Cleanup the environment
+# remove(list = mort_all)
+rm(get_mort_year, get_mort_5_2, file_year)
 ```

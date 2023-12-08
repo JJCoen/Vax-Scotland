@@ -64,8 +64,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./data-sources.html" rel="next">
-<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting-cleaning-data.html">Getting and Cleaning Data</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Getting and Cleaning Data</li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -148,12 +146,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-cleaning-data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Getting and Cleaning Data</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./data-sources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Sources</span></a>
   </div>
@@ -168,7 +160,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#population" id="toc-population" class="nav-link active" data-scroll-target="#population">Population</a></li>
+  <li><a href="#population" id="toc-population" class="nav-link active" data-scroll-target="#population">Population</a>
+  <ul class="collapse">
+  <li><a href="#scotlands-census" id="toc-scotlands-census" class="nav-link" data-scroll-target="#scotlands-census">Scotland’s Census</a></li>
+  <li><a href="#nrs-mid-year-population-estimates" id="toc-nrs-mid-year-population-estimates" class="nav-link" data-scroll-target="#nrs-mid-year-population-estimates">NRS Mid-Year Population Estimates</a></li>
+  </ul></li>
   <li><a href="#mortality" id="toc-mortality" class="nav-link" data-scroll-target="#mortality">Mortality</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcoen/vax-scotland/edit/main/getting-cleaning-data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/jjcoen/vax-scotland/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -199,901 +195,546 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="population" class="level2">
-<h2 class="anchored" data-anchor-id="population">Population</h2>
+<section id="population" class="level1">
+<h1>Population</h1>
+<section id="scotlands-census" class="level2">
+<h2 class="anchored" data-anchor-id="scotlands-census">Scotland’s Census</h2>
 <section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section">2019</h3>
+<h3 class="anchored" data-anchor-id="section"><strong>2022</strong></h3>
+</section>
+<section id="section-1" class="level3">
+<h3 class="anchored" data-anchor-id="section-1"><strong>2011</strong></h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-census-11.R"</span>)   </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Population counts for each year of age</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pop11_1yr <span class="ot">&lt;-</span> <span class="fu">get_census_11</span>(<span class="at">is_plot =</span> <span class="dv">0</span>)  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Section age variable into the 7 HP age categories</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pop11 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop11_1yr, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># cleanup</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(pop11_1yr, get_census_11)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="nrs-mid-year-population-estimates" class="level2">
+<h2 class="anchored" data-anchor-id="nrs-mid-year-population-estimates">NRS Mid-Year Population Estimates</h2>
+<section id="section-2" class="level3">
+<h3 class="anchored" data-anchor-id="section-2">2021</h3>
+<div class="cell">
+<details>
+<summary>Similar to Census 2011, population numbers are for each year of age</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop-by-year.R"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>file_21 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-21-data.xlsx"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sheet_21 <span class="ot">&lt;-</span> <span class="st">"Table 1"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>range_21 <span class="ot">&lt;-</span> <span class="st">"F4:CR5"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>pop21 <span class="ot">&lt;-</span> <span class="fu">get_pop_by_year</span>(file_21, sheet_21, range_21)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>pop21 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop21, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># cleanup</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_21, range_21, sheet_21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="section-3" class="level3">
+<h3 class="anchored" data-anchor-id="section-3">2020</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop.R"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>file_20 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-20-data.xlsx"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sheet_20 <span class="ot">&lt;-</span> <span class="st">"Table 1"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>range_20 <span class="ot">&lt;-</span> <span class="st">"F4:CR5"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>pop20 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_20, <span class="at">is_16 =</span> <span class="dv">0</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pop20[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>pop20 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop20, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_20, range_20, sheet_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="nrs-mid-year-population-estimates---archive" class="level3">
+<h3 class="anchored" data-anchor-id="nrs-mid-year-population-estimates---archive">NRS Mid-Year Population Estimates - Archive</h3>
+</section>
+<section id="section-4" class="level3">
+<h3 class="anchored" data-anchor-id="section-4">2019</h3>
 <p>In the source data, year of age and population numbers are stored in multiple columns:</p>
 <p><img src="images/NRS-2019-pop-by-age.png" class="img-fluid"></p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop.R"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-19-data.xlsx"</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>scot_pop19 <span class="ot">&lt;-</span> <span class="fu">get_pop_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_19 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-19-data.xlsx"</span>  </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pop19 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_19, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>pop19[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>pop19 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop19, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_19)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5463300 
- sum of pop categories:  5463300</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>age_categories <span class="ot">&lt;-</span> scot_pop19[, age_cat]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="section-1" class="level3">
-<h3 class="anchored" data-anchor-id="section-1">2022</h3>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 3 contains Population by age category</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>scot_pop22 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"./data/scotland-s-census-2022-first-results-rounded-population-estimates-data.xlsx"</span>, </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sheet =</span> <span class="st">"Table 3"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">n_max =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setDT</span>()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># First 3 columns are superfluous</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>scot_pop22[, <span class="fu">c</span>(<span class="st">"Area name"</span>, <span class="st">"Area code"</span>, <span class="st">"Area type"</span> ) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove "All ages" column and calculate totals after processing</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>scot_pop22[, <span class="st">"All ages"</span> <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>scot_pop22 <span class="sc">|&gt;</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Sex</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 0-4 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 5-9 year</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 10-14 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 15-19 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 20-24 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 25-29 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 30-34 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 35-39 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 40-44 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 45-49 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 50-54 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 55-59 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 60-64 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 65-69 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 70-74 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 75-79 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 80-84 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 85-89 years</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Aged 90+ years</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Persons</td>
-<td style="text-align: right;">247100</td>
-<td style="text-align: right;">284100</td>
-<td style="text-align: right;">301000</td>
-<td style="text-align: right;">299100</td>
-<td style="text-align: right;">337000</td>
-<td style="text-align: right;">338200</td>
-<td style="text-align: right;">356000</td>
-<td style="text-align: right;">347000</td>
-<td style="text-align: right;">334300</td>
-<td style="text-align: right;">329500</td>
-<td style="text-align: right;">391500</td>
-<td style="text-align: right;">408600</td>
-<td style="text-align: right;">372100</td>
-<td style="text-align: right;">315300</td>
-<td style="text-align: right;">284800</td>
-<td style="text-align: right;">218300</td>
-<td style="text-align: right;">142300</td>
-<td style="text-align: right;">85400</td>
-<td style="text-align: right;">45000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Females</td>
-<td style="text-align: right;">120100</td>
-<td style="text-align: right;">138300</td>
-<td style="text-align: right;">147200</td>
-<td style="text-align: right;">146000</td>
-<td style="text-align: right;">170500</td>
-<td style="text-align: right;">172300</td>
-<td style="text-align: right;">182600</td>
-<td style="text-align: right;">178200</td>
-<td style="text-align: right;">171200</td>
-<td style="text-align: right;">169000</td>
-<td style="text-align: right;">202400</td>
-<td style="text-align: right;">210400</td>
-<td style="text-align: right;">191200</td>
-<td style="text-align: right;">163300</td>
-<td style="text-align: right;">149300</td>
-<td style="text-align: right;">118500</td>
-<td style="text-align: right;">81900</td>
-<td style="text-align: right;">52400</td>
-<td style="text-align: right;">29800</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Males</td>
-<td style="text-align: right;">127000</td>
-<td style="text-align: right;">145800</td>
-<td style="text-align: right;">153900</td>
-<td style="text-align: right;">153000</td>
-<td style="text-align: right;">166400</td>
-<td style="text-align: right;">166000</td>
-<td style="text-align: right;">173400</td>
-<td style="text-align: right;">168800</td>
-<td style="text-align: right;">163100</td>
-<td style="text-align: right;">160500</td>
-<td style="text-align: right;">189100</td>
-<td style="text-align: right;">198200</td>
-<td style="text-align: right;">180900</td>
-<td style="text-align: right;">152000</td>
-<td style="text-align: right;">135400</td>
-<td style="text-align: right;">99800</td>
-<td style="text-align: right;">60300</td>
-<td style="text-align: right;">33100</td>
-<td style="text-align: right;">15200</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-<p>This data has three variables:</p>
-<ul>
-<li><code>Sex</code>, stored in the rows,</li>
-<li><code>age_category</code> spread across the column names, and</li>
-<li>population numbers are stored in the cell values.</li>
-</ul>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>scot_pop22 <span class="ot">&lt;-</span> scot_pop22 <span class="sc">%&gt;%</span>    </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(     </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="sc">!</span>Sex, <span class="co"># reshape every column apart from "Sex" </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"age"</span>,      </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"pop"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_transform =</span> readr<span class="sc">::</span>parse_number) <span class="sc">|&gt;</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setDT</span>()</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( scot_pop22 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>       sex age    pop
-1: Persons   0 247100
-2: Persons   5 284100
-3: Persons  10 301000
-4: Persons  15 299100
-5: Persons  20 337000
-6: Persons  25 338200</code></pre>
-</div>
-</div>
-<ul>
-<li>There are 19 age categories in 5 year intervals.</li>
-<li>The last entry is for 90 years and older.</li>
-<li><code>sex</code> has three categories: <em>Persons, Males, Females.</em></li>
-</ul>
-<p>Separate the combined counts, which is given by the “Person” entries in the <code>sex</code> variable</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store Male and Female values for later analysis </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># scot_pop22_MF &lt;- scot_pop22[sex %in% c("Males","Females") ,]</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># All Persons</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>scot_pop22 <span class="ot">&lt;-</span> scot_pop22[sex <span class="sc">==</span> <span class="st">"Persons"</span> ,]  </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># no longer need the "sex" variable</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>scot_pop22[, sex <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># add 'age_cat' column for compatibility with other years</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>scot_pop22[, age_cat <span class="sc">:</span><span class="er">=</span> age_categories][, age <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setcolorder</span>(scot_pop22, <span class="fu">c</span>(<span class="st">"age_cat"</span>, <span class="st">"pop"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Plot population counts by age category</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># suppress scientific notation</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">20</span>)  </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(scot_pop22, <span class="fu">aes</span>(age_cat, pop)) <span class="sc">+</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> pop)) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scotland Population 2022"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"by 5-year age category"</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age 5yr"</span>, <span class="at">y =</span> <span class="st">"Population"</span>) <span class="sc">+</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>()) <span class="sc">+</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="getting-cleaning-data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="section-2" class="level3">
-<h3 class="anchored" data-anchor-id="section-2">2021</h3>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 1 contains Population by each year of </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>scot_pop21 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"./data/mid-year-pop-est-21-data.xlsx"</span>, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sheet =</span> <span class="st">"Table 1"</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">n_max =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    clean_names() |&gt; </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setDT</span>()</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># First 3 columns are superfluous</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>scot_pop21[, <span class="fu">c</span>(<span class="st">"Area name"</span>, <span class="st">"Area code"</span>, <span class="st">"Area type"</span> ) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># remove "All ages" column and calculate totals after processing</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>scot_pop21[, <span class="st">"All ages"</span> <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p><strong>Inspect the Data</strong></p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>scot_pop21[, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>       Sex     0     1     2     3     4     5     6     7     8
-1: Persons 46782 49017 51478 53317 54843 57070 57945 58262 59490
-2:   Males 23961 25131 26485 27398 28339 29530 29710 29948 30459
-3: Females 22821 23886 24993 25919 26504 27540 28235 28314 29031</code></pre>
-</div>
-</div>
-<p>Check the final column</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>scot_pop21[, <span class="dv">92</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     90+
-1: 45321
-2: 14421
-3: 30900</code></pre>
-</div>
-</div>
-<p>This data has three variables:</p>
-<ul>
-<li><code>Sex</code>, stored in the rows,</li>
-<li><code>age</code> spread across the column names, and</li>
-<li>population numbers are stored in the cell values.</li>
-</ul>
-<p><code>pivot_longer:</code></p>
-<ul>
-<li><code>names_to</code> gives the name of the variable that will be created from the data stored in the column names, i.e.&nbsp;year of age</li>
-<li><code>values_to</code> gives the name of the variable that will be created from the data stored in the cell value, i.e.&nbsp;population count</li>
-</ul>
-<p>Entries in the <code>age</code> column are in character format. <a href="https://readr.tidyverse.org/reference/parse_number.html"><code>readr::parse_number()</code></a> extracts numeric values and automatically strips non-numeric components, so it can deal with the “90+” entry</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>scot_pop21 <span class="ot">&lt;-</span> scot_pop21 <span class="sc">%&gt;%</span>    </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(     </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="sc">!</span>Sex, <span class="co"># reshape every column apart from "Sex" </span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"age"</span>,      </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"pop"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_transform =</span> readr<span class="sc">::</span>parse_number) <span class="sc">|&gt;</span> </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setDT</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Separate the combined counts, which is given by the “Person” entries in the <code>sex</code> variable</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store Male and Female values for later analysis</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># scot_pop21_MF &lt;- scot_pop21[sex %in% c("Males","Females") ,]</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># counts for male + female</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>scot_pop21 <span class="ot">&lt;-</span> scot_pop21[sex <span class="sc">==</span> <span class="st">"Persons"</span> ,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Need to combine rows of <code>age</code> to 5-year age categories and to sum the associated population numbers. Bear in mind that the “90” entry refers to ages 90 and above. This means that there will be 18 age categories with an additional one for over 90.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># "sex" column is no longer needed</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>scot_pop21[, sex <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>over90 <span class="ot">&lt;-</span> scot_pop21[<span class="dv">91</span>, pop]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>scot_pop21 <span class="ot">&lt;-</span> scot_pop21[<span class="sc">-</span><span class="dv">91</span>,]</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grouping variable</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>scot_pop21[, age_cat <span class="sc">:</span><span class="er">=</span> <span class="fu">cut2</span>(age, <span class="at">g =</span> <span class="dv">18</span>)]</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># sum the number of deaths in each age category</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>scot_pop21_cats <span class="ot">&lt;-</span> scot_pop21[, <span class="fu">sum</span>(pop), by <span class="ot">=</span> age_cat]</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>scot_pop21_cats[, pop <span class="sc">:</span><span class="er">=</span> V1][, V1 <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># append an entry for the 90 plus group</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>oldest <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">age_cat =</span> <span class="fu">as.factor</span>(<span class="st">"90 plus"</span>), </span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pop =</span> over90)</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>scot_pop21 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(scot_pop21_cats, oldest)</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co"># update "age_cat" column for compatibility with other years</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>scot_pop21[, age_cat <span class="sc">:</span><span class="er">=</span> age_categories]</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(scot_pop21_cats, oldest, over90)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="section-3" class="level3">
-<h3 class="anchored" data-anchor-id="section-3">2018</h3>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-18-tabs.xlsx"</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>scot_pop18 <span class="ot">&lt;-</span> <span class="fu">get_pop_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5438100 
- sum of pop categories:  5438100</code></pre>
-</div>
-</div>
-</section>
-<section id="section-4" class="level3">
-<h3 class="anchored" data-anchor-id="section-4">2017</h3>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-17-all-tables-revised.xlsx"</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>scot_pop17 <span class="ot">&lt;-</span> <span class="fu">get_pop_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5424800 
- sum of pop categories:  5424800</code></pre>
-</div>
 </div>
 </section>
 <section id="section-5" class="level3">
-<h3 class="anchored" data-anchor-id="section-5">2016</h3>
+<h3 class="anchored" data-anchor-id="section-5">2018</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop-16.R"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/16-mid-year-pe-tab1.xlsx"</span> </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>scot_pop16 <span class="ot">&lt;-</span> <span class="fu">get_pop_2016</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file_18 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-18-tabs.xlsx"</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pop18 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_18, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>pop18[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>pop18 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop18, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_18)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5404700 
-  sum of pop categories:  5404700</code></pre>
-</div>
 </div>
 </section>
 <section id="section-6" class="level3">
-<h3 class="anchored" data-anchor-id="section-6">2015</h3>
+<h3 class="anchored" data-anchor-id="section-6">2017</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/15mype-cahb-tab1.xlsx"</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>scot_pop15 <span class="ot">&lt;-</span> <span class="fu">get_pop_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>file_17 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-17-all-tables-revised.xlsx"</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pop17 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_17, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pop17[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pop17 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop17, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_17)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5373000 
- sum of pop categories:  5373000</code></pre>
-</div>
 </div>
 </section>
 <section id="section-7" class="level3">
-<h3 class="anchored" data-anchor-id="section-7">2014</h3>
+<h3 class="anchored" data-anchor-id="section-7">2016</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/14mype-cahb-all-tab.xlsx"</span>  </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>scot_pop14 <span class="ot">&lt;-</span> <span class="fu">get_pop_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop.R"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>file_16 <span class="ot">&lt;-</span> <span class="st">"./data/16-mid-year-pe-tab1.xlsx"</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pop16 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_16, <span class="at">is_16 =</span> <span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pop16[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>pop16 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop16, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_16)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5347600 
- sum of pop categories:  5347600</code></pre>
-</div>
 </div>
 </section>
 <section id="section-8" class="level3">
-<h3 class="anchored" data-anchor-id="section-8">2013</h3>
+<h3 class="anchored" data-anchor-id="section-8">2015</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/13mype-cahb-tab1.xlsx"</span>  </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>scot_pop13 <span class="ot">&lt;-</span> <span class="fu">get_pop_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>file_15 <span class="ot">&lt;-</span> <span class="st">"./data/15mype-cahb-tab1.xlsx"</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pop15 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_15, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>pop15[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>pop15 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop15, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_15)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5327700 
- sum of pop categories:  5327700</code></pre>
-</div>
 </div>
 </section>
 <section id="section-9" class="level3">
-<h3 class="anchored" data-anchor-id="section-9">2012</h3>
+<h3 class="anchored" data-anchor-id="section-9">2014</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/12mype-cahb-tab1.xlsx"</span>  </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>scot_pop12 <span class="ot">&lt;-</span> <span class="fu">get_pop_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>file_14 <span class="ot">&lt;-</span> <span class="st">"./data/14mype-cahb-all-tab.xlsx"</span>  </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>pop14 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_14, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>pop14[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>pop14 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop14, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_14)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- total:  5313600 
- sum of pop categories:  5313600</code></pre>
-</div>
 </div>
 </section>
 <section id="section-10" class="level3">
-<h3 class="anchored" data-anchor-id="section-10">2011</h3>
-<p><strong>Inspect the Data</strong></p>
+<h3 class="anchored" data-anchor-id="section-10">2013</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># File contains a single sheet</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>scot_pop11 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"./data/scotland-census-2011.xlsx"</span>, </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sheet =</span> <span class="st">"Data Sheet 0"</span>,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">skip =</span> <span class="dv">10</span>, <span class="at">n_max =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setDT</span>()</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Second columns is superfluous</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>scot_pop11[, <span class="fu">c</span>(<span class="st">"...2"</span> ) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># remove "All people" column and calculate totals after processing</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>scot_pop11[, <span class="fu">c</span>(<span class="st">"All people"</span>, <span class="st">"Age"</span>) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="co"># remove second row since it contains NAs</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>scot_pop11 <span class="ot">&lt;-</span> scot_pop11[<span class="dv">2</span>, ]</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>scot_pop11 <span class="sc">|&gt;</span> </span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">Under 1</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">1</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">2</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">3</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">4</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">5</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">6</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">7</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">8</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">9</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">10</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">11</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">12</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">13</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">14</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">15</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">16</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">17</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">18</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">19</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">20</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">21</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">22</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">23</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">24</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">25</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">26</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">27</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">28</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">29</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">30</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">31</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">32</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">33</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">34</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">35</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">36</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">37</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">38</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">39</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">40</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">41</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">42</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">43</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">44</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">45</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">46</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">47</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">48</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">49</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">50</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">51</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">52</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">53</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">54</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">55</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">56</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">57</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">58</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">59</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">60</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">61</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">62</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">63</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">64</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">65</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">66</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">67</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">68</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">69</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">70</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">71</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">72</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">73</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">74</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">75</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">76</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">77</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">78</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">79</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">80</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">81</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">82</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">83</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">84</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">85</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">86</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">87</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">88</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">89</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">90</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">91</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">92</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">93</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">94</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">95</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">96</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">97</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">98</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">99</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">100 and over</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">58715</td>
-<td style="text-align: right;">59556</td>
-<td style="text-align: right;">58909</td>
-<td style="text-align: right;">58764</td>
-<td style="text-align: right;">56877</td>
-<td style="text-align: right;">55224</td>
-<td style="text-align: right;">55236</td>
-<td style="text-align: right;">53786</td>
-<td style="text-align: right;">52325</td>
-<td style="text-align: right;">53046</td>
-<td style="text-align: right;">55067</td>
-<td style="text-align: right;">56769</td>
-<td style="text-align: right;">58656</td>
-<td style="text-align: right;">59971</td>
-<td style="text-align: right;">61152</td>
-<td style="text-align: right;">62278</td>
-<td style="text-align: right;">62145</td>
-<td style="text-align: right;">64121</td>
-<td style="text-align: right;">68130</td>
-<td style="text-align: right;">74152</td>
-<td style="text-align: right;">74835</td>
-<td style="text-align: right;">72001</td>
-<td style="text-align: right;">72969</td>
-<td style="text-align: right;">73783</td>
-<td style="text-align: right;">70352</td>
-<td style="text-align: right;">70288</td>
-<td style="text-align: right;">69246</td>
-<td style="text-align: right;">67813</td>
-<td style="text-align: right;">68342</td>
-<td style="text-align: right;">69943</td>
-<td style="text-align: right;">69202</td>
-<td style="text-align: right;">67429</td>
-<td style="text-align: right;">64193</td>
-<td style="text-align: right;">60491</td>
-<td style="text-align: right;">60380</td>
-<td style="text-align: right;">63609</td>
-<td style="text-align: right;">64355</td>
-<td style="text-align: right;">66397</td>
-<td style="text-align: right;">70159</td>
-<td style="text-align: right;">75536</td>
-<td style="text-align: right;">76562</td>
-<td style="text-align: right;">76474</td>
-<td style="text-align: right;">79587</td>
-<td style="text-align: right;">80953</td>
-<td style="text-align: right;">81122</td>
-<td style="text-align: right;">81314</td>
-<td style="text-align: right;">84376</td>
-<td style="text-align: right;">82601</td>
-<td style="text-align: right;">82554</td>
-<td style="text-align: right;">80084</td>
-<td style="text-align: right;">78847</td>
-<td style="text-align: right;">75598</td>
-<td style="text-align: right;">75660</td>
-<td style="text-align: right;">73955</td>
-<td style="text-align: right;">71767</td>
-<td style="text-align: right;">69190</td>
-<td style="text-align: right;">67232</td>
-<td style="text-align: right;">66128</td>
-<td style="text-align: right;">64782</td>
-<td style="text-align: right;">63559</td>
-<td style="text-align: right;">63996</td>
-<td style="text-align: right;">64709</td>
-<td style="text-align: right;">66339</td>
-<td style="text-align: right;">70598</td>
-<td style="text-align: right;">70880</td>
-<td style="text-align: right;">53361</td>
-<td style="text-align: right;">55060</td>
-<td style="text-align: right;">54012</td>
-<td style="text-align: right;">51495</td>
-<td style="text-align: right;">47270</td>
-<td style="text-align: right;">45155</td>
-<td style="text-align: right;">46168</td>
-<td style="text-align: right;">44637</td>
-<td style="text-align: right;">43297</td>
-<td style="text-align: right;">41337</td>
-<td style="text-align: right;">39583</td>
-<td style="text-align: right;">37832</td>
-<td style="text-align: right;">35211</td>
-<td style="text-align: right;">33146</td>
-<td style="text-align: right;">32342</td>
-<td style="text-align: right;">30065</td>
-<td style="text-align: right;">27162</td>
-<td style="text-align: right;">25170</td>
-<td style="text-align: right;">21669</td>
-<td style="text-align: right;">20459</td>
-<td style="text-align: right;">18626</td>
-<td style="text-align: right;">15898</td>
-<td style="text-align: right;">14181</td>
-<td style="text-align: right;">12024</td>
-<td style="text-align: right;">10778</td>
-<td style="text-align: right;">9439</td>
-<td style="text-align: right;">6975</td>
-<td style="text-align: right;">4331</td>
-<td style="text-align: right;">3321</td>
-<td style="text-align: right;">2840</td>
-<td style="text-align: right;">2241</td>
-<td style="text-align: right;">1825</td>
-<td style="text-align: right;">1174</td>
-<td style="text-align: right;">857</td>
-<td style="text-align: right;">539</td>
-<td style="text-align: right;">854</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-<p>This data has two variables:</p>
-<ul>
-<li><code>age</code> spread across the column names, and</li>
-<li>population numbers are stored in the cell values.</li>
-</ul>
-<p>Need to <code>pivot_longer</code> to create <code>age</code> column and to transpose age values from row to column format.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename "Under 1" column to "0" </span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to represent first year of life</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(scot_pop11, <span class="st">"Under 1"</span>, <span class="st">"0"</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>scot_pop11 <span class="ot">&lt;-</span> scot_pop11 <span class="sc">%&gt;%</span>    </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(   </span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="st">"0"</span><span class="sc">:</span><span class="st">"100 and over"</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"age"</span>,      </span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"pop"</span>,</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_transform =</span> readr<span class="sc">::</span>parse_number) <span class="sc">|&gt;</span> </span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setDT</span>()</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(scot_pop11, <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>    age   pop
- 1:   0 58715
- 2:   1 59556
- 3:   2 58909
- 4:   3 58764
- 5:   4 56877
- 6:   5 55224
- 7:   6 55236
- 8:   7 53786
- 9:   8 52325
-10:   9 53046</code></pre>
-</div>
-</div>
-<p>Aggregate rows for ages 90 and above into a single entry for compatibility with data for 2022 and 2021.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>over90 <span class="ot">&lt;-</span> scot_pop11[<span class="dv">91</span><span class="sc">:</span><span class="dv">101</span>, <span class="fu">sum</span>(pop)]</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remove rows for age 90 and above</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>scot_pop11 <span class="ot">&lt;-</span> scot_pop11[<span class="dv">1</span><span class="sc">:</span><span class="dv">90</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Combine rows into 5-year age categories</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grouping variable</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>scot_pop11[, age_cat <span class="sc">:</span><span class="er">=</span> <span class="fu">cut2</span>(age, <span class="at">g =</span> <span class="dv">18</span>)]</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># sum the number of deaths in each age category</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>scot_pop11_cats <span class="ot">&lt;-</span> scot_pop11[, <span class="fu">sum</span>(pop), by <span class="ot">=</span> age_cat]</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>scot_pop11_cats[, pop <span class="sc">:</span><span class="er">=</span> V1][, V1 <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># append an entry for the 90 plus group</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>oldest <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">age_cat =</span> <span class="fu">as.factor</span>(<span class="st">"90 plus"</span>), </span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pop =</span> over90)</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>scot_pop11 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(scot_pop11_cats, oldest)</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="co"># update "age_cat" for compatibility with other years</span></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>scot_pop11[, age_cat <span class="sc">:</span><span class="er">=</span> age_categories]</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleanup</span></span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(scot_pop11_cats, oldest, over90)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Save cleaned data tables</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>scot_all <span class="ot">&lt;-</span> <span class="fu">ls</span>()[<span class="fu">sapply</span>(<span class="fu">ls</span>(), <span class="cf">function</span>(x) <span class="fu">is.data.frame</span>(<span class="fu">get</span>(x)))]</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list =</span> scot_all, <span class="at">file =</span> <span class="st">"./data-clean/scot-pop.RData"</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleanup the environment</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># keep 'age_categories' vector</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(<span class="at">list =</span> scot_all)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_pop_2016, get_pop_year, file_year, scot_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>file_13 <span class="ot">&lt;-</span> <span class="st">"./data/13mype-cahb-tab1.xlsx"</span>  </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pop13 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_13, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>pop13[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>pop13 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop13, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_13)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-</section>
-<section id="mortality" class="level2">
-<h2 class="anchored" data-anchor-id="mortality">Mortality</h2>
-<p>Table 5.02 contains deaths, by sex, age, and administrative area, Scotland</p>
 <section id="section-11" class="level3">
-<h3 class="anchored" data-anchor-id="section-11">2022</h3>
+<h3 class="anchored" data-anchor-id="section-11">2012</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-22-ref-tabs-5.xlsx"</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>scot_mort22 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>file_12 <span class="ot">&lt;-</span> <span class="st">"./data/12mype-cahb-tab1.xlsx"</span>  </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pop12 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_12, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>pop12[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>pop12 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop12, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-12" class="level3">
-<h3 class="anchored" data-anchor-id="section-12">2021</h3>
+<h3 class="anchored" data-anchor-id="section-12">2010</h3>
+<p>Mid-year population estimates, Scotland and its Council areas by single year of age and sex: 2002 to 2011</p>
 <div class="cell">
 <details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-21-ref-tabs-5.xlsx"</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>scot_mort21 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>convert single year population numbers to age categories</summary>
+<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop-by-year.R"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>file_10 <span class="ot">&lt;-</span> <span class="st">"./data/council-rebased-02-11-sya.xls"</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sheet_10 <span class="ot">&lt;-</span> <span class="st">"2010"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>range_10 <span class="ot">&lt;-</span> <span class="st">"C4:CO5"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>pop10 <span class="ot">&lt;-</span> <span class="fu">get_pop_by_year</span>(file_10, sheet_10, range_10)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>pop10 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(pop10, <span class="at">is_pop =</span> <span class="dv">1</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># cleanup</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(file_10, range_10, sheet_10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="section-13" class="level3">
-<h3 class="anchored" data-anchor-id="section-13">2020</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-20-ref-tabs-5.xlsx"</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>scot_mort20 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pop_all &lt;- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pop_dt &lt;- rbind(pop10, pop11, pop12, pop13, pop14, pop15,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                  pop16, pop17, pop18, pop19, pop20, pop21, </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                  pop22)</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(pop_dt, file = "./data-clean/scot-pop.rds")</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Cleanup the environment</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # keep 'group5yr' vector containing age categories</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># remove(list = pop_all)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_pop, get_pop_by_year, total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in rm(get_pop, get_pop_by_year, total): object 'total' not found</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="mortality" class="level1">
+<h1>Mortality</h1>
+<p>Table 5.02 contains deaths, by sex, age, and administrative area, Scotland</p>
+<section id="section-13" class="level3">
+<h3 class="anchored" data-anchor-id="section-13">2022</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-22-ref-tabs-5.xlsx"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort22, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort22, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>mort22[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2022</span>]</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setcolorder</span>(mort22, <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"age_cat"</span>, <span class="st">"mort"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Calculate mortality rate by age category</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>scot22 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort22, pop22, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-14" class="level3">
-<h3 class="anchored" data-anchor-id="section-14">2019</h3>
+<h3 class="anchored" data-anchor-id="section-14">2021</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-19-ref-tabs-5.xlsx"</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>scot_mort19 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-21-ref-tabs-5.xlsx"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort21, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort21, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>mort21[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2021</span>]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>scot21 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort21, pop21, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-15" class="level3">
-<h3 class="anchored" data-anchor-id="section-15">2018</h3>
+<h3 class="anchored" data-anchor-id="section-15">2020</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-18-ref-tabs-5.xlsx"</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>scot_mort18 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-20-ref-tabs-5.xlsx"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort20, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort20, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>mort20[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2020</span>]</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>scot20 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort20, pop20, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-16" class="level3">
-<h3 class="anchored" data-anchor-id="section-16">2017</h3>
+<h3 class="anchored" data-anchor-id="section-16">2019</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-17-ref-tabs-5.xlsx"</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>scot_mort17 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-19-ref-tabs-5.xlsx"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort19, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort19, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>mort19[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2019</span>]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>scot19 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort19, pop19, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-17" class="level3">
-<h3 class="anchored" data-anchor-id="section-17">2016</h3>
+<h3 class="anchored" data-anchor-id="section-17">2018</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-mort-5-2.R"</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-16-ref-tabs-5-2.xlsx"</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>scot_mort16 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-18-ref-tabs-5.xlsx"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mort18 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>mort18<span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort18, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort18, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>mort18[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2018</span>]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>scot18 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort18, pop18, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-18" class="level3">
-<h3 class="anchored" data-anchor-id="section-18">2015</h3>
+<h3 class="anchored" data-anchor-id="section-18">2017</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-15-ref-tabs-5-2.xlsx"</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>scot_mort15 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-17-ref-tabs-5.xlsx"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort17, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort17, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>mort17[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2017</span>]</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>scot17 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort17, pop17, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-19" class="level3">
-<h3 class="anchored" data-anchor-id="section-19">2014</h3>
+<h3 class="anchored" data-anchor-id="section-19">2016</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-14-ref-tabs-5-2.xlsx"</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>scot_mort14 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-mort-5-2.R"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-16-ref-tabs-5-2.xlsx"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %&gt;% select(col_range)
+
+  # Now:
+  data %&gt;% select(all_of(col_range))
+
+See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort16, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort16, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>mort16[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2016</span>]</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>scot16 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort16, pop16, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-20" class="level3">
-<h3 class="anchored" data-anchor-id="section-20">2013</h3>
+<h3 class="anchored" data-anchor-id="section-20">2015</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-13-ref-tabs-5-2.xls"</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>scot_mort13 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-15-ref-tabs-5-2.xlsx"</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="dv">15</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort15, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort15, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>mort15[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2015</span>]</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>scot15 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort15, pop15, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-21" class="level3">
-<h3 class="anchored" data-anchor-id="section-21">2012</h3>
+<h3 class="anchored" data-anchor-id="section-21">2014</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-12-ref-tabs-5-2.xls"</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>scot_mort12 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-14-ref-tabs-5-2.xlsx"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">14</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort14, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort14, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>mort14[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2014</span>]</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>scot14 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort14, pop14, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="section-22" class="level3">
-<h3 class="anchored" data-anchor-id="section-22">2011</h3>
+<h3 class="anchored" data-anchor-id="section-22">2013</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-11-ref-tabs-5-2.xls"</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>scot_mort11 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-13-ref-tabs-5-2.xls"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">13</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort13, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort13, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>mort13[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2013</span>]</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>scot13 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort13, pop13, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Save data tables that are in “tidy data” format</p>
+</section>
+<section id="section-23" class="level3">
+<h3 class="anchored" data-anchor-id="section-23">2012</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>mort_all <span class="ot">&lt;-</span> <span class="fu">ls</span>()[<span class="fu">sapply</span>(<span class="fu">ls</span>(), <span class="cf">function</span>(x) <span class="fu">is.data.frame</span>(<span class="fu">get</span>(x)))]</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="at">list =</span> mort_all, <span class="at">file =</span> <span class="st">"./data-clean/scot-mort.RData"</span>)</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleanup the environment</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># keep 'age_categories' vector</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(<span class="at">list =</span> mort_all)</span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_mort_year, get_mort_5_2, file_year, mort_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-12-ref-tabs-5-2.xls"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">12</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort12, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort12, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>mort12[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2012</span>]</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>scot12 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort12, pop12, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="section-24" class="level3">
+<h3 class="anchored" data-anchor-id="section-24">2011</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-11-ref-tabs-5-2.xls"</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">11</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort11, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C5:C5"</span>, </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort11, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>mort11[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2011</span>]</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>scot11 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort11, pop11, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="section-25" class="level3">
+<h3 class="anchored" data-anchor-id="section-25">2010</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-10-t5-2.xls"</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">10</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort10, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C5:C5"</span>, </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort10, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>mort10[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2010</span>]</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>scot10 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort10, pop10, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Combine mortality data tables, ordered by year</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mort_all &lt;- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>scot_dt <span class="ot">&lt;-</span> <span class="fu">rbind</span>(scot10, scot11, scot12, scot13, scot14, scot15,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                 scot16, scot17, scot18, scot19, scot20, scot21,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                 scot22)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(scot_dt, <span class="at">file =</span> <span class="st">"./data-clean/scot_dt.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Save the combined data table that are in “tidy data” format</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(mort_dt, file = "./data-clean/scot-mort.rds")</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Cleanup the environment</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remove(list = mort_all)</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_mort_year, get_mort_5_2, file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
@@ -1450,18 +1091,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./data-sources.html" class="pagination-link">
-        <span class="nav-page-text">Data Sources</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

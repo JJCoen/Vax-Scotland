@@ -21,6 +21,8 @@ editor: visual
 
 [Mid-Year Population Estimates, Archive 2019-2012](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates/archive)
 
+[Mid-2002 to Mid-2010 Revision](https://webarchive.nrscotland.gov.uk/20210313160229/https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates/mid-2002-to-mid-2010-revision/additional-detailed-tables-for-population-estimates)
+
 ### Mortality
 
 [National Records of Scotland, Vital Events 2022](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2022/list-of-data-tables#section5)\

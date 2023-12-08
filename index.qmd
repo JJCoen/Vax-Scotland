@@ -1,9 +1,11 @@
 ---
 title: "Change in Mortality Rates for Scotland"
 subtitle: "for the years 2011 to 2022"
+editor_options: 
+  chunk_output_type: inline
 ---
 
-## Population Change {#Population} 
+## Population Change {#Pop-Change} 
 
 ```{r}
 #| include: false
@@ -12,80 +14,32 @@ subtitle: "for the years 2011 to 2022"
 library(data.table)
 library(kableExtra)
 library(ggplot2)
+library(janitor)
+library(readxl)
+library(tidyr)
+library(Hmisc)
 ```
 
 
 ```{r}
-#| label: Load data
+#| warning: false
 #| include: false
 
-load(file = "./data-clean/scot-Pop.RData")
+source("./code/get-census-22.R")
+source("./code/get-census-11.R")
+source("./code/plot-pop-change.R")
 
-# add column for 2011 population counts
-pop_11_vec <- scot_pop11[, pop]
-scot_pop11_22 <- scot_pop22[, pop_11 := pop_11_vec] 
+pop22_5yr <- get_census_22(is_plot = 1)
+
+pop11_5yr <- get_census_11(is_plot = 1)
+
 ```
-
-Population sub-group wave moving to older age categories.
 
 ```{r}
 #| echo: false
-#| fig-width: 5
-
-
-ggplot(scot_pop11_22, aes(age_cat, pop)) + 
-  geom_col(aes(fill = pop)) +
-  scale_fill_gradient(low = "white", high = "navy") +
-  labs(title = "Scotland Population 2022",
-       subtitle = "compared to 2011",
-       x = "Age 5yr", y = "Population") +
-  geom_line(aes(x = age_cat, y = pop_11,
-           group = 1), colour = "#FFCB05", linewidth = 1.2) +
-  scale_y_continuous(labels = scales::label_comma()) +
-  theme(legend.position = "none") +    
-  annotate(geom = "text", x = 8, y = 400000, 
-           label = "2011", colour = "#FFCB05", size = 5,) +
-    coord_flip()
+plot_pop_change(pop11_5yr, pop22_5yr)
 ```
 
 
-## Welcome 
 
-It's possible to create beautiful documentation to share online with [Quarto](https://quarto.org) that auto-updates with [GitHub](http://github.com). This is very new and incredibly cool. This tutorial is an example of a quarto website --- it is a really powerful way to create and share your work. You can communicate about science using the same reproducible workflow you and/or your colleagues use for analyses, whether or not you write code.
 
-Creating websites with Quarto can be done without knowing R, Python or HTML, CSS, etc, and that's where we'll start. However, Quarto integrates with these tools so you can make your websites as complex and beautiful as you like as you see examples and reuse and remix from others in the open community. This tutorial borrows heavily from a lot of great tutorials and resources you should check out too -- there are links throughout.
-
-## What is Quarto?
-
-Quarto helps you have your ideas and your code in one place, and present it in a beautiful way. 
-
-**Quarto unifies and extends the RMarkdown ecosystem** - it unifies by combining the functionality of R Markdown, bookdown, distill, xaringian, etc into a single consistent system. And it extends in several ways: all features are possible beyond R too, including Python and Javascript. It also has more “guardrails”: accessibility and inclusion are centered in the design. Quarto is for people who love RMarkdown, and it's for people who have never used RMarkdown. 
- 
-
-The ability for Quarto to streamline collaboration has been so cool and important for our [NASA Openscapes](https://nasa-openscapes.github.io/) project. Quarto has been a common place for us to collaborate - across R and Python languages and coding expertise. 
-
-## What is this tutorial?
-
-This is a 1-hour tutorial that can be used to teach or as self-paced learning. 
-
-We introduce Quarto by exploring this tutorial website, and practicing the basic Quarto workflow using different tools (GitHub browser, RStudio, and Jupyter) for editing your website.
-
-We'll start off from the browser so you don't need to install any additional software, however this approach is very limited and you will soon outgrow its capabilities. If you don't already have a workflow to edit files and sync to GitHub from your computer, I recommend RStudio. You don't need to know R to use RStudio, and it has powerful editor features that make for happy workflows.
-
-[Quarto.org](https://quarto.org) is the go-to place for full documentation and more tutorials! 
-
-## Example Quarto sites
-
-A few Quarto websites from Openscapes - so far we have been using Quarto for documentation using Quarto and Markdown files and Jupyter Notebooks.
-
--   [Champions Lessons Series](https://openscapes.github.io/series)
--   [Openscapes Approach Guide](https://openscapes.github.io/approach-guide/)\
--   [2021 NASA Cloud Hackathon](https://nasa-openscapes.github.io/2021-Cloud-Hackathon/)
--   [Faylab Lab Manual](https://thefaylab.github.io/lab-manual/)
--   [A Quarto tip a day](https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/), by Mine Çetinkaya-Rundel
-
-## About
-
-[Openscapes](https://openscapes.org) is about better science for future us. We help researchers reimagine data analysis, develop modern skills that are of immediate value to them, and cultivate collaborative and inclusive research teams as part of the broader global open movement.
-
-We're developing this tutorial to help folks with different levels of technical skills use [Quarto](https://quarto.org) for documentation and tutorial building. This tutorial was originally created for several different audiences: [NASA-Openscapes](https://nasa-openscapes.github.io) researcher support engineers using Python, communications directors at organizations promoting open science who do not identify as coders, and fisheries scientists curious about transitioning from RMarkdown. We're hoping it's useful to folks with backgrounds as wide as these; if you find it useful or have suggestions for improvement, please let us know by clicking "Edit this page" or "Report an issue" at the upper right side of any page.

@@ -1,17 +1,38 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Change in Mortality Rates for Scotland",
-    "section": "",
-    "text": "plot_pop_change(pop11_5yr, pop22_5yr)"
+    "objectID": "explore.html#mortality-by-age-category",
+    "href": "explore.html#mortality-by-age-category",
+    "title": "Exploratory Data Analysis",
+    "section": "Mortality by age category",
+    "text": "Mortality by age category\nCalculate mortality rates per 10,000 persons for each age category"
   },
   {
-    "objectID": "index.html#Pop-Change",
-    "href": "index.html#Pop-Change",
-    "title": "Change in Mortality Rates for Scotland",
+    "objectID": "explore.html#trend-lines",
+    "href": "explore.html#trend-lines",
+    "title": "Exploratory Data Analysis",
+    "section": "Trend Lines",
+    "text": "Trend Lines\n\n\nCode\n# Visualize changes over time\nggplot(scot_dt, aes(x = year, y = rate)) +\n  geom_line(aes(group = age_cat), color = \"grey50\") +\n  geom_point(aes(color = age_cat, shape = age_cat)) +\n  # x-axis breaks for years from 2010 to 2022\n  scale_x_continuous(breaks = 2010:2022)"
+  },
+  {
+    "objectID": "explore.html#young-and-middle-ages",
+    "href": "explore.html#young-and-middle-ages",
+    "title": "Exploratory Data Analysis",
+    "section": "Young and Middle Ages",
+    "text": "Young and Middle Ages\n\n\nCode\nworking &lt;- scot_dt[age_cat %in% c(\"0\", \"1-14\", \"15-44\", \"45-64\"), ]\nggplot(working, aes(x = year, y = rate)) +\n  geom_line(aes(group = age_cat), color = \"grey50\") +\n  geom_point(aes(color = age_cat, shape = age_cat)) +\n  # x-axis breaks for years from 2010 to 2022\n  scale_x_continuous(breaks = 2010:2022)"
+  },
+  {
+    "objectID": "data-sources.html",
+    "href": "data-sources.html",
+    "title": "Data Sources",
     "section": "",
-    "text": "plot_pop_change(pop11_5yr, pop22_5yr)"
+    "text": "Scotland’s Census\nScotland’s Census, 2022\nScotland’s Census, 2011\nNational Records of Scotland:\nMid-Year Population Estimates 2021, 2020\nMid-Year Population Estimates, Archive 2019-2012\nMid-2002 to Mid-2010 Revision\n\n\n\nNational Records of Scotland, Vital Events 2022\nSection 5 contains mortality by age\nVital Events Reference Tables 2021\nVital Events Archive - Historical data back to 2001"
+  },
+  {
+    "objectID": "data-sources.html#census-and-statistics-service-of-scotland",
+    "href": "data-sources.html#census-and-statistics-service-of-scotland",
+    "title": "Data Sources",
+    "section": "",
+    "text": "Scotland’s Census\nScotland’s Census, 2022\nScotland’s Census, 2011\nNational Records of Scotland:\nMid-Year Population Estimates 2021, 2020\nMid-Year Population Estimates, Archive 2019-2012\nMid-2002 to Mid-2010 Revision\n\n\n\nNational Records of Scotland, Vital Events 2022\nSection 5 contains mortality by age\nVital Events Reference Tables 2021\nVital Events Archive - Historical data back to 2001"
   },
   {
     "objectID": "getting-cleaning-data.html",
@@ -33,40 +54,5 @@
     "title": "Getting and Cleaning Data",
     "section": "",
     "text": "Similar to Census 2011, population numbers are for each year of age\nsource(\"./code/get-pop-by-year.R\")\nfile_21 &lt;- \"./data/mid-year-pop-est-21-data.xlsx\"\nsheet_21 &lt;- \"Table 1\"\nrange_21 &lt;- \"F4:CR5\"\n\npop21 &lt;- get_pop_by_year(file_21, sheet_21, range_21)\n\npop21 &lt;- make_groups(pop21, is_pop = 1, cat_19 = FALSE)\n\n# cleanup\nrm(file_21, range_21, sheet_21)\n\n\n\n\n\n\n\nCode\nsource(\"./code/get-pop.R\")\n\nfile_20 &lt;- \"./data/mid-year-pop-est-20-data.xlsx\"\nsheet_20 &lt;- \"Table 1\"\nrange_20 &lt;- \"F4:CR5\"\n\npop20 &lt;- get_pop(file_20, is_16 = 0)\npop20[, age := group_5yr][, age_cat := NULL]\n\npop20 &lt;- make_groups(pop20, is_pop = 1, cat_19 = FALSE)\nrm(file_20, range_20, sheet_20)\n\n\n\n\n\n\n\n\nIn the source data, year of age and population numbers are stored in multiple columns:\n\n\n\nCode\nfile_19 &lt;- \"./data/mid-year-pop-est-19-data.xlsx\"  \n\npop19 &lt;- get_pop(file_19, is_16 = 0) \npop19[, age := group_5yr][, age_cat := NULL]\n\npop19 &lt;- make_groups(pop19, is_pop = 1, cat_19 = FALSE)\nrm(file_19)\n\n\n\n\n\n\n\nCode\nfile_18 &lt;- \"./data/mid-year-pop-est-18-tabs.xlsx\" \n\npop18 &lt;- get_pop(file_18, is_16 = 0) \npop18[, age := group_5yr][, age_cat := NULL]\n\npop18 &lt;- make_groups(pop18, is_pop = 1, cat_19 = FALSE)\nrm(file_18)\n\n\n\n\n\n\n\nCode\nfile_17 &lt;- \"./data/mid-year-pop-est-17-all-tables-revised.xlsx\" \n\npop17 &lt;- get_pop(file_17, is_16 = 0) \npop17[, age := group_5yr][, age_cat := NULL]\n\npop17 &lt;- make_groups(pop17, is_pop = 1, cat_19 = FALSE)\nrm(file_17)\n\n\n\n\n\n\n\nCode\nsource(\"./code/get-pop.R\")\nfile_16 &lt;- \"./data/16-mid-year-pe-tab1.xlsx\" \n\npop16 &lt;- get_pop(file_16, is_16 = 1)\npop16[, age := group_5yr][, age_cat := NULL]\n\npop16 &lt;- make_groups(pop16, is_pop = 1, cat_19 = FALSE)\nrm(file_16)\n\n\n\n\n\n\n\nCode\nfile_15 &lt;- \"./data/15mype-cahb-tab1.xlsx\" \n\npop15 &lt;- get_pop(file_15, is_16 = 0) \npop15[, age := group_5yr][, age_cat := NULL]\n\npop15 &lt;- make_groups(pop15, is_pop = 1, cat_19 = FALSE)\nrm(file_15)\n\n\n\n\n\n\n\nCode\nfile_14 &lt;- \"./data/14mype-cahb-all-tab.xlsx\"  \n\npop14 &lt;- get_pop(file_14, is_16 = 0) \npop14[, age := group_5yr][, age_cat := NULL]\n\npop14 &lt;- make_groups(pop14, is_pop = 1, cat_19 = FALSE)\nrm(file_14)\n\n\n\n\n\n\n\nCode\nfile_13 &lt;- \"./data/13mype-cahb-tab1.xlsx\"  \n\npop13 &lt;- get_pop(file_13, is_16 = 0) \npop13[, age := group_5yr][, age_cat := NULL]\n\npop13 &lt;- make_groups(pop13, is_pop = 1, cat_19 = FALSE)\nrm(file_13)\n\n\n\n\n\n\n\nCode\nfile_12 &lt;- \"./data/12mype-cahb-tab1.xlsx\"  \n\npop12 &lt;- get_pop(file_12, is_16 = 0) \npop12[, age := group_5yr][, age_cat := NULL]\n\npop12 &lt;- make_groups(pop12, is_pop = 1, cat_19 = FALSE)\nrm(file_12)\n\n\n\n\n\nMid-year population estimates, Scotland and its Council areas by single year of age and sex: 2002 to 2011\n\n\nconvert single year population numbers to age categories\nsource(\"./code/get-pop-by-year.R\")\n\nfile_10 &lt;- \"./data/council-rebased-02-11-sya.xls\" \nsheet_10 &lt;- \"2010\"\nrange_10 &lt;- \"C4:CO5\"\n\npop10 &lt;- get_pop_by_year(file_10, sheet_10, range_10)\n\npop10 &lt;- make_groups(pop10, is_pop = 1, cat_19 = FALSE)\n\n# cleanup\nrm(file_10, range_10, sheet_10)\n\n\n\n\nCode\n# pop_all &lt;- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]\n# \n# pop_dt &lt;- rbind(pop10, pop11, pop12, pop13, pop14, pop15,\n#                  pop16, pop17, pop18, pop19, pop20, pop21, \n#                  pop22)\n# \n# saveRDS(pop_dt, file = \"./data-clean/scot-pop.rds\")\n# \n# # Cleanup the environment\n# # keep 'group5yr' vector containing age categories\n# remove(list = pop_all)\nrm(get_pop, get_pop_by_year, total)\n\n\nWarning in rm(get_pop, get_pop_by_year, total): object 'total' not found"
-  },
-  {
-    "objectID": "explore.html",
-    "href": "explore.html",
-    "title": "explore",
-    "section": "",
-    "text": "Update data tables for mortality so as to include year.\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
-    "objectID": "explore.html#mortality-by-age-category",
-    "href": "explore.html#mortality-by-age-category",
-    "title": "Exploratory Data Analysis",
-    "section": "Mortality by age category",
-    "text": "Mortality by age category\nCalculate mortality rates per 10,000 persons for each age category"
-  },
-  {
-    "objectID": "explore.html#running-code",
-    "href": "explore.html#running-code",
-    "title": "explore",
-    "section": "Running Code",
-    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
-  },
-  {
-    "objectID": "explore.html#trend-lines",
-    "href": "explore.html#trend-lines",
-    "title": "Exploratory Data Analysis",
-    "section": "Trend Lines",
-    "text": "Trend Lines\n\n\nCode\n# Visualize changes over time\nggplot(scot_dt, aes(x = year, y = rate)) +\n  geom_line(aes(group = age_cat), color = \"grey50\") +\n  geom_point(aes(color = age_cat, shape = age_cat)) +\n  # x-axis breaks for years from 2010 to 2022\n  scale_x_continuous(breaks = 2010:2022) \n\n\nWarning: The shape palette can deal with a maximum of 6 discrete values because\nmore than 6 becomes difficult to discriminate; you have 7. Consider\nspecifying shapes manually if you must have them.\n\n\nWarning: Removed 13 rows containing missing values (`geom_point()`)."
-  },
-  {
-    "objectID": "explore.html#young-and-middle-ages",
-    "href": "explore.html#young-and-middle-ages",
-    "title": "Exploratory Data Analysis",
-    "section": "Young and Middle Ages",
-    "text": "Young and Middle Ages\n\n\nCode\nworking &lt;- scot_dt[age_cat %in% c(\"0\", \"1-14\", \"15-44\", \"45-64\"), ]\nggplot(working, aes(x = year, y = rate)) +\n  geom_line(aes(group = age_cat), color = \"grey50\") +\n  geom_point(aes(color = age_cat, shape = age_cat)) +\n  # x-axis breaks for years from 2010 to 2022\n  scale_x_continuous(breaks = 2010:2022)"
   }
 ]

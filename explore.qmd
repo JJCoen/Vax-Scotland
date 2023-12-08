@@ -49,6 +49,7 @@ head(scot_dt, 10) |>
 ## Trend Lines
 
 ```{r}
+#| warning: false
 
 # Visualize changes over time
 ggplot(scot_dt, aes(x = year, y = rate)) +

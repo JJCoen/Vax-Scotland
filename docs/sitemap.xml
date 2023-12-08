@@ -2,14 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jjcoen.github.io/vax-scotland/index.html</loc>
-    <lastmod>2023-12-08T15:54:54.715Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jjcoen.github.io/vax-scotland/getting-cleaning-data.html</loc>
-    <lastmod>2023-12-08T15:08:05.678Z</lastmod>
+    <lastmod>2023-12-08T16:12:26.273Z</lastmod>
   </url>
   <url>
     <loc>https://jjcoen.github.io/vax-scotland/explore.html</loc>
-    <lastmod>2023-12-08T15:54:52.829Z</lastmod>
+    <lastmod>2023-12-08T16:12:13.304Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jjcoen.github.io/vax-scotland/data-sources.html</loc>
+    <lastmod>2023-12-08T16:12:09.180Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jjcoen.github.io/vax-scotland/getting-cleaning-data.html</loc>
+    <lastmod>2023-12-08T16:12:22.610Z</lastmod>
   </url>
 </urlset>

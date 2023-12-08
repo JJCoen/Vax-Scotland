@@ -11,7 +11,7 @@ website:
   
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
-    left: "&copy; CC-By Openscapes, 2022"
+    left: "&copy; CC-Based on Openscapes, 2022"
     
   sidebar:
     logo: "images/covid19_variant.jpeg"
@@ -31,10 +31,12 @@ website:
     contents:
       - href: index.qmd
         text: Welcome
-#      - href: getting-cleaning-data.qmd
-#        text: Getting and Cleaning Data
-      - data-sources.qmd
-
+      - href: getting-cleaning-data.qmd  
+        text: Getting and Cleaning Data
+      - href: explore.qmd
+        text: Exploratory Data Analysis
+      - href: data-sources.qmd
+        text: Data Sources
 
 format:
   html:

@@ -26,7 +26,7 @@ library(janitor)
 library(tidyr)
 ```
 
-## Mortality by age category
+### Mortality by age category
 
 Calculate mortality rates per 10,000 persons for each age category
 
@@ -37,16 +37,12 @@ Calculate mortality rates per 10,000 persons for each age category
 scot_dt <- readRDS(file = "./data-clean/scot_dt.rds")
 scot_dt[, rate := mort/pop * 10000]
 
-is.na(scot_dt)
-which(is.na(scot_dt))
-colSums(is.na(scot_dt))
-
 setcolorder(scot_dt, c("year", "age_cat", "mort", "pop", "rate"))
 head(scot_dt, 10) |> 
     kable()
 ```
 
-## Trend Lines
+### Trend Lines
 
 ```{r}
 #| warning: false
@@ -59,7 +55,7 @@ ggplot(scot_dt, aes(x = year, y = rate)) +
   scale_x_continuous(breaks = 2010:2022) 
 ```
 
-## Young and Middle Ages
+### Young and Middle Ages
 
 ```{r}
 

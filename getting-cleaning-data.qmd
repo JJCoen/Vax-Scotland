@@ -279,7 +279,7 @@ rm(file_10, range_10, sheet_10)
 # # Cleanup the environment
 # # keep 'group5yr' vector containing age categories
 # remove(list = pop_all)
-rm(get_pop, get_pop_by_year, total)
+rm(get_pop, get_pop_by_year)
 ```
 
 # Mortality
@@ -416,6 +416,7 @@ scot17 <- merge(mort17, pop17, by="age_cat" )
 
 ```{r}
 #| message: false
+#| warning: false
 
 source("./code/get-mort-5-2.R")
 

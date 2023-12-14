@@ -38,8 +38,6 @@ scot_dt <- readRDS(file = "./data-clean/scot_dt.rds")
 scot_dt[, rate := mort/pop * 10000]
 
 setcolorder(scot_dt, c("year", "age_cat", "mort", "pop", "rate"))
-head(scot_dt, 10) |> 
-    kable()
 ```
 
 ### Mortality rate compared to baseline
@@ -49,7 +47,8 @@ The baseline level is the 2019 numbers for each age group.
 ```{r}
 
 library(purrr)
-# base <- scot_dt[year==2019, rate]
+# Set the base rate from year 2019 values
+base <- scot_dt[year==2019, rate]
 # y <- 2019
 # adj_rate <- scot_dt[year==eval(y), rate] - base
 
@@ -57,10 +56,11 @@ calc_adj_rate <- function(yr){
     scot_dt[year==eval(yr), rate] - base
 }
 
-adj <- map(2010:2022, calc_adj_rate) |> 
-    unlist()
+adj <- map(2010:2022, calc_adj_rate) 
+adj <- unlist(adj)
 scot_dt[, rate_adj := adj]
-scot_dt
+head(scot_dt, 10) |> 
+    kable()
 ```
 
 ## Trend Lines

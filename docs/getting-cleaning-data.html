@@ -434,11 +434,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Cleanup the environment</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # keep 'group5yr' vector containing age categories</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># remove(list = pop_all)</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_pop, get_pop_by_year, total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_pop, get_pop_by_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in rm(get_pop, get_pop_by_year, total): object 'total' not found</code></pre>
-</div>
 </div>
 </section>
 </section>
@@ -451,25 +448,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-22-ref-tabs-5.xlsx"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort22, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort22, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>mort22[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2022</span>]</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setcolorder</span>(mort22, <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"age_cat"</span>, <span class="st">"mort"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-22-ref-tabs-5.xlsx"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort22, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort22, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>mort22[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2022</span>]</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setcolorder</span>(mort22, <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"age_cat"</span>, <span class="st">"mort"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Calculate mortality rate by age category</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>scot22 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort22, pop22, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>scot22 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort22, pop22, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -478,18 +475,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-21-ref-tabs-5.xlsx"</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort21, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort21, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>mort21[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2021</span>]</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>scot21 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort21, pop21, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-21-ref-tabs-5.xlsx"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort21, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort21, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>mort21[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2021</span>]</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>scot21 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort21, pop21, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -498,18 +495,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-20-ref-tabs-5.xlsx"</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort20, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort20, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>mort20[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2020</span>]</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>scot20 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort20, pop20, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-20-ref-tabs-5.xlsx"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort20, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort20, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>mort20[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2020</span>]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>scot20 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort20, pop20, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -518,18 +515,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-19-ref-tabs-5.xlsx"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort19, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort19, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>mort19[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2019</span>]</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>scot19 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort19, pop19, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-19-ref-tabs-5.xlsx"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort19, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort19, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>mort19[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2019</span>]</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>scot19 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort19, pop19, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -538,18 +535,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-18-ref-tabs-5.xlsx"</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mort18 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>mort18<span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort18, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort18, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>mort18[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2018</span>]</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>scot18 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort18, pop18, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-18-ref-tabs-5.xlsx"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mort18 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mort18<span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort18, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort18, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>mort18[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2018</span>]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>scot18 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort18, pop18, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -558,18 +555,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-17-ref-tabs-5.xlsx"</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort17, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort17, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>mort17[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2017</span>]</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>scot17 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort17, pop17, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-17-ref-tabs-5.xlsx"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort17, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">sheet =</span> <span class="dv">4</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">range =</span> <span class="st">"C6:C6"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort17, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>mort17[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2017</span>]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>scot17 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort17, pop17, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -578,34 +575,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-mort-5-2.R"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-16-ref-tabs-5-2.xlsx"</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
-ℹ Please use `all_of()` or `any_of()` instead.
-  # Was:
-  data %&gt;% select(col_range)
-
-  # Now:
-  data %&gt;% select(all_of(col_range))
-
-See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort16, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort16, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>mort16[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2016</span>]</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>scot16 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort16, pop16, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-mort-5-2.R"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-16-ref-tabs-5-2.xlsx"</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr=</span><span class="dv">16</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort16, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort16, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>mort16[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2016</span>]</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>scot16 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort16, pop16, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -614,18 +597,18 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-15-ref-tabs-5-2.xlsx"</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="dv">15</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort15, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort15, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>mort15[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2015</span>]</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>scot15 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort15, pop15, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-15-ref-tabs-5-2.xlsx"</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="dv">15</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort15, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort15, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>mort15[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2015</span>]</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>scot15 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort15, pop15, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -634,18 +617,18 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-14-ref-tabs-5-2.xlsx"</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">14</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort14, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort14, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>mort14[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2014</span>]</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>scot14 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort14, pop14, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-14-ref-tabs-5-2.xlsx"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">14</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort14, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort14, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>mort14[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2014</span>]</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>scot14 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort14, pop14, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -654,18 +637,18 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-13-ref-tabs-5-2.xls"</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">13</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort13, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort13, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>mort13[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2013</span>]</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>scot13 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort13, pop13, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-13-ref-tabs-5-2.xls"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">13</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort13, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort13, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>mort13[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2013</span>]</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>scot13 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort13, pop13, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -674,18 +657,18 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-12-ref-tabs-5-2.xls"</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">12</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort12, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort12, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>mort12[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2012</span>]</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>scot12 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort12, pop12, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-12-ref-tabs-5-2.xls"</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">12</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort12, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C6:C6"</span>, </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort12, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>mort12[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2012</span>]</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>scot12 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort12, pop12, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -694,18 +677,18 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-11-ref-tabs-5-2.xls"</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">11</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort11, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C5:C5"</span>, </span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort11, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>mort11[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2011</span>]</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>scot11 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort11, pop11, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-11-ref-tabs-5-2.xls"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">11</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort11, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C5:C5"</span>, </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort11, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>mort11[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2011</span>]</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>scot11 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort11, pop11, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -714,41 +697,41 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-10-t5-2.xls"</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">10</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort10, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C5:C5"</span>, </span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort10, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>mort10[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2010</span>]</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>scot10 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort10, pop10, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-10-t5-2.xls"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">10</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort10, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that sum of age categories equals the recorded total</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in source data</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_year, <span class="at">range =</span> <span class="st">"C5:C5"</span>, </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">verify</span>(mort10, <span class="fu">sum</span>(mort) <span class="sc">==</span> total)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>mort10[, year <span class="sc">:</span><span class="er">=</span> <span class="dv">2010</span>]</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>scot10 <span class="ot">&lt;-</span> <span class="fu">merge</span>(mort10, pop10, <span class="at">by=</span><span class="st">"age_cat"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Combine mortality data tables, ordered by year</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mort_all &lt;- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>scot_dt <span class="ot">&lt;-</span> <span class="fu">rbind</span>(scot10, scot11, scot12, scot13, scot14, scot15,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                 scot16, scot17, scot18, scot19, scot20, scot21,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                 scot22)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(scot_dt, <span class="at">file =</span> <span class="st">"./data-clean/scot_dt.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mort_all &lt;- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>scot_dt <span class="ot">&lt;-</span> <span class="fu">rbind</span>(scot10, scot11, scot12, scot13, scot14, scot15,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                 scot16, scot17, scot18, scot19, scot20, scot21,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                 scot22)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(scot_dt, <span class="at">file =</span> <span class="st">"./data-clean/scot_dt.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Save the combined data table that are in “tidy data” format</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(mort_dt, file = "./data-clean/scot-mort.rds")</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Cleanup the environment</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remove(list = mort_all)</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_mort_year, get_mort_5_2, file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(mort_dt, file = "./data-clean/scot-mort.rds")</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Cleanup the environment</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remove(list = mort_all)</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(get_mort_year, get_mort_5_2, file_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 

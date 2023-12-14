@@ -45,6 +45,7 @@ setcolorder(scot_dt, c("year", "age_cat", "mort", "pop", "rate"))
 The baseline level is the 2019 numbers for each age group.
 
 ```{r}
+#| message: false
 
 library(purrr)
 # Set the base rate from year 2019 values
@@ -59,7 +60,7 @@ calc_adj_rate <- function(yr){
 adj <- map(2010:2022, calc_adj_rate) 
 adj <- unlist(adj)
 scot_dt[, rate_adj := adj]
-head(scot_dt, 10) |> 
+scot_dt[1:10] |> 
     kable()
 ```
 

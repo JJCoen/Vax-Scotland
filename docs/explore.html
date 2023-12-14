@@ -217,126 +217,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the base rate from year 2019 values</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> scot_dt[year<span class="sc">==</span><span class="dv">2019</span>, rate]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- 2019</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># adj_rate &lt;- scot_dt[year==eval(y), rate] - base</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>calc_adj_rate <span class="ot">&lt;-</span> <span class="cf">function</span>(yr){</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    scot_dt[year<span class="sc">==</span><span class="fu">eval</span>(yr), rate] <span class="sc">-</span> base</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>adj <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>, calc_adj_rate) </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>adj <span class="ot">&lt;-</span> <span class="fu">unlist</span>(adj)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>scot_dt[, rate_adj <span class="sc">:</span><span class="er">=</span> adj]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>scot_dt[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>] <span class="sc">|&gt;</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'purrr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:data.table':
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">age_cat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mort</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">pop</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">rate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">rate_adj</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">59335</td>
+<td style="text-align: right;">36.740541</td>
+<td style="text-align: right;">4.2423136</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">1-14</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">796862</td>
+<td style="text-align: right;">1.129430</td>
+<td style="text-align: right;">0.1968382</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">15-44</td>
+<td style="text-align: right;">2229</td>
+<td style="text-align: right;">2087635</td>
+<td style="text-align: right;">10.677154</td>
+<td style="text-align: right;">-0.6764865</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">45-64</td>
+<td style="text-align: right;">8368</td>
+<td style="text-align: right;">1436146</td>
+<td style="text-align: right;">58.267056</td>
+<td style="text-align: right;">2.8005163</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">65-74</td>
+<td style="text-align: right;">10092</td>
+<td style="text-align: right;">478080</td>
+<td style="text-align: right;">211.094378</td>
+<td style="text-align: right;">27.6774659</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">75-84</td>
+<td style="text-align: right;">16877</td>
+<td style="text-align: right;">300237</td>
+<td style="text-align: right;">562.122590</td>
+<td style="text-align: right;">55.1234931</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">85+</td>
+<td style="text-align: right;">16093</td>
+<td style="text-align: right;">103905</td>
+<td style="text-align: right;">1548.818632</td>
+<td style="text-align: right;">19.7873389</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">58715</td>
+<td style="text-align: right;">40.534787</td>
+<td style="text-align: right;">8.0365593</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">1-14</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">795338</td>
+<td style="text-align: right;">1.131594</td>
+<td style="text-align: right;">0.1990024</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">15-44</td>
+<td style="text-align: right;">2262</td>
+<td style="text-align: right;">2096847</td>
+<td style="text-align: right;">10.787625</td>
+<td style="text-align: right;">-0.5660149</td>
+</tr>
+</tbody>
+</table>
 
-    transpose</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> scot_dt[year<span class="sc">==</span><span class="dv">2019</span>, rate]</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- 2019</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># adj_rate &lt;- scot_dt[year==eval(y), rate] - base</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>calc_adj_rate <span class="ot">&lt;-</span> <span class="cf">function</span>(yr){</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    scot_dt[year<span class="sc">==</span><span class="fu">eval</span>(yr), rate] <span class="sc">-</span> base</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>adj <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>, calc_adj_rate) <span class="sc">|&gt;</span> </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>()</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>scot_dt[, rate_adj <span class="sc">:</span><span class="er">=</span> adj]</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>scot_dt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>    year age_cat  mort     pop         rate     rate_adj
- 1: 2010       0   218   59335   36.7405410   4.24231363
- 2: 2010    1-14    90  796862    1.1294302   0.19683819
- 3: 2010   15-44  2229 2087635   10.6771538  -0.67648651
- 4: 2010   45-64  8368 1436146   58.2670564   2.80051629
- 5: 2010   65-74 10092  478080  211.0943775  27.67746587
- 6: 2010   75-84 16877  300237  562.1225898  55.12349312
- 7: 2010     85+ 16093  103905 1548.8186324  19.78733888
- 8: 2011       0   238   58715   40.5347867   8.03655931
- 9: 2011    1-14    90  795338    1.1315944   0.19900236
-10: 2011   15-44  2262 2096847   10.7876254  -0.56601490
-11: 2011   45-64  8076 1454169   55.5368736   0.07033352
-12: 2011   65-74 10019  481792  207.9528095  24.53589787
-13: 2011   75-84 16475  302639  544.3779553  37.37885855
-14: 2011     85+ 16501  105903 1558.1239436  29.09265009
-15: 2012       0   217   58547   37.0642390   4.56601162
-16: 2012    1-14    93  794418    1.1706683   0.23807633
-17: 2012   15-44  2071 2078002    9.9663042  -1.38733615
-18: 2012   45-64  7930 1456892   54.4309393  -1.03560083
-19: 2012   65-74 10135  507288  199.7878917  16.37098005
-20: 2012   75-84 16951  309226  548.1751211  41.17602441
-21: 2012     85+ 17540  109227 1605.8300603  76.79876681
-22: 2013       0   186   56999   32.6321514   0.13392407
-23: 2013    1-14    83  794873    1.0441920   0.11159996
-24: 2013   15-44  1990 2064946    9.6370559  -1.71658444
-25: 2013   45-64  7863 1463984   53.7096034  -1.75693674
-26: 2013   65-74 10222  522302  195.7105276  12.29361599
-27: 2013   75-84 16830  313868  536.2126754  29.21357869
-28: 2013     85+ 17526  110728 1582.7974857  53.76619221
-29: 2014       0   207   56183   36.8438852   4.34565779
-30: 2014    1-14    81  796294    1.0172122   0.08462023
-31: 2014   15-44  1904 2053897    9.2701825  -2.08345784
-32: 2014   45-64  7740 1472776   52.5538167  -2.91272338
-33: 2014   65-74 10029  535212  187.3836909   3.96677931
-34: 2014   75-84 16698  318857  523.6830303  16.68393362
-35: 2014     85+ 17580  114381 1536.9685525   7.93725895
-36: 2015       0   175   56001   31.2494420  -1.24878540
-37: 2015    1-14    70  799671    0.8753600  -0.05723201
-38: 2015   15-44  1976 2053401    9.6230595  -1.73058083
-39: 2015   45-64  7976 1480929   53.8580850  -1.60845509
-40: 2015   65-74 10791  545281  197.8979645  14.48105290
-41: 2015   75-84 17273  321910  536.5785468  29.57945010
-42: 2015     85+ 19318  115807 1668.1202345 139.08894100
-43: 2016       0   181   55516   32.6032135   0.10498612
-44: 2016    1-14    97  804962    1.2050258   0.27243382
-45: 2016   15-44  2194 2054055   10.6813109  -0.67232945
-46: 2016   45-64  8256 1491315   55.3605375  -0.10600261
-47: 2016   65-74 10585  556543  190.1919528   6.77504119
-48: 2016   75-84 16812  323264  520.0702831  13.07118641
-49: 2016     85+ 18603  119045 1562.6863791  33.65508558
-50: 2017       0   176   53553   32.8646388   0.36641140
-51: 2017    1-14    81  810601    0.9992586   0.06666657
-52: 2017   15-44  2068 2048063   10.0973456  -1.25629469
-53: 2017   45-64  8138 1500016   54.2527546  -1.21378548
-54: 2017   65-74 10529  564596  186.4873290   3.07041736
-55: 2017   75-84 17373  326155  532.6608514  25.66175474
-56: 2017     85+ 19518  121816 1602.2525777  73.22128413
-57: 2018       0   163   52310   31.1603900  -1.33783739
-58: 2018    1-14    83  813431    1.0203693   0.08777727
-59: 2018   15-44  2220 2044305   10.8594363  -0.49420399
-60: 2018   45-64  8376 1501940   55.7678736   0.30133343
-61: 2018   65-74 10759  571378  188.2991645   4.88225284
-62: 2018   75-84 17511  331360  528.4584742  21.45937747
-63: 2018     85+ 19391  123376 1571.6995202  42.66822664
-64: 2019       0   165   50772   32.4982274   0.00000000
-65: 2019    1-14    76  814933    0.9325920   0.00000000
-66: 2019   15-44  2331 2053086   11.3536403   0.00000000
-67: 2019   45-64  8322 1500364   55.4665401   0.00000000
-68: 2019   65-74 10607  578300  183.4169116   0.00000000
-69: 2019   75-84 17175  338758  506.9990967   0.00000000
-70: 2019     85+ 19432  127087 1529.0312935   0.00000000
-71: 2020       0   146   48635   30.0195333  -2.47869411
-72: 2020    1-14    80  811155    0.9862480   0.05365600
-73: 2020   15-44  2349 2055180   11.4296558   0.07601547
-74: 2020   45-64  9119 1494950   60.9986956   5.53215549
-75: 2020   65-74 11676  586263  199.1597628  15.74285113
-76: 2020   75-84 19072  341506  558.4674940  51.46839728
-77: 2020     85+ 21651  128311 1687.3845578 158.35326431
-78: 2021       0   186   46782   39.7588816   7.26065425
-79: 2021    1-14    72  806948    0.8922508  -0.04034120
-80: 2021   15-44  2322 2062184   11.2599070  -0.09373335
-81: 2021   45-64  9565 1490125   64.1892459   8.72270575
-82: 2021   65-74 11915  595578  200.0577590  16.64084738
-83: 2021   75-84 18785  346974  541.3950325  34.39593578
-84: 2021     85+ 20742  131309 1579.6327746  50.60148108
-85: 2022       0   165   49420   33.3872926   0.88906522
-86: 2022    1-14    69  782780    0.8814737  -0.05111828
-87: 2022   15-44  2061 2011600   10.2455757  -1.10806466
-88: 2022   45-64  8994 1501700   59.8921223   4.42558214
-89: 2022   65-74 11551  600100  192.4845859   9.06767426
-90: 2022   75-84 18789  360600  521.0482529  14.04915621
-91: 2022     85+ 21312  130400 1634.3558282 105.32453470
-    year age_cat  mort     pop         rate     rate_adj</code></pre>
+
 </div>
 </div>
 </section>
@@ -348,14 +341,14 @@ Attaching package: 'purrr'</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>older <span class="ot">&lt;-</span> scot_dt[age_cat  <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"65-74"</span>, <span class="st">"75-84"</span>, <span class="st">"85+"</span>)]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize changes over time</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(older, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> rate_adj)) <span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> age_cat), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> age_cat, <span class="at">shape =</span> age_cat)) <span class="sc">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x-axis breaks for years from 2010 to 2022</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>older <span class="ot">&lt;-</span> scot_dt[age_cat  <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"65-74"</span>, <span class="st">"75-84"</span>, <span class="st">"85+"</span>)]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize changes over time</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(older, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> rate_adj)) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> age_cat), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> age_cat, <span class="at">shape =</span> age_cat)) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x-axis breaks for years from 2010 to 2022</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="explore_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
@@ -367,12 +360,12 @@ Attaching package: 'purrr'</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>working <span class="ot">&lt;-</span> scot_dt[age_cat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"15-44"</span>, <span class="st">"45-64"</span>), ]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(working, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> rate_adj)) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> age_cat), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> age_cat, <span class="at">shape =</span> age_cat)) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x-axis breaks for years from 2010 to 2022</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>working <span class="ot">&lt;-</span> scot_dt[age_cat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"15-44"</span>, <span class="st">"45-64"</span>), ]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(working, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> rate_adj)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> age_cat), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> age_cat, <span class="at">shape =</span> age_cat)) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x-axis breaks for years from 2010 to 2022</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="explore_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
@@ -384,13 +377,13 @@ Attaching package: 'purrr'</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>young <span class="ot">&lt;-</span> scot_dt[age_cat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1-14"</span>)]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(young, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> rate_adj)) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> age_cat), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> age_cat, <span class="at">shape =</span> age_cat)) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x-axis breaks for years from 2010 to 2022</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>young <span class="ot">&lt;-</span> scot_dt[age_cat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1-14"</span>)]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(young, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> rate_adj)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> age_cat), <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> age_cat, <span class="at">shape =</span> age_cat)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x-axis breaks for years from 2010 to 2022</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2022</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="explore_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>

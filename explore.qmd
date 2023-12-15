@@ -34,7 +34,7 @@ Calculate mortality rates per 10,000 persons for each age category
 #| include: false
 #| 
 
-scot_dt <- readRDS(file = "./data-clean/scot_dt.rds")
+scot_dt <- readRDS(file = "./processed-data/scot_dt.rds")
 scot_dt[, rate := mort/pop * 10000]
 
 setcolorder(scot_dt, c("year", "age_cat", "mort", "pop", "rate"))

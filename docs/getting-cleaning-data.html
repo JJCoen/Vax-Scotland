@@ -221,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-census-11.R"</span>)   </span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./scripts/get-census-11.R"</span>)   </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Population counts for each year of age</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pop11_1yr <span class="ot">&lt;-</span> <span class="fu">get_census_11</span>(<span class="at">is_plot =</span> <span class="dv">0</span>)  </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -241,8 +241,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Similar to Census 2011, population numbers are for each year of age</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop-by-year.R"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>file_21 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-21-data.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./scripts/get-pop-by-year.R"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>file_21 <span class="ot">&lt;-</span> <span class="st">"./raw-data/mid-year-pop-est-21-data.xlsx"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sheet_21 <span class="ot">&lt;-</span> <span class="st">"Table 1"</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>range_21 <span class="ot">&lt;-</span> <span class="st">"F4:CR5"</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -260,9 +260,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop.R"</span>)</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./scripts/get-pop.R"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>file_20 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-20-data.xlsx"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>file_20 <span class="ot">&lt;-</span> <span class="st">"./raw-data/mid-year-pop-est-20-data.xlsx"</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sheet_20 <span class="ot">&lt;-</span> <span class="st">"Table 1"</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>range_20 <span class="ot">&lt;-</span> <span class="st">"F4:CR5"</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_19 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-19-data.xlsx"</span>  </span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_19 <span class="ot">&lt;-</span> <span class="st">"./raw-data/mid-year-pop-est-19-data.xlsx"</span>  </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pop19 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_19, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>pop19[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -299,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file_18 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-18-tabs.xlsx"</span> </span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file_18 <span class="ot">&lt;-</span> <span class="st">"./raw-data/mid-year-pop-est-18-tabs.xlsx"</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pop18 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_18, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>pop18[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -314,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>file_17 <span class="ot">&lt;-</span> <span class="st">"./data/mid-year-pop-est-17-all-tables-revised.xlsx"</span> </span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>file_17 <span class="ot">&lt;-</span> <span class="st">"./raw-data/mid-year-pop-est-17-all-tables-revised.xlsx"</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pop17 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_17, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pop17[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -329,8 +329,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop.R"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>file_16 <span class="ot">&lt;-</span> <span class="st">"./data/16-mid-year-pe-tab1.xlsx"</span> </span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./scripts/get-pop.R"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>file_16 <span class="ot">&lt;-</span> <span class="st">"./raw-data/16-mid-year-pe-tab1.xlsx"</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pop16 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_16, <span class="at">is_16 =</span> <span class="dv">1</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pop16[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -345,7 +345,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>file_15 <span class="ot">&lt;-</span> <span class="st">"./data/15mype-cahb-tab1.xlsx"</span> </span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>file_15 <span class="ot">&lt;-</span> <span class="st">"./raw-data/15mype-cahb-tab1.xlsx"</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pop15 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_15, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>pop15[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -360,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>file_14 <span class="ot">&lt;-</span> <span class="st">"./data/14mype-cahb-all-tab.xlsx"</span>  </span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>file_14 <span class="ot">&lt;-</span> <span class="st">"./raw-data/14mype-cahb-all-tab.xlsx"</span>  </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>pop14 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_14, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>pop14[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>file_13 <span class="ot">&lt;-</span> <span class="st">"./data/13mype-cahb-tab1.xlsx"</span>  </span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>file_13 <span class="ot">&lt;-</span> <span class="st">"./raw-data/13mype-cahb-tab1.xlsx"</span>  </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pop13 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_13, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>pop13[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -390,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>file_12 <span class="ot">&lt;-</span> <span class="st">"./data/12mype-cahb-tab1.xlsx"</span>  </span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>file_12 <span class="ot">&lt;-</span> <span class="st">"./raw-data/12mype-cahb-tab1.xlsx"</span>  </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pop12 <span class="ot">&lt;-</span> <span class="fu">get_pop</span>(file_12, <span class="at">is_16 =</span> <span class="dv">0</span>) </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>pop12[, age <span class="sc">:</span><span class="er">=</span> group_5yr][, age_cat <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
@@ -406,9 +406,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>convert single year population numbers to age categories</summary>
-<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-pop-by-year.R"</span>)</span>
+<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./scripts/get-pop-by-year.R"</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>file_10 <span class="ot">&lt;-</span> <span class="st">"./data/council-rebased-02-11-sya.xls"</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>file_10 <span class="ot">&lt;-</span> <span class="st">"./raw-data/council-rebased-02-11-sya.xls"</span> </span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sheet_10 <span class="ot">&lt;-</span> <span class="st">"2010"</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>range_10 <span class="ot">&lt;-</span> <span class="st">"C4:CO5"</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -429,7 +429,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                  pop16, pop17, pop18, pop19, pop20, pop21, </span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                  pop22)</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(pop_dt, file = "./data-clean/scot-pop.rds")</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(pop_dt, file = "./processed-data/scot-pop.rds")</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Cleanup the environment</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # keep 'group5yr' vector containing age categories</span></span>
@@ -448,7 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-22-ref-tabs-5.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-22-ref-tabs-5.xlsx"</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mort22 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort22, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
@@ -475,7 +475,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-21-ref-tabs-5.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-21-ref-tabs-5.xlsx"</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>mort21 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort21, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -495,7 +495,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-20-ref-tabs-5.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-20-ref-tabs-5.xlsx"</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>mort20 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort20, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -515,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-19-ref-tabs-5.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-19-ref-tabs-5.xlsx"</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>mort19 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort19, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -535,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-18-ref-tabs-5.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-18-ref-tabs-5.xlsx"</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mort18 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mort18<span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort18, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -555,7 +555,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-17-ref-tabs-5.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-17-ref-tabs-5.xlsx"</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">get_mort_year</span>(file_year, group_5yr)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>mort17 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort17, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -575,9 +575,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./code/get-mort-5-2.R"</span>)</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"./scripts/get-mort-5-2.R"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-16-ref-tabs-5-2.xlsx"</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-16-ref-tabs-5-2.xlsx"</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr=</span><span class="dv">16</span>)</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>mort16 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort16, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -597,7 +597,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-15-ref-tabs-5-2.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-15-ref-tabs-5-2.xlsx"</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="dv">15</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>mort15 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort15, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -617,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-14-ref-tabs-5-2.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-14-ref-tabs-5-2.xlsx"</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">14</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>mort14 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort14, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -637,7 +637,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-13-ref-tabs-5-2.xls"</span></span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-13-ref-tabs-5-2.xls"</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">13</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>mort13 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort13, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -657,7 +657,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-12-ref-tabs-5-2.xls"</span></span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-12-ref-tabs-5-2.xls"</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">12</span>)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mort12 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort12, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -677,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-11-ref-tabs-5-2.xls"</span></span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-11-ref-tabs-5-2.xls"</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">11</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mort11 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort11, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -697,7 +697,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./data/vital-events-10-t5-2.xls"</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>file_year <span class="ot">&lt;-</span> <span class="st">"./raw-data/vital-events-10-t5-2.xls"</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">get_mort_5_2</span>(file_year, group_5yr, <span class="at">yr =</span> <span class="dv">10</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mort10 <span class="ot">&lt;-</span> <span class="fu">make_groups</span>(mort10, <span class="at">is_pop =</span> <span class="dv">0</span>, <span class="at">cat_19 =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -720,14 +720,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>scot_dt <span class="ot">&lt;-</span> <span class="fu">rbind</span>(scot10, scot11, scot12, scot13, scot14, scot15,</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                 scot16, scot17, scot18, scot19, scot20, scot21,</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                 scot22)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(scot_dt, <span class="at">file =</span> <span class="st">"./data-clean/scot_dt.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(scot_dt, <span class="at">file =</span> <span class="st">"./processed-data/scot_dt.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Save the combined data table that are in “tidy data” format</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(mort_dt, file = "./data-clean/scot-mort.rds")</span></span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(mort_dt, file = "./processed-data/scot-mort.rds")</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Cleanup the environment</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remove(list = mort_all)</span></span>

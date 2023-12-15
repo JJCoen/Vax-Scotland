@@ -3,7 +3,7 @@ get_census_22 <- function(is_plot){
     # Import census data for 2022.  
     # Records population numbers by 5-year age categories
     # Table 3 contains Population by age category
-    scot_pop22 <- read_excel("./data/scotland-s-census-2022-first-results-rounded-population-estimates-data.xlsx", 
+    scot_pop22 <- read_excel("./raw-data/scotland-s-census-2022-first-results-rounded-population-estimates-data.xlsx", 
                              sheet = "Table 3",
                              range = "E4:X5") |> 
         clean_names() |> 

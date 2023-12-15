@@ -4,7 +4,7 @@ get_census_11 <- function(is_plot) {
     # Records population numbers by single year of age"
     
     # File contains a single sheet
-    scot_pop11 <- read_excel("./data/scotland-census-2011.xlsx", 
+    scot_pop11 <- read_excel("./raw-data/scotland-census-2011.xlsx", 
                              sheet = "Data Sheet 0",
                              range = "C12:CZ14") |> 
         setDT()

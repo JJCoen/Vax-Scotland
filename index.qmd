@@ -25,9 +25,9 @@ library(Hmisc)
 #| warning: false
 #| include: false
 
-source("./code/get-census-22.R")
-source("./code/get-census-11.R")
-source("./code/plot-pop-change.R")
+source("./scripts/get-census-22.R")
+source("./scripts/get-census-11.R")
+source("./scripts/plot-pop-change.R")
 
 pop22_5yr <- get_census_22(is_plot = 1)
 

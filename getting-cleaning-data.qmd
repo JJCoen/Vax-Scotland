@@ -39,8 +39,8 @@ library(docstring)  # function specification
 #| code-summary: "Import excel sheet giving numbers of persons by 5-year age groups for year 2022" 
 #| echo: false
 
-source("./code/get-census-22.R")
-source("./code/make-groups.R")
+source("./scripts/get-census-22.R")
+source("./scripts/make-groups.R")
 
 census22 <- get_census_22(is_plot=0)
 # Population counts are in 5-year age groups
@@ -75,7 +75,7 @@ rm(census22, pop0, pop22_5yr, newborn22, get_census_22)
 ```{r}
 #| message: false    
 
-source("./code/get-census-11.R")   
+source("./scripts/get-census-11.R")   
 # Population counts for each year of age
 pop11_1yr <- get_census_11(is_plot = 0)  
 
@@ -93,8 +93,8 @@ rm(pop11_1yr, get_census_11)
 ```{r}
 #| code-summary: "Similar to Census 2011, population numbers are for each year of age"
 
-source("./code/get-pop-by-year.R")
-file_21 <- "./data/mid-year-pop-est-21-data.xlsx"
+source("./scripts/get-pop-by-year.R")
+file_21 <- "./raw-data/mid-year-pop-est-21-data.xlsx"
 sheet_21 <- "Table 1"
 range_21 <- "F4:CR5"
 
@@ -111,9 +111,9 @@ rm(file_21, range_21, sheet_21)
 ```{r}
 #| message: false
 
-source("./code/get-pop.R")
+source("./scripts/get-pop.R")
 
-file_20 <- "./data/mid-year-pop-est-20-data.xlsx"
+file_20 <- "./raw-data/mid-year-pop-est-20-data.xlsx"
 sheet_20 <- "Table 1"
 range_20 <- "F4:CR5"
 
@@ -135,7 +135,7 @@ In the source data, year of age and population numbers are stored in multiple co
 ```{r}
 #| message: false  
 
-file_19 <- "./data/mid-year-pop-est-19-data.xlsx"  
+file_19 <- "./raw-data/mid-year-pop-est-19-data.xlsx"  
 
 pop19 <- get_pop(file_19, is_16 = 0) 
 pop19[, age := group_5yr][, age_cat := NULL]
@@ -149,7 +149,7 @@ rm(file_19)
 ```{r}
 #| message: false
 
-file_18 <- "./data/mid-year-pop-est-18-tabs.xlsx" 
+file_18 <- "./raw-data/mid-year-pop-est-18-tabs.xlsx" 
 
 pop18 <- get_pop(file_18, is_16 = 0) 
 pop18[, age := group_5yr][, age_cat := NULL]
@@ -163,7 +163,7 @@ rm(file_18)
 ```{r}
 #| message: false
 
-file_17 <- "./data/mid-year-pop-est-17-all-tables-revised.xlsx" 
+file_17 <- "./raw-data/mid-year-pop-est-17-all-tables-revised.xlsx" 
 
 pop17 <- get_pop(file_17, is_16 = 0) 
 pop17[, age := group_5yr][, age_cat := NULL]
@@ -177,8 +177,8 @@ rm(file_17)
 ```{r}
 #| message: false
 
-source("./code/get-pop.R")
-file_16 <- "./data/16-mid-year-pe-tab1.xlsx" 
+source("./scripts/get-pop.R")
+file_16 <- "./raw-data/16-mid-year-pe-tab1.xlsx" 
 
 pop16 <- get_pop(file_16, is_16 = 1)
 pop16[, age := group_5yr][, age_cat := NULL]
@@ -192,7 +192,7 @@ rm(file_16)
 ```{r}
 #| message: false
 
-file_15 <- "./data/15mype-cahb-tab1.xlsx" 
+file_15 <- "./raw-data/15mype-cahb-tab1.xlsx" 
 
 pop15 <- get_pop(file_15, is_16 = 0) 
 pop15[, age := group_5yr][, age_cat := NULL]
@@ -206,7 +206,7 @@ rm(file_15)
 ```{r}
 #| message: false
 
-file_14 <- "./data/14mype-cahb-all-tab.xlsx"  
+file_14 <- "./raw-data/14mype-cahb-all-tab.xlsx"  
 
 pop14 <- get_pop(file_14, is_16 = 0) 
 pop14[, age := group_5yr][, age_cat := NULL]
@@ -220,7 +220,7 @@ rm(file_14)
 ```{r}
 #| message: false
 
-file_13 <- "./data/13mype-cahb-tab1.xlsx"  
+file_13 <- "./raw-data/13mype-cahb-tab1.xlsx"  
 
 pop13 <- get_pop(file_13, is_16 = 0) 
 pop13[, age := group_5yr][, age_cat := NULL]
@@ -234,7 +234,7 @@ rm(file_13)
 ```{r}
 #| message: false
 
-file_12 <- "./data/12mype-cahb-tab1.xlsx"  
+file_12 <- "./raw-data/12mype-cahb-tab1.xlsx"  
 
 pop12 <- get_pop(file_12, is_16 = 0) 
 pop12[, age := group_5yr][, age_cat := NULL]
@@ -252,9 +252,9 @@ Mid-year population estimates, Scotland and its Council areas by single year of 
 #| code-line-numbers: false
 #| code-summary: "convert single year population numbers to age categories"
 
-source("./code/get-pop-by-year.R")
+source("./scripts/get-pop-by-year.R")
 
-file_10 <- "./data/council-rebased-02-11-sya.xls" 
+file_10 <- "./raw-data/council-rebased-02-11-sya.xls" 
 sheet_10 <- "2010"
 range_10 <- "C4:CO5"
 
@@ -274,7 +274,7 @@ rm(file_10, range_10, sheet_10)
 #                  pop16, pop17, pop18, pop19, pop20, pop21, 
 #                  pop22)
 # 
-# saveRDS(pop_dt, file = "./data-clean/scot-pop.rds")
+# saveRDS(pop_dt, file = "./processed-data/scot-pop.rds")
 # 
 # # Cleanup the environment
 # # keep 'group5yr' vector containing age categories
@@ -289,7 +289,7 @@ Table 5.02 contains deaths, by sex, age, and administrative area, Scotland
 ```{r}
 #| include: false
 
-source("./code/get-mort-year.R")
+source("./scripts/get-mort-year.R")
 ```
 
 ### 2022
@@ -297,7 +297,7 @@ source("./code/get-mort-year.R")
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-22-ref-tabs-5.xlsx"
+file_year <- "./raw-data/vital-events-22-ref-tabs-5.xlsx"
 mort22 <- get_mort_year(file_year, group_5yr)
 
 mort22 <- make_groups(mort22, is_pop = 0, cat_19 = FALSE)
@@ -322,7 +322,7 @@ scot22 <- merge(mort22, pop22, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-21-ref-tabs-5.xlsx"
+file_year <- "./raw-data/vital-events-21-ref-tabs-5.xlsx"
 mort21 <- get_mort_year(file_year, group_5yr)
 mort21 <- make_groups(mort21, is_pop = 0, cat_19 = FALSE)
 
@@ -341,7 +341,7 @@ scot21 <- merge(mort21, pop21, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-20-ref-tabs-5.xlsx"
+file_year <- "./raw-data/vital-events-20-ref-tabs-5.xlsx"
 mort20 <- get_mort_year(file_year, group_5yr)
 mort20 <- make_groups(mort20, is_pop = 0, cat_19 = FALSE)
 
@@ -360,7 +360,7 @@ scot20 <- merge(mort20, pop20, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-19-ref-tabs-5.xlsx"
+file_year <- "./raw-data/vital-events-19-ref-tabs-5.xlsx"
 mort19 <- get_mort_year(file_year, group_5yr)
 mort19 <- make_groups(mort19, is_pop = 0, cat_19 = FALSE)
 
@@ -379,7 +379,7 @@ scot19 <- merge(mort19, pop19, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-18-ref-tabs-5.xlsx"
+file_year <- "./raw-data/vital-events-18-ref-tabs-5.xlsx"
 mort18 <- get_mort_year(file_year, group_5yr)
 mort18<- make_groups(mort18, is_pop = 0, cat_19 = FALSE)
 
@@ -398,7 +398,7 @@ scot18 <- merge(mort18, pop18, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-17-ref-tabs-5.xlsx"
+file_year <- "./raw-data/vital-events-17-ref-tabs-5.xlsx"
 mort17 <- get_mort_year(file_year, group_5yr)
 mort17 <- make_groups(mort17, is_pop = 0, cat_19 = FALSE)
 
@@ -418,9 +418,9 @@ scot17 <- merge(mort17, pop17, by="age_cat" )
 #| message: false
 #| warning: false
 
-source("./code/get-mort-5-2.R")
+source("./scripts/get-mort-5-2.R")
 
-file_year <- "./data/vital-events-16-ref-tabs-5-2.xlsx"
+file_year <- "./raw-data/vital-events-16-ref-tabs-5-2.xlsx"
 mort16 <- get_mort_5_2(file_year, group_5yr, yr=16)
 mort16 <- make_groups(mort16, is_pop = 0, cat_19 = FALSE)
 
@@ -439,7 +439,7 @@ scot16 <- merge(mort16, pop16, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-15-ref-tabs-5-2.xlsx"
+file_year <- "./raw-data/vital-events-15-ref-tabs-5-2.xlsx"
 mort15 <- get_mort_5_2(file_year, group_5yr, 15)
 mort15 <- make_groups(mort15, is_pop = 0, cat_19 = TRUE)
 
@@ -458,7 +458,7 @@ scot15 <- merge(mort15, pop15, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-14-ref-tabs-5-2.xlsx"
+file_year <- "./raw-data/vital-events-14-ref-tabs-5-2.xlsx"
 mort14 <- get_mort_5_2(file_year, group_5yr, yr = 14)
 mort14 <- make_groups(mort14, is_pop = 0, cat_19 = TRUE)
 
@@ -477,7 +477,7 @@ scot14 <- merge(mort14, pop14, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-13-ref-tabs-5-2.xls"
+file_year <- "./raw-data/vital-events-13-ref-tabs-5-2.xls"
 mort13 <- get_mort_5_2(file_year, group_5yr, yr = 13)
 mort13 <- make_groups(mort13, is_pop = 0, cat_19 = TRUE)
 
@@ -496,7 +496,7 @@ scot13 <- merge(mort13, pop13, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-12-ref-tabs-5-2.xls"
+file_year <- "./raw-data/vital-events-12-ref-tabs-5-2.xls"
 mort12 <- get_mort_5_2(file_year, group_5yr, yr = 12)
 mort12 <- make_groups(mort12, is_pop = 0, cat_19 = TRUE)
 
@@ -515,7 +515,7 @@ scot12 <- merge(mort12, pop12, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-11-ref-tabs-5-2.xls"
+file_year <- "./raw-data/vital-events-11-ref-tabs-5-2.xls"
 mort11 <- get_mort_5_2(file_year, group_5yr, yr = 11)
 mort11 <- make_groups(mort11, is_pop = 0, cat_19 = TRUE)
 
@@ -534,7 +534,7 @@ scot11 <- merge(mort11, pop11, by="age_cat" )
 ```{r}
 #| message: false
 
-file_year <- "./data/vital-events-10-t5-2.xls"
+file_year <- "./raw-data/vital-events-10-t5-2.xls"
 mort10 <- get_mort_5_2(file_year, group_5yr, yr = 10)
 mort10 <- make_groups(mort10, is_pop = 0, cat_19 = TRUE)
 
@@ -557,14 +557,14 @@ Combine mortality data tables, ordered by year
 scot_dt <- rbind(scot10, scot11, scot12, scot13, scot14, scot15,
                  scot16, scot17, scot18, scot19, scot20, scot21,
                  scot22)
-saveRDS(scot_dt, file = "./data-clean/scot_dt.rds")
+saveRDS(scot_dt, file = "./processed-data/scot_dt.rds")
 ```
 
 Save the combined data table that are in "tidy data" format
 
 ```{r}
 
-# saveRDS(mort_dt, file = "./data-clean/scot-mort.rds")
+# saveRDS(mort_dt, file = "./processed-data/scot-mort.rds")
 # 
 # # Cleanup the environment
 # remove(list = mort_all)

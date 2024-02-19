@@ -14,7 +14,7 @@ website:
     left: "&copy; CC-Based on Openscapes, 2022"
     
   sidebar:
-    logo: "images/covid19_variant.jpeg"
+    logo: "images/HP-logo.png"
     pinned: true
     align: center
     tools: 

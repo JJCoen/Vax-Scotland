@@ -264,9 +264,9 @@ bottom <- textGrob("years", gp = gpar(fontsize = 20))
 uni <- grid.arrange(grobs=g_all, ncol = 2, nrow = 4, 
                     left = yleft, bottom = bottom)
 #save - generates g object
-g <- arrangeGrob(g0,g15, g25, g50, g60, g70, g80, nrow=4) 
-#saves g
-ggsave(file="./figures/linear_fit.jpeg", g) 
+# g <- arrangeGrob(g0,g15, g25, g50, g60, g70, g80, nrow=4) 
+# #saves g
+# ggsave(file="./figures/linear_fit.jpeg", g) 
 ```
 
 Only age categories 0-14 and 70-79 have adequate $r^2$ value.

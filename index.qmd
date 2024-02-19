@@ -5,7 +5,7 @@ editor_options:
   chunk_output_type: inline
 ---
 
-## Population Change {#Pop-Change} 
+## Population Change {#Pop-Change}
 
 ```{r}
 #| include: false
@@ -18,8 +18,8 @@ library(janitor)
 library(readxl)
 library(tidyr)
 library(Hmisc)
+library(assertr)
 ```
-
 
 ```{r}
 #| warning: false
@@ -31,7 +31,7 @@ source("./scripts/plot-pop-change.R")
 
 pop22_5yr <- get_census_22(is_plot = 1)
 
-pop11_5yr <- get_census_11(is_plot = 1)
+pop11_5yr <- get_census_11()
 
 ```
 
@@ -40,6 +40,22 @@ pop11_5yr <- get_census_11(is_plot = 1)
 plot_pop_change(pop11_5yr, pop22_5yr)
 ```
 
+## Method 1: Number of Deaths above Average
 
+![](images/method_1.png)
 
+![](figures/method1-diff-avg.jpeg)
 
+## Method 2A: Death Rate Percent Change from 2019 Baseline
+
+![](images/method_2A.png)
+
+![](figures/method2a-xs_base.jpeg)
+
+## Method 2C: Death Rate difference from Linear Fit
+
+![](images/method_2C.png)
+
+### Linear Model Evaluation
+
+![](figures/linear_fit.jpeg)Only age categories 0-14 and 70-79 have adequate $r^2$ value.

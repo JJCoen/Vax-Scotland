@@ -176,7 +176,7 @@ g0 <- ggplot(scot_lin_fit[age_cat == "0-14", ],
                 aes(x = year, y = rate)) + 
   geom_point(size = 3, shape=10)+
     geom_smooth(method = lm, se=FALSE) +
-    stat_regline_equation(label.x = 2017, label.y = 40,
+    stat_regline_equation(label.x = 2016, label.y = 38, size = 5,
         aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
   # x-axis breaks for year from 2010 to 2022
   scale_x_continuous(breaks = 2010:2019) +
@@ -186,7 +186,7 @@ g15 <- ggplot(scot_lin_fit[age_cat == "15-24", ],
                 aes(x = year, y = rate)) + 
   geom_point(size = 3, shape=10)+
     geom_smooth(method = lm, se=FALSE) +
-    stat_regline_equation(label.x = 2015, label.y = 47,
+    stat_regline_equation(label.x = 2016, label.y = 50, size = 5,
         aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
   # x-axis breaks for year from 2010 to 2022
   scale_x_continuous(breaks = 2010:2019) +
@@ -196,7 +196,7 @@ g25 <- ggplot(scot_lin_fit[age_cat == "25-49", ],
                 aes(x = year, y = rate)) + 
   geom_point(size = 3, shape=10)+
     geom_smooth(method = lm, se=FALSE) +
-    stat_regline_equation(label.x = 2010, label.y = 180,
+    stat_regline_equation(label.x = 2016, label.y = 160, size = 5,
         aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
   # x-axis breaks for year from 2010 to 2022
   scale_x_continuous(breaks = 2010:2019) +
@@ -206,7 +206,7 @@ g50 <- ggplot(scot_lin_fit[age_cat == "50-59", ],
                 aes(x = year, y = rate)) + 
   geom_point(size = 3, shape=10)+
     geom_smooth(method = lm, se=FALSE) +
-    stat_regline_equation(label.x = 2017, label.y = 540,
+    stat_regline_equation(label.x = 2016, label.y = 540, size = 5,
         aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
   # x-axis breaks for year from 2010 to 2022
   scale_x_continuous(breaks = 2010:2019) +
@@ -216,7 +216,7 @@ g60 <- ggplot(scot_lin_fit[age_cat == "60-69", ],
                 aes(x = year, y = rate)) + 
   geom_point(size = 3, shape=10)+
     geom_smooth(method = lm, se=FALSE) +
-    stat_regline_equation(label.x = 2017, label.y = 1300,
+    stat_regline_equation(label.x = 2016, label.y = 1300, size = 5,
         aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
   # x-axis breaks for year from 2010 to 2022
   scale_x_continuous(breaks = 2010:2019) +
@@ -226,7 +226,7 @@ g70 <- ggplot(scot_lin_fit[age_cat == "70-79", ],
                 aes(x = year, y = rate)) + 
   geom_point(size = 3, shape=10)+
     geom_smooth(method = lm, se=FALSE) +
-    stat_regline_equation(label.x = 2017, label.y = 3400,
+    stat_regline_equation(label.x = 2016, label.y = 3400, size = 5,
         aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
   # x-axis breaks for year from 2010 to 2022
   scale_x_continuous(breaks = 2010:2019) +
@@ -236,7 +236,7 @@ g80 <- ggplot(scot_lin_fit[age_cat == "80+", ],
                 aes(x = year, y = rate)) + 
   geom_point(size = 3, shape=10)+
     geom_smooth(method = lm, se=FALSE) +
-    stat_regline_equation(label.x = 2010, label.y = 11400,
+    stat_regline_equation(label.x = 2016, label.y = 11400, size = 5,
         aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
   # x-axis breaks for year from 2010 to 2022
   scale_x_continuous(breaks = 2010:2019) +
@@ -250,8 +250,8 @@ g_all <- list(g0,g15, g25, g50, g60, g70, g80) %>%
 [Plot Function](https://community.rstudio.com/t/common-axis-title-in-grid-arrange/96353/2 "source code")
 
 ```{r}
-#| fig-height: 12
-#| fig-width: 10
+#| fig-height: 14
+#| fig-width: 12
 #| message: false
 
 # plotmath expressions
@@ -261,92 +261,12 @@ yleft <- textGrob(expression(paste("deaths per 100,000")),
 bottom <- textGrob("years", gp = gpar(fontsize = 20))
 
 # Lay out plots
-uni <- grid.arrange(grobs=g_all, ncol = 3, nrow = 3, 
+uni <- grid.arrange(grobs=g_all, ncol = 2, nrow = 4, 
                     left = yleft, bottom = bottom)
-#save
-g <- arrangeGrob(g0,g15, g25, g50, g60, g70, g80, nrow=3) #generates g
-# ggsave(file="./figures/linear_fit.jpeg", g) #saves g
+#save - generates g object
+g <- arrangeGrob(g0,g15, g25, g50, g60, g70, g80, nrow=4) 
+#saves g
+ggsave(file="./figures/linear_fit.jpeg", g) 
 ```
 
 Only age categories 0-14 and 70-79 have adequate $r^2$ value.
-
-## Trend Lines
-
-### Older
-
-```{r}
-#| warning: false
-#| eval: false
-
-older <- scot_dt[age_cat  %in% c("60-69", "70-79", "80+")]
-
-# Visualize changes over time
-g_old <- ggplot(older, aes(x = Years, y = rate_adj)) +
-  geom_line(aes(colour = age_cat)) +
-  geom_point(aes(color = age_cat)) +
-  # use custom palette
-  scale_color_manual(values=c("#999999", "#E69F00", "darkblue")) + 
-  # x-axis breaks for years from 2010 to 2022
-  scale_x_continuous(breaks = 2010:2022) 
-ggplotly(g_old)
-```
-
-### Middle Ages
-
-```{r}
-#| eval: false
-working <- scot_dt[age_cat %in% c("20-24", "25-49", "50-59"), ]
-
-g_work <- ggplot(working, aes(x = Years, y = rate_adj)) +
-  geom_line(aes(colour = age_cat)) +
-  geom_point(aes(color = age_cat)) +
-  # use brewer colour palettes
-  scale_color_brewer(palette="Dark2") +
-  # x-axis breaks for years from 2010 to 2022
-  scale_x_continuous(breaks = 2010:2022) 
-ggplotly(g_work)
-```
-
-### Teens
-
-```{r}
-#| eval: false
-teens <- scot_dt[age_cat %in% c("10-14", "15-19")]
-
-g_teen <- ggplot(teens, aes(x = Years, y = rate_adj)) +
-  geom_line(aes(colour = age_cat)) +
-  geom_point(aes(color = age_cat)) +
-  # Use grey scale
-  scale_color_grey() + theme_classic() +
-  # x-axis breaks for years from 2010 to 2022
-  scale_x_continuous(breaks = 2010:2022) 
-ggplotly(g_teen)
-```
-
-### Young
-
-```{r}
-young <- scot_dt[age_cat %in% c("0-4", "5-9")]
-
-g_young <- ggplot(young, aes(x = Years, y = rate_adj)) +
-  geom_line(aes(colour = age_cat)) +
-  geom_point(aes(color = age_cat)) +
-  scale_color_brewer(palette="Dark2") +
-  # x-axis breaks for years from 2010 to 2022
-  scale_x_continuous(breaks = 2010:2022) 
-ggplotly(g_young)
-```
-
-### Total
-
-```{r}
-total <- scot_dt[age_cat == "Total", ]
-
-g_total <- ggplot(total, aes(x = Years, y = rate_adj)) +
-  geom_line(aes(colour = age_cat)) +
-  geom_point(aes(color = age_cat)) +
-  scale_color_brewer(palette="Dark2") +
-  # x-axis breaks for years from 2010 to 2022
-  scale_x_continuous(breaks = 2010:2022) 
-ggplotly(g_total)
-```

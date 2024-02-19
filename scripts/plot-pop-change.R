@@ -19,19 +19,19 @@ plot_pop_change <- function(scot_pop11, scot_pop22){
     #'  
 
     # add column for 2011 population counts
-    pop_11_vec <- scot_pop11[, pop]
-    scot_pop11_22 <- scot_pop22[, pop_11 := pop_11_vec] 
+    pop_11_vec <- scot_pop11[, count]
+    scot_pop11_22 <- scot_pop22[, count_11 := pop_11_vec] 
     
     # Population sub-group wave moving to older age categories.
     
-    ggplot(scot_pop11_22, aes(age, pop)) + 
-        geom_col(aes(fill = pop)) +
+    ggplot(scot_pop11_22, aes(age, count)) + 
+        geom_col(aes(fill = count)) +
         scale_fill_gradient(low = "white", high = "navy") +
         labs(title = "More older people in 2022 compared to 2011",
              subtitle = "Population wave moving into older age categories",
              x = "Age 5yr", y = "Population",
              caption = "Source: Scotland's Census") +
-        geom_line(aes(x = age, y = pop_11,
+        geom_line(aes(x = age, y = count_11,
                       group = 1), colour = "#FFCB05", linewidth = 1.2) +
         scale_y_continuous(labels = scales::label_comma()) +
         theme(legend.position = "none") +    

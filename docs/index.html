@@ -62,6 +62,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -139,6 +141,12 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#Pop-Change" id="toc-Pop-Change" class="nav-link active" data-scroll-target="#Pop-Change">Population Change</a></li>
+  <li><a href="#method-1-number-of-deaths-above-average" id="toc-method-1-number-of-deaths-above-average" class="nav-link" data-scroll-target="#method-1-number-of-deaths-above-average">Method 1: Number of Deaths above Average</a></li>
+  <li><a href="#method-2a-death-rate-percent-change-from-2019-baseline" id="toc-method-2a-death-rate-percent-change-from-2019-baseline" class="nav-link" data-scroll-target="#method-2a-death-rate-percent-change-from-2019-baseline">Method 2A: Death Rate Percent Change from 2019 Baseline</a></li>
+  <li><a href="#method-2c-death-rate-difference-from-linear-fit" id="toc-method-2c-death-rate-difference-from-linear-fit" class="nav-link" data-scroll-target="#method-2c-death-rate-difference-from-linear-fit">Method 2C: Death Rate difference from Linear Fit</a>
+  <ul class="collapse">
+  <li><a href="#linear-model-evaluation" id="toc-linear-model-evaluation" class="nav-link" data-scroll-target="#linear-model-evaluation">Linear Model Evaluation</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcoen/vax-scotland/edit/main/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/jjcoen/vax-scotland/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -170,8 +178,26 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="method-1-number-of-deaths-above-average" class="level2">
+<h2 class="anchored" data-anchor-id="method-1-number-of-deaths-above-average">Method 1: Number of Deaths above Average</h2>
+<p><img src="images/method_1.png" class="img-fluid"></p>
+<p><img src="figures/method1-diff-avg.jpeg" class="img-fluid"></p>
+</section>
+<section id="method-2a-death-rate-percent-change-from-2019-baseline" class="level2">
+<h2 class="anchored" data-anchor-id="method-2a-death-rate-percent-change-from-2019-baseline">Method 2A: Death Rate Percent Change from 2019 Baseline</h2>
+<p><img src="images/method_2A.png" class="img-fluid"></p>
+<p><img src="figures/method2a-xs_base.jpeg" class="img-fluid"></p>
+</section>
+<section id="method-2c-death-rate-difference-from-linear-fit" class="level2">
+<h2 class="anchored" data-anchor-id="method-2c-death-rate-difference-from-linear-fit">Method 2C: Death Rate difference from Linear Fit</h2>
+<p><img src="images/method_2C.png" class="img-fluid"></p>
+<section id="linear-model-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="linear-model-evaluation">Linear Model Evaluation</h3>
+<p><img src="figures/linear_fit.jpeg" class="img-fluid">Only age categories 0-14 and 70-79 have adequate <span class="math inline">\(r^2\)</span> value.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

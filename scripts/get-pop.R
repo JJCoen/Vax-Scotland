@@ -5,15 +5,16 @@ get_pop <- function(file_year, is_16) {
     # Table 1 contains Population by each year of age
     scot_pop <- read_excel(file_year, 
                            sheet = "Table 1",
-                           skip = 2) |> 
+                           skip = 2,
+                           n_max = 39) |> 
         clean_names() |> 
         setDT()
     
-    # Store pop number of newborns
-    num_newborns <- read_excel(file_year, 
-                               sheet = "Table 1",
-                               range = "B5", 
-                               col_names = FALSE)[[1]]
+    # # Store pop number of newborns
+    # num_newborns <- read_excel(file_year, 
+    #                            sheet = "Table 1",
+    #                            range = "B5", 
+    #                            col_names = FALSE)[[1]]
     
     # Store total population for validation
     total <- scot_pop[1, persons_2] |> 
@@ -34,12 +35,12 @@ get_pop <- function(file_year, is_16) {
         # create a data table with a single obs. for "90 & over"
         over90 <- scot_pop[38, .(persons_12) ]
     }
+    # Create an entry for the 90+ group
+    over90[, count :=as.integer(persons_12)][, persons_12 := NULL]
+    over90[, age_cat := "90 plus"]
+    setcolorder(over90, c("age_cat", "count"))
     
-    over90[, pop :=as.integer(persons_12)][, persons_12 := NULL]
-    over90[, age_cat := as.factor("90 plus")]
-    setcolorder(over90, c("age_cat", "pop"))
-    
-    # filter rows with pop numbers for each 5-year age category
+    # filter rows with counts for each 5-year age category
     scot_pop <- scot_pop[c(6, 12, 18, 24, 30, 36), ]
     # extract young ages
     scot_popyoung <- scot_pop[, .(age_1, persons_2 )]
@@ -52,27 +53,24 @@ get_pop <- function(file_year, is_16) {
                      scot_popold, over90) |> 
         rbindlist(use.names = FALSE) 
     setnames(scot_pop, c("age_1", "persons_2"),
-             c("age_cat", "pop"))
+             c("age_cat", "count"))
     
-    # convert pop column to integer
-    scot_pop[, pop := as.integer(pop)]
-    
-    # age = "0-4" represents 0-4 year old group
-    # separate out a new group for newborns
-    # age = "0": newborns
-    # age = "1-4" for 1 <= age <= 4
-    # Create new entry for age = 0
-    pop0 <- data.table(age_cat = "0", pop = num_newborns)
-    # Substract number of newborns from the 0 category
-    # and convert this to the "1-4" category
-    scot_pop[age_cat == "0 - 4", `:=` (pop = pop - num_newborns,
-                              age_cat = "1 - 4")]
-    scot_pop <- rbind(pop0, scot_pop)
+    # # age = "0-4" represents 0-4 year old group
+    # # separate out a new group for newborns
+    # # age = "0": newborns
+    # # age = "1-4" for 1 <= age <= 4
+    # # Create new entry for age = 0
+    # pop0 <- data.table(age_cat = "0", count = num_newborns)
+    # # Substract number of newborns from the 0 category
+    # # and convert this to the "1-4" category
+    # scot_pop[age_cat == "0-4", `:=` (count = count - num_newborns,
+    #                           age_cat = "1-4")]
+    # scot_pop <- rbind(pop0, scot_pop)
     
     # Check that total population number equals 
     # the sum of numbers in each age category:
     scot_pop |> 
-        verify(total == scot_pop[, sum(pop)])
+        verify(total == scot_pop[, sum(count)])
     
-    return(scot_pop)
+    return(list(scot_pop, total))
 }

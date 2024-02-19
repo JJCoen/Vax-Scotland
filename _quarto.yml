@@ -31,8 +31,8 @@ website:
     contents:
       - href: index.qmd
         text: Welcome
-      - href: getting-cleaning-data.qmd  
-        text: Getting and Cleaning Data
+      - href: transform.qmd  
+        text: Load and Transform Data
       - href: explore.qmd
         text: Exploratory Data Analysis
       - href: data-sources.qmd

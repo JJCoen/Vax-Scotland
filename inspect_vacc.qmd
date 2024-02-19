@@ -1,0 +1,292 @@
+---
+title: "Inspect Vaccinations Dataset"
+subtitle: "for daily (Jan 21 - Sept 22) and weekly (Sept 22 - present) counts"
+author: "JJC"
+format: 
+    html:
+        toc: true
+        toc-depth: 2
+        toc-title: Table of contents
+        # number-sections: true
+        code-fold: true
+        highlight-style: github
+editor: visual
+---
+
+```{r}
+#| include: false
+#| label: load_libraries
+
+library(data.table)
+library(gt)
+library(kableExtra)
+library(tidyverse)
+library(plotly)
+library(janitor)
+library(tidyr)
+library(docstring)
+library(assertr)    # verify function
+library(Hmisc)      # cut2 function
+library(readxl)
+library(writexl)
+```
+
+```{r}
+
+# Five year age categories:
+age_5yr <- c("0-4", "5-9", "10-14", "15-19", "20-24", 
+                         "25-29", "30-34", "35-39", "40-44", 
+                         "45-49", "50-54", "55-59", "60-64", 
+                         "65-69", "70-74", "75-79",
+                         "80-84", "85-89", "90 plus")
+```
+
+## Daily Vaccinations by age group, Jan 2021 - Sept 2022
+
+```{r}
+#| code-summary: "Input daily vacc data and remove rows for Male and Female.  Using total numbers only"
+
+
+daily_vacc <- fread("./raw-data/daily_vacc_age_sex_sept_2022.csv")
+
+daily_vacc <- daily_vacc[Sex == "Total",]
+colnames(daily_vacc)
+```
+
+Select relevant columns only
+
+```{r}
+daily_vacc[, c("Sex", "SexQF", "AgeGroupQF", "Population", 
+               "PopulationQF", "DoseQF",
+               "NumberVaccinatedQF",
+               "PercentCoverage", "PercentCoverageQF", 
+               "CumulativeNumberVaccinated",
+               "CumulativeNumberVaccinatedQF", 
+               "CumulativePercentCoverage",
+               "CumulativePercentCoverageQF") := NULL]
+head(daily_vacc) 
+```
+
+Remove rows where no vaccination occurred.
+
+```{r}
+
+daily_vacc <- daily_vacc[NumberVaccinated != 0, ]
+```
+
+Remove rows where no age group is given
+
+```{r}
+daily_vacc <- daily_vacc[!(AgeGroup == ""),]
+```
+
+### Overview
+
+```{r}
+
+head(daily_vacc, 20) |> gt()
+```
+
+The "Total" age group is misleading. The number receiving all doses is recorded in the "All vaccinations" category.
+
+```{r}
+daily_vacc <- daily_vacc[AgeGroup != "Total", ]
+```
+
+### Age groups
+
+```{r}
+
+n_age_groups <- daily_vacc[, unique(AgeGroup)] |> 
+    length()
+daily_vacc[, unique(AgeGroup)]
+```
+
+14 age categories in use by Humanity Projects:
+
+0-4 5-9 10-14 15-19 20-24 25-49 50-59 60-69 70-79 80+
+
+0-14 15-24 \<20 45-64
+
+Only certain `AgeGroups` are compatible with Humanity Projects age categorisation:
+
+```         
+"50 to 54"  "55 to 59" "60 to 64" "65 to 69" "70 to 74" "75 to 79"   
+"All vaccinations"    "80 years and over"
+```
+
+Number of days when records were taken.
+
+```{r}
+(n_days <- daily_vacc[unique(Date), .N])
+```
+
+Collapse `Dose` column so as to record `NumberVaccinated` for all doses given by age group and date. The number of observations should equal to the number of days times the number of age groups
+
+```{r}
+daily_vacc_all_dose <- daily_vacc[, .(Num_Vacc = sum(NumberVaccinated)),
+                                  by = .(Date, AgeGroup)]
+n_days * n_age_groups
+```
+
+Since the number of observations (10,135) is less that the 10,931 then not every age group is recorded on each day.
+
+Check whether the age groups above are recorded for each day in the data set
+
+```{r}
+#| eval: false
+
+# 636 days only
+daily_vacc_all_dose[AgeGroup == "50 to 54", .N]
+
+# 636 days only
+daily_vacc_all_dose[AgeGroup == "55 to 59", .N]
+
+# 631 days only
+daily_vacc_all_dose[AgeGroup == "60 to 64", .N]
+
+# 613 days only
+daily_vacc_all_dose[AgeGroup == "70 to 74", .N]
+
+# 611 days only
+daily_vacc_all_dose[AgeGroup == "75 to 79", .N]
+
+# 614 days only
+daily_vacc_all_dose[AgeGroup == "80 years and over", .N]
+
+# 634 days only
+daily_vacc_all_dose[AgeGroup == "Total", .N]
+```
+
+### Aggregate daily to weekly
+
+```{r}
+#| code-summary: "Convert column named 'Date' from integer to the class Date"
+
+
+library(lubridate)
+
+daily_vacc_all_dose[, Date := ymd(Date)]
+head(daily_vacc_all_dose)
+```
+
+The `floor_date()` function starts recording weeks in 2021 on 3 Jan. Remove observations prior to that date.
+
+```{r}
+daily_vacc_all_dose <- daily_vacc_all_dose[Date >= ymd(20210103), ]
+```
+
+Aggregate numbers vaccinated for the first week by age group
+
+```{r}
+first_week <- daily_vacc_all_dose[Date < ymd(20210110), sum(Num_Vacc), by = AgeGroup]
+kable(first_week)
+```
+
+There is no record for the "5 to 11" group in the first week.
+
+Aggregate for all weeks:
+
+```{r}
+
+daily_vacc_all_dose$Week <- floor_date(daily_vacc_all_dose$Date, "week")
+```
+
+Check the aggregated numbers for the first week
+
+```{r}
+(floor1 <- daily_vacc_all_dose[Week == "2021-01-03", sum(Num_Vacc), by = AgeGroup] )
+
+first_week[, V1] == floor1[, V1]
+```
+
+Aggregate numbers vaccinated for all weeks
+
+```{r}
+weekly_vacc <- daily_vacc_all_dose[, sum(Num_Vacc), 
+                                   by = .(Week, AgeGroup)]
+```
+
+### Humanity Projects Age Groups
+
+HP uses the 50-59 60-69 70-79 80+ and Total categories
+
+Filter age groups that correspond with Humanity Projects categorisation
+
+```{r}
+
+matching_groups <- c("50 to 54", "55 to 59", "60 to 64","65 to 69", 
+                     "70 to 74", "75 to 79", "All vaccinations", "80 years and over")
+
+weekly_vacc <- weekly_vacc[AgeGroup %in% matching_groups,]
+```
+
+The `combineLevels()` function from *rockchalk* puts factor levels together and creates a new factor variable. Author: Paul E. Johnson pauljohn\@ku.edu
+
+Usage: `combineLevels(fac, levs, newLabel = "combinedLevels")`
+
+```{r}
+library(rockchalk)
+ 
+weekly_vacc[, AgeGroup := as.factor(AgeGroup)]
+levels(weekly_vacc$AgeGroup)
+weekly_vacc$AgeGroup <- combineLevels(weekly_vacc$AgeGroup, 
+                                     levs = c("50 to 54", "55 to 59"),
+              newLabel = "Age50_59")
+weekly_vacc$AgeGroup <- combineLevels(weekly_vacc$AgeGroup, 
+                                     levs = c("60 to 64", "65 to 69"),
+              newLabel = "Age60_69")
+weekly_vacc$AgeGroup <- combineLevels(weekly_vacc$AgeGroup, 
+                                     levs = c("70 to 74", "75 to 79"),
+              newLabel = "Age70_79")
+
+# Rename: change "All vaccinations" to "All"
+levels(weekly_vacc$AgeGroup)[levels(weekly_vacc$AgeGroup)=="All vaccinations"] <- "All"
+# Rename: change "80 years and over" to "Age80+"
+levels(weekly_vacc$AgeGroup)[levels(weekly_vacc$AgeGroup)=="80 years and over"] <- "Age80+"
+```
+
+Sum the combined levels by Date
+
+```{r}
+
+weekly_vacc[, Num_Vacc := V1][, V1 := NULL]
+weekly_vacc[, Num_Vacc := sum(Num_Vacc), by = .(AgeGroup, Week)]
+
+# Keep distinct rows only
+weekly_vacc <- dplyr::distinct(weekly_vacc)
+```
+
+### Yearly Totals
+
+**2021**
+
+```{r}
+weekly_vacc[Week >= "2021-01-03" & 
+                Week <= "2021-12-26", sum(Num_Vacc), 
+            by = AgeGroup]
+```
+
+Our World in Data gives the cumulative number of vaccinations for 2021 at 11.39 Million.
+
+[OWD: Scotland Vaccinations](https://ourworldindata.org/grapher/cumulative-covid-vaccinations?country=~Scotland "Check value at 31 Dec 2021")
+
+**2022**
+
+```{r}
+
+weekly_vacc[Week >= "2022-01-02" & 
+                Week <= "2022-08-28", sum(Num_Vacc), 
+            by = AgeGroup]
+```
+
+### Construct Excel Table
+
+HP records age categories as separate columns.
+
+```{r}
+weekly_excel <- pivot_wider(weekly_vacc, names_from = AgeGroup,
+            values_from = Num_Vacc)
+
+write_xlsx(weekly_excel, path = "./processed-data/all_doses_by_AG.xlsx")
+```

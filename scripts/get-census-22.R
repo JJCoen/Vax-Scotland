@@ -22,7 +22,7 @@ get_census_22 <- function(is_plot){
         pivot_longer(     
             cols = "aged_0_4_years":"aged_90_years",
             names_to = "age",      
-            values_to = "pop",
+            values_to = "count",
             names_transform = readr::parse_number) |> 
         clean_names() |> 
         setDT()
@@ -45,9 +45,8 @@ get_census_22 <- function(is_plot){
         scot_pop22 <- scot_pop22[, age := age_5yr_cat]
         return(scot_pop22)
     } else {
-        # from census 2011, 20% of 0-4 age group are newborns
-        num_newborns <- scot_pop22[age == 0, pop] * 0.2
-        return(list(scot_pop22, num_newborns) )
+        # include total recorded in source data
+        return(list(scot_pop22, pop22_total) )
     }
 }
     

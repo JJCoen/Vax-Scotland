@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -113,8 +147,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-cleaning-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting and Cleaning Data</span></a>
+  <a href="./transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load and Transform Data</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -139,10 +173,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#census-and-statistics-service-of-scotland" id="toc-census-and-statistics-service-of-scotland" class="nav-link active" data-scroll-target="#census-and-statistics-service-of-scotland">Census and Statistics Service of Scotland</a>
+  <li><a href="#population" id="toc-population" class="nav-link active" data-scroll-target="#population">Population</a>
   <ul class="collapse">
-  <li><a href="#population" id="toc-population" class="nav-link" data-scroll-target="#population">Population</a></li>
+  <li><a href="#scotlands-census---census-and-statistics-service-of-scotland" id="toc-scotlands-census---census-and-statistics-service-of-scotland" class="nav-link" data-scroll-target="#scotlands-census---census-and-statistics-service-of-scotland"><strong>Scotland’s Census -</strong> Census and Statistics Service of Scotland</a></li>
+  <li><a href="#national-records-of-scotland" id="toc-national-records-of-scotland" class="nav-link" data-scroll-target="#national-records-of-scotland"><strong>National Records of Scotland:</strong></a></li>
+  </ul></li>
   <li><a href="#mortality" id="toc-mortality" class="nav-link" data-scroll-target="#mortality">Mortality</a></li>
+  <li><a href="#vaccinations" id="toc-vaccinations" class="nav-link" data-scroll-target="#vaccinations">Vaccinations</a>
+  <ul class="collapse">
+  <li><a href="#daily-vaccinations-by-age-group-jan-2021---sept-2022" id="toc-daily-vaccinations-by-age-group-jan-2021---sept-2022" class="nav-link" data-scroll-target="#daily-vaccinations-by-age-group-jan-2021---sept-2022">Daily Vaccinations by age group, Jan 2021 - Sept 2022</a></li>
+  <li><a href="#weekly-vaccinations-by-dose-and-priority-group" id="toc-weekly-vaccinations-by-dose-and-priority-group" class="nav-link" data-scroll-target="#weekly-vaccinations-by-dose-and-priority-group">Weekly Vaccinations by dose and priority group</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcoen/vax-scotland/edit/main/data-sources.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/jjcoen/vax-scotland/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -173,24 +213,47 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="census-and-statistics-service-of-scotland" class="level2">
-<h2 class="anchored" data-anchor-id="census-and-statistics-service-of-scotland">Census and Statistics Service of Scotland</h2>
-<section id="population" class="level3">
-<h3 class="anchored" data-anchor-id="population">Population</h3>
-<p><strong>Scotland’s Census</strong></p>
+<section id="population" class="level2">
+<h2 class="anchored" data-anchor-id="population">Population</h2>
+<section id="scotlands-census---census-and-statistics-service-of-scotland" class="level3">
+<h3 class="anchored" data-anchor-id="scotlands-census---census-and-statistics-service-of-scotland"><strong>Scotland’s Census -</strong> Census and Statistics Service of Scotland</h3>
 <p><a href="https://www.scotlandscensus.gov.uk/2022-results/scotland-s-census-2022-rounded-population-estimates/">Scotland’s Census, 2022</a></p>
 <p><a href="https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml">Scotland’s Census, 2011</a></p>
-<p><strong>National Records of Scotland:</strong></p>
+</section>
+<section id="national-records-of-scotland" class="level3">
+<h3 class="anchored" data-anchor-id="national-records-of-scotland"><strong>National Records of Scotland:</strong></h3>
 <p><a href="https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates#lmye">Mid-Year Population Estimates 2021, 2020</a></p>
 <p><a href="https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates/archive">Mid-Year Population Estimates, Archive 2019-2012</a></p>
 <p><a href="https://webarchive.nrscotland.gov.uk/20210313160229/https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates/mid-2002-to-mid-2010-revision/additional-detailed-tables-for-population-estimates">Mid-2002 to Mid-2010 Revision</a></p>
 </section>
-<section id="mortality" class="level3">
-<h3 class="anchored" data-anchor-id="mortality">Mortality</h3>
+</section>
+<section id="mortality" class="level2">
+<h2 class="anchored" data-anchor-id="mortality">Mortality</h2>
 <p><a href="https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2022/list-of-data-tables#section5">National Records of Scotland, Vital Events 2022</a><br>
 Section 5 contains mortality by age</p>
 <p><a href="https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2021">Vital Events Reference Tables 2021</a></p>
 <p><a href="https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/archive">Vital Events Archive - Historical data back to 2001</a></p>
+</section>
+<section id="vaccinations" class="level2">
+<h2 class="anchored" data-anchor-id="vaccinations">Vaccinations</h2>
+<section id="daily-vaccinations-by-age-group-jan-2021---sept-2022" class="level3">
+<h3 class="anchored" data-anchor-id="daily-vaccinations-by-age-group-jan-2021---sept-2022">Daily Vaccinations by age group, Jan 2021 - Sept 2022</h3>
+<p><a href="https://www.opendata.nhs.scot/dataset/covid-19-vaccination-in-scotland/resource/9b99e278-b8d8-47df-8d7a-a8cf98519ac1">Data Dictionary</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>daily_url <span class="ot">&lt;-</span> <span class="st">"https://www.opendata.nhs.scot/dataset/6dbdd466-45e3-4348-9ee3-1eac72b5a592/resource/9b99e278-b8d8-47df-8d7a-a8cf98519ac1/download/daily_vacc_age_sex_20220914.csv"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> daily_url, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">destfile =</span> <span class="st">"./raw-data/daily_vacc_age_sex_sept_2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="weekly-vaccinations-by-dose-and-priority-group" class="level3">
+<h3 class="anchored" data-anchor-id="weekly-vaccinations-by-dose-and-priority-group">Weekly Vaccinations by dose and priority group</h3>
+<p><a href="https://www.publichealthscotland.scot/publications/viral-respiratory-diseases-including-influenza-and-covid-19-in-scotland-surveillance-report/viral-respiratory-diseases-including-influenza-and-covid-19-in-scotland-surveillance-report-21-december-2023/" title="Report">Viral respiratory diseases (including influenza and COVID-19) in Scotland surveillance report</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weekly_url <span class="ot">&lt;-</span> <span class="st">"https://www.opendata.nhs.scot/dataset/086c153d-0fdc-4f7c-ad51-1e856c094a0e/resource/6978457e-f619-491c-885d-f60e90e81cbd/download/weekly_covid_vacc_scot_20231221.csv"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> weekly_url, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">destfile =</span> <span class="st">"./raw-data/weekly_covid_vacc_scot_20231221"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

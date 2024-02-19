@@ -1,0 +1,727 @@
+---
+title: "Data Transformation"
+subtitle: "to a form suitable for Humanity Projects"
+author: "JJC"
+format: 
+    html:
+        toc: true
+        toc-depth: 2
+        toc-title: Table of contents
+        # number-sections: true
+        code-fold: true
+        highlight-style: github
+editor: visual
+---
+
+```{r}
+
+# Five year age categories:
+age_5yr <- c("0-4", "5-9", "10-14", "15-19", "20-24", 
+                         "25-29", "30-34", "35-39", "40-44", 
+                         "45-49", "50-54", "55-59", "60-64", 
+                         "65-69", "70-74", "75-79",
+                         "80-84", "85-89", "90 plus")
+```
+
+```{r}
+#| include: false
+#| label: load_libraries
+
+library(data.table)
+library(gt)
+library(kableExtra)
+library(tidyverse)
+library(plotly)
+library(janitor)
+library(tidyr)
+library(docstring)
+library(assertr)    # verify function
+library(Hmisc)      # cut2 function
+library(readxl)
+library(writexl)
+```
+
+# Population by age category
+
+14 age categories in use by Humanity Projects:
+
+0-4 5-9 10-14 15-19 20-24 25-49 50-59 60-69 70-79 80+
+
+0-14 15-24 \<20 45-64
+
+## Scotland's Census
+
+### **2022**
+
+```{r}
+#| code-summary: "Import excel sheet giving numbers of persons by 5-year age groups for year 2022. /n Verify that total recorded in source data equals total computed from the transformed data"
+
+source("./scripts/get-census-22.R")
+source("./scripts/transform-pop.R")
+
+census22 <- get_census_22(is_plot=0)
+# Population counts are in 5-year age groups
+pop22_5yr <- census22[[1]]
+total22 <- census22[[2]]
+
+# Convert age categories to HP grouping
+# Source data contains 19 categories
+pop22 <- transform_pop(pop22_5yr)
+
+verify(pop22, total22 == pop22[1:10, sum(count)],
+       success_fun = success_logical)
+
+# cleanup
+rm(census22, pop22_5yr, total22, get_census_22)
+```
+
+### **2011**
+
+```{r}
+#| message: false    
+#| code-summary: "Source data for year 2022 records counts by single year of age. /nTRUE output means that total count recorded in source data equals sum of age categories"
+
+source("./scripts/get-census-11.R")   
+# Population counts for each year of age
+pop11_5yr <- get_census_11()  
+
+# Section age variable into the HP age categories
+pop11 <- transform_pop(pop11_5yr)
+
+# cleanup
+rm(pop11_5yr, get_census_11)
+```
+
+## NRS Mid-Year Population Estimates
+
+In the source data, year of age and population numbers are stored in multiple columns:
+
+![](images/NRS-2019-pop-by-age.png)
+
+### 2021
+
+```{r}
+#| code-summary: "Similar to Census 2011, population numbers are for each year of age"
+
+source("./scripts/get-pop-by-year.R")
+source("./scripts/transform-pop-by-year.R")
+
+file_21 <- "./raw-data/mid-year-pop-est-21-data.xlsx"
+sheet_21 <- "Table 1"
+range_21 <- "E4:CR5"
+
+pop21_list <- get_pop_by_year(file_21, sheet_21, range_21)
+pop21 <- pop21_list[[1]]
+total21 <- pop21_list[[2]]
+
+pop21 <- transform_pop_by_year(pop21)
+
+# Check total recorded in source data equals sum of age categories
+verify(pop21, total21 == pop21[11, count],
+       success_fun = success_logical)
+
+# cleanup
+rm(file_21, range_21, sheet_21, total21, pop21_list)
+```
+
+### 2020
+
+```{r}
+#| message: false
+
+source("./scripts/get-pop.R")
+
+file_20 <- "./raw-data/mid-year-pop-est-20-data.xlsx"
+# sheet_20 <- "Table 1"
+# range_20 <- "F4:CR5"
+
+pop20_list <- get_pop(file_20, is_16 = 0)
+pop20 <- pop20_list[[1]]
+total20 <- pop20_list[[2]]
+
+pop20[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop20 <- transform_pop(pop20)
+
+verify(pop20, total20 == pop20[11, count],
+       success_fun = success_logical)
+
+rm(file_20, pop20_list, total20)
+```
+
+## NRS Mid-Year Population Estimates - Archive
+
+### 2019
+
+```{r}
+#| message: false  
+
+file_19 <- "./raw-data/mid-year-pop-est-19-data.xlsx"  
+
+pop19_list <- get_pop(file_19, is_16 = 0) 
+pop19 <- pop19_list[[1]]
+total19 <- pop19_list[[2]]
+pop19[, age_cat := age_5yr]
+
+pop19 <- transform_pop(pop19)
+
+verify(pop19, total19 == pop19[11, count],
+       success_fun = success_logical)
+
+rm(file_19, pop19_list, total19)
+```
+
+### 2018
+
+```{r}
+#| message: false
+
+file_18 <- "./raw-data/mid-year-pop-est-18-tabs.xlsx" 
+
+pop18_list <- get_pop(file_18, is_16 = 0) 
+pop18 <- pop18_list[[1]]
+total18 <- pop18_list[[2]]
+pop18[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop18 <- transform_pop(pop18)
+
+verify(pop18, total18 == pop18[11, count],
+       success_fun = success_logical)
+rm(file_18, pop18_list, total18)
+```
+
+### 2017
+
+```{r}
+#| message: false
+
+file_17 <- "./raw-data/mid-year-pop-est-17-all-tables-revised.xlsx" 
+
+pop17_list <- get_pop(file_17, is_16 = 0) 
+pop17 <- pop17_list[[1]]
+total17 <- pop17_list[[2]]
+pop17[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop17 <- transform_pop(pop17)
+
+verify(pop17, total17 == pop17[11, count],
+       success_fun = success_logical)
+rm(file_17, pop17_list, total17)
+```
+
+### 2016
+
+```{r}
+#| message: false
+
+source("./scripts/get-pop.R")
+file_16 <- "./raw-data/16-mid-year-pe-tab1.xlsx" 
+
+pop16_list <- get_pop(file_16, is_16 = 1)
+pop16 <- pop16_list[[1]]
+total16 <- pop16_list[[2]]
+pop16[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop16 <- transform_pop(pop16)
+
+verify(pop16, total16 == pop16[11, count],
+       success_fun = success_logical)
+
+rm(file_16, pop16_list, total16)
+```
+
+### 2015
+
+```{r}
+#| message: false
+
+file_15 <- "./raw-data/15mype-cahb-tab1.xlsx" 
+
+pop15_list <- get_pop(file_15, is_16 = 0) 
+pop15 <- pop15_list[[1]]
+total15 <- pop15_list[[2]]
+pop15[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop15 <- transform_pop(pop15)
+
+verify(pop15, total15 == pop15[11, count],
+       success_fun = success_logical)
+
+rm(file_15, pop15_list, total15)
+```
+
+### 2014
+
+```{r}
+#| message: false
+
+file_14 <- "./raw-data/14mype-cahb-all-tab.xlsx"  
+
+pop14_list <- get_pop(file_14, is_16 = 0) 
+pop14 <- pop14_list[[1]]
+total14 <- pop14_list[[2]]
+pop14[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop14 <- transform_pop(pop14)
+
+verify(pop14, total14 == pop14[11, count],
+       success_fun = success_logical)
+
+rm(file_14, pop14_list, total14)
+```
+
+### 2013
+
+```{r}
+#| message: false
+
+file_13 <- "./raw-data/13mype-cahb-tab1.xlsx"  
+
+pop13_list <- get_pop(file_13, is_16 = 0) 
+pop13 <- pop13_list[[1]]
+total13 <- pop13_list[[2]]
+pop13[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop13 <- transform_pop(pop13)
+
+verify(pop13, total13 == pop13[11, count],
+       success_fun = success_logical)
+
+rm(file_13, pop13_list, total13)
+```
+
+### 2012
+
+```{r}
+#| message: false
+
+file_12 <- "./raw-data/12mype-cahb-tab1.xlsx"  
+
+pop12_list <- get_pop(file_12, is_16 = 0) 
+pop12 <- pop12_list[[1]]
+total12 <- pop12_list[[2]]
+pop12[, age_cat := age_5yr]
+
+# Source data contains 19 age categories
+pop12 <- transform_pop(pop12)
+
+verify(pop12, total12 == pop12[11, count],
+       success_fun = success_logical)
+rm(file_12, pop12_list, total12)
+```
+
+### 2010
+
+Mid-year population estimates, Scotland and its Council areas by single year of age and sex: 2002 to 2011
+
+```{r}
+#| message: false
+#| code-line-numbers: false
+#| code-summary: "convert single year population numbers to age categories"
+
+file_10 <- "./raw-data/council-rebased-02-11-sya.xls" 
+sheet_10 <- "2010"
+range_10 <- "B4:CO5"
+
+pop10_list <- get_pop_by_year(file_10, sheet_10, range_10)
+pop10 <- pop10_list[[1]]
+total10 <- pop10_list[[2]]
+pop10 <- transform_pop_by_year(pop10)
+
+# Check total recorded in source data equals sum of age categories
+verify(pop10, total10 == pop10[11, count],
+       success_fun = success_logical)
+
+# cleanup
+rm(file_10, range_10, sheet_10, pop10_list, total10)
+```
+
+## Construct Excel Table for Population
+
+The table required by Humanity Projects has the age categories as column names (not tidy data format). The first column contains the years from 2010 to 2022.
+
+```{r}
+
+HP_cat <- pop22[, age_cat]
+pop_mx <- matrix(c(
+    2010, pop10[, count],
+    2011, pop11[, count],
+    2012, pop12[, count],
+    2013, pop13[, count],
+    2014, pop14[, count],
+    2015, pop15[, count],
+    2016, pop16[, count],
+    2017, pop17[, count],
+    2018, pop18[, count],
+    2019, pop19[, count],
+    2020, pop20[, count],
+    2021, pop21[, count],
+    2022, pop22[, count]
+    ),
+    byrow = TRUE,
+    nrow = 13,
+    dimnames = list(1:13, c("Years", HP_cat)))
+
+pop_table <- as.data.frame(pop_mx)
+write_xlsx(pop_table, path = "./processed-data/Table_4_yearly_pop_counts.xlsx")
+```
+
+Save population tables for exploratory analysis
+
+```{r}
+
+# In the "pop_df" dataframe, age categories are spread across 
+# columns.  The cells contain population counts.  
+# The "pivot_longer()" function transposes the age categories into
+# a single column.
+scot_pop <- pop_table |> pivot_longer(cols = !Years, 
+                       # reshape every column apart from Years
+                       names_to = "age_cat", 
+                       values_to = "pop_count"
+)
+setnames(scot_pop, "Years", "year")
+
+saveRDS(scot_pop, file = "./processed-data/scot_pop.rds")
+# 
+# # Cleanup the environment
+pop_all <- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]
+# # keep 'age_5yr' vector containing age categories
+remove(list = pop_all)
+rm(get_pop, get_pop_by_year, 
+   transform_pop, transform_pop_by_year, pop_mx, pop_all)
+```
+
+# Mortality
+
+### 2022
+
+Input data and convert to table
+
+```{r}
+#| message: false
+
+source("./scripts/get-mort-year.R")
+source("./scripts/transform-mort.R")
+
+file_year <- "./raw-data/vital-events-22-ref-tabs-5.xlsx"
+mort22 <- read_excel(file_year, sheet = 4,
+                              range = "C4:W6") |> 
+    setDT()
+    
+# First row is blank / NAs
+mort22 <- mort22[2,]
+# Extract the total count contained in the first column
+total22 <- mort22[, 1] |> 
+    as.numeric()
+# Remove first column
+mort22[, 1 := NULL]
+
+# age category variable is spread across columns
+# mortality counts are stored in cell values as numbers
+mort22 <- mort22 %>%    
+    pivot_longer(
+        cols = 1:20,
+        names_to = "age_cat",      
+        values_to = "count") |> 
+    # names_transform = readr::parse_number) |> 
+    clean_names() |> 
+    setDT()
+
+mort22 |> 
+    gt(caption = "Mortality by age categories in source data")
+```
+
+Transform to HP age categories
+
+```{r}
+#| message: false
+
+mort22_tx <- transform_mort(mort22) 
+
+mort22_tx |> verify(total22 == 
+                    mort22_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+# Verify that total recorded in source data equals
+# sum of age categories
+mort22_tx |> 
+    gt(caption = "Mortality by HP age categories")
+rm(mort22, total22)
+```
+
+### 2021
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-21-ref-tabs-5.xlsx"
+mort21_list <- get_mort_year(file_year)
+mort21 <- mort21_list[[1]]
+total21 <- mort21_list[[2]]
+
+mort21_tx <- transform_mort(mort21) 
+
+mort21_tx |> verify(total21 == 
+                    mort21_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort21, mort21_list, total21)
+```
+
+### 2020
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-20-ref-tabs-5.xlsx"
+mort20_list <- get_mort_year(file_year)
+mort20 <- mort20_list[[1]]
+total20 <- mort20_list[[2]]
+
+mort20_tx <- transform_mort(mort20) 
+
+mort20_tx |> verify(total20 == 
+                    mort20_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort20, mort20_list, total20)
+```
+
+### 2019
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-19-ref-tabs-5.xlsx"
+mort19_list <- get_mort_year(file_year)
+mort19 <- mort19_list[[1]]
+total19 <- mort19_list[[2]]
+
+mort19_tx <- transform_mort(mort19)
+
+mort19_tx |> verify(total19 == 
+                    mort19_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort19, mort19_list, total19)
+```
+
+### 2018
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-18-ref-tabs-5.xlsx"
+mort18_list <- get_mort_year(file_year)
+mort18 <- mort18_list[[1]]
+total18 <- mort18_list[[2]]
+
+mort18_tx <- transform_mort(mort18)
+
+mort18_tx |> verify(total18 == 
+                    mort18_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort18, mort18_list, total18)
+```
+
+### 2017
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-17-ref-tabs-5.xlsx"
+mort17_list <- get_mort_year(file_year)
+mort17 <- mort17_list[[1]]
+total17 <- mort17_list[[2]]
+
+mort17_tx <- transform_mort(mort17)
+
+mort17_tx |> verify(total17 == 
+                    mort17_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort17, mort17_list, total17)
+```
+
+### 2016
+
+```{r}
+#| message: false
+#| warning: false
+
+source("./scripts/get-mort-5-2.R")
+
+file_year <- "./raw-data/vital-events-16-ref-tabs-5-2.xlsx"
+mort16_list <- get_mort_5_2(file_year, yr=16)
+mort16 <- mort16_list[[1]]
+total16 <- mort16_list[[2]]
+
+mort16_tx <- transform_mort(mort16)
+
+mort16_tx |> verify(total16 == 
+                    mort16_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort16, mort16_list, total16)
+```
+
+### 2015
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-15-ref-tabs-5-2.xlsx"
+mort15_list <- get_mort_5_2(file_year, 15)
+mort15 <- mort15_list[[1]]
+total15 <- mort15_list[[2]]
+
+mort15_tx <- transform_mort(mort15)
+
+mort15_tx |> verify(total15 == 
+                    mort15_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort15, mort15_list, total15)
+```
+
+### 2014
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-14-ref-tabs-5-2.xlsx"
+mort14_list <- get_mort_5_2(file_year, yr = 14)
+mort14 <- mort14_list[[1]]
+total14 <- mort14_list[[2]]
+
+mort14_tx <- transform_mort(mort14)
+
+mort14_tx |> verify(total14 == 
+                    mort14_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort14, mort14_list, total14)
+```
+
+### 2013
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-13-ref-tabs-5-2.xls"
+mort13_list <- get_mort_5_2(file_year, yr = 13)
+mort13 <- mort13_list[[1]]
+total13 <- mort13_list[[2]]
+
+mort13_tx <- transform_mort(mort13)
+
+mort13_tx |> verify(total13 == 
+                    mort13_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort13, mort13_list, total13)
+```
+
+### 2012
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-12-ref-tabs-5-2.xls"
+mort12_list <- get_mort_5_2(file_year, yr = 12)
+mort12 <- mort12_list[[1]]
+total12 <- mort12_list[[2]]
+
+mort12_tx <- transform_mort(mort12)
+
+mort12_tx |> verify(total12 == 
+                    mort12_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort12, mort12_list, total12)
+```
+
+### 2011
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-11-ref-tabs-5-2.xls"
+mort11_list <- get_mort_5_2(file_year, yr = 11)
+mort11 <- mort11_list[[1]]
+total11 <- mort11_list[[2]]
+
+mort11_tx <- transform_mort(mort11)
+
+mort11_tx |> verify(total11 == 
+                    mort11_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort11, mort11_list, total11)
+```
+
+### 2010
+
+```{r}
+#| message: false
+
+file_year <- "./raw-data/vital-events-10-t5-2.xls"
+mort10_list <- get_mort_5_2(file_year, yr = 10)
+mort10 <- mort10_list[[1]]
+total10 <- mort10_list[[2]]
+
+mort10_tx <- transform_mort(mort10)
+
+mort10_tx |> verify(total10 == 
+                    mort10_tx[age_cat == "Total", count],
+                    success_fun = success_logical)
+rm(mort10, mort10_list, total10, file_year, age_5yr, HP_cat)
+```
+
+## Construct Excel Table for Mortality
+
+The table required by Humanity Projects has the age categories as column names (not tidy data format). The first column contains the years from 2010 to 2022.
+
+```{r}
+
+HP_cat <- mort22_tx[, age_cat]
+mort_mx <- matrix(c(
+    2010, mort10_tx[, count],
+    2011, mort11_tx[, count],
+    2012, mort12_tx[, count],
+    2013, mort13_tx[, count],
+    2014, mort14_tx[, count],
+    2015, mort15_tx[, count],
+    2016, mort16_tx[, count],
+    2017, mort17_tx[, count],
+    2018, mort18_tx[, count],
+    2019, mort19_tx[, count],
+    2020, mort20_tx[, count],
+    2021, mort21_tx[, count],
+    2022, mort22_tx[, count]
+    ),
+    byrow = TRUE,
+    nrow = 13,
+    dimnames = list(1:13, c("Years", HP_cat)))
+
+mort_df <- as.data.frame(mort_mx)
+write_xlsx(mort_df, path = "./processed-data/Table_2_yearly_deaths.xlsx")
+```
+
+Save mortality tables
+
+```{r}
+
+scot_mort <- mort_df |> pivot_longer(cols = !Years, 
+                       # reshape every column apart from Years
+                       names_to = "age_cat", 
+                       values_to = "mort_count"
+)
+setnames(scot_mort, "Years", "year")
+saveRDS(scot_mort, file = "./processed-data/scot_mort.rds")
+# 
+# # Cleanup the environment
+mort_all <- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]
+# # keep 'age_5yr' vector containing age categories
+remove(list = mort_all)
+rm(get_mort_5_2, get_mort_year, 
+   transform_mort, mort_mx)
+```
+
+# Vaccinations

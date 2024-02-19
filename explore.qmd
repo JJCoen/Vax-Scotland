@@ -20,6 +20,7 @@ editor: visual
 
 library(data.table)
 library(kableExtra)
+library(gt)
 library(ggplot2)
 library(plotly)
 library(janitor)
@@ -34,34 +35,123 @@ Calculate mortality rates per 10,000 persons for each age category
 #| include: false
 #| 
 
-scot_dt <- readRDS(file = "./processed-data/scot_dt.rds")
-scot_dt[, rate := mort/pop * 10000]
+scot_mort <- readRDS(file = "./processed-data/scot_mort.rds") |> 
+    setDT()
+scot_pop <- readRDS(file = "./processed-data/scot_pop.rds") |> 
+    setDT()
+# filter out "Total" age category
+age_vec <- c("0-14", "15-24", "25-49", "50-59", "60-69", "70-79", "80+")
+scot_pop <- scot_pop[age_cat %in% age_vec,]
+scot_mort <- scot_mort[age_cat %in% age_vec, ]
+scot_dt <- scot_mort[, pop_count := scot_pop$pop_count]
 
-setcolorder(scot_dt, c("year", "age_cat", "mort", "pop", "rate"))
+# death rate per 100,000
+scot_dt[, rate := round(mort_count/pop_count * 100000, 3) ]
+ 
+setcolorder(scot_dt, c("year", "age_cat", "mort_count", "pop_count", "rate"))
+setorderv(scot_dt, c("year", "age_cat"))
+scot_dt |> 
+    head(10) |> 
+    gt()
 ```
 
-### Mortality rate compared to baseline
+## Method 1: Deaths in excess of the average
 
-The baseline level is the 2019 numbers for each age group.
+![](images/method_1.png)
+
+1.  Compute the average number of deaths from 2015 to 2019, by age category.
+2.  Calculate difference from average, expressed as a percentage.
+
+```{r}
+#| label: "excess above average"
+#| 
+avg_vec <- scot_mort[year %in% 2015:2019, 
+                        floor(mean(mort_count)), 
+         by = age_cat ][, V1]
+# extract years 2020 to 2022
+scot_mort_xs <- scot_mort[year %in% 2020:2022, .(year, age_cat, mort_count)]
+
+# Excess mortality compared to average as a percentage
+scot_mort_xs[, mort_xs := (mort_count/avg_vec - 1)*100, by = year] |> 
+    head() |> 
+    gt()
+```
+
+Visualise
+
+```{r}
+#| message: false
+#| label: "plot excess above average"
+#| 
+scot_mort_xs[, year := as.factor(year)]
+ggplot(data=scot_mort_xs, aes(x=age_cat, y=mort_xs, 
+                        fill= year)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired") +
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(
+      title ="older have greater excess deaths",
+      subtitle = waiver(),
+      caption = "NRS census, popln estimates, and \n Vital Events register",
+      x = "age category",
+      y = "death rate above average") +
+  annotate(geom = "text", x = "0-4", y = 15,
+             label = "Method 1") +
+  theme_minimal() +
+  theme(legend.position='top', 
+        legend.justification='left',
+        legend.direction='horizontal') 
+# ggsave("./figures/method1-diff-avg.jpeg")
+```
+
+## Method 2A: Difference from 2019 baseline
+
+![](images/method_2A.png)
+
+The baseline level is the 2019 numbers for each age group. Calculate the difference from the baseline, expressed as a percentage.
 
 ```{r}
 #| message: false
 
-library(purrr)
 # Set the base rate from year 2019 values
 base <- scot_dt[year==2019, rate]
-# y <- 2019
-# adj_rate <- scot_dt[year==eval(y), rate] - base
+# Create a baseline vector for the three years 2020 - 2022
+base <- rep(base, 3)
 
-calc_adj_rate <- function(yr){
-    scot_dt[year==eval(yr), rate] - base
-}
+# Calculate percent change relative to death rate for 2019
+scot_dt[year %in% 2020:2022, 
+                       xs_base := round((rate/base-1)*100, 3)]
 
-adj <- map(2010:2022, calc_adj_rate) 
-adj <- unlist(adj)
-scot_dt[, rate_adj := adj]
-scot_dt[1:10] |> 
-    kable()
+scot_dt[year %in% 2020:2023,] |> 
+    head() |> 
+    gt()
+```
+
+Visualise
+
+```{r}
+#| message: false
+
+scot_20_22 <- scot_dt[year %in% 2020:2022,]
+scot_20_22[, year := as.factor(year)]
+ggplot(data=scot_20_22, aes(x=age_cat, y=xs_base, 
+                        fill= year)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired") +
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(
+  title ="Younger groups have reduced mortality",
+  subtitle = waiver(),
+  caption = "NRS census, popln estimates, and \n Vital Events register",
+  x = "age category",
+  y = "death rate above baseline") +
+    annotate(geom = "text", x = "5-14", y = 10, 
+             label = "Method 2A") +
+  theme_minimal() +
+  theme(legend.position='top', 
+        legend.justification='left',
+        legend.direction='horizontal') 
+# ggsave("./figures/method2a-xs_base.jpeg")
 ```
 
 ## Trend Lines
@@ -70,39 +160,77 @@ scot_dt[1:10] |>
 
 ```{r}
 #| warning: false
+#| eval: false
 
-older <- scot_dt[age_cat  %in% c("65-74", "75-84", "85+")]
+older <- scot_dt[age_cat  %in% c("60-69", "70-79", "80+")]
 
 # Visualize changes over time
-ggplot(older, aes(x = year, y = rate_adj)) +
-  geom_line(aes(group = age_cat), color = "grey50") +
-  geom_point(aes(color = age_cat, shape = age_cat)) +
+g_old <- ggplot(older, aes(x = Years, y = rate_adj)) +
+  geom_line(aes(colour = age_cat)) +
+  geom_point(aes(color = age_cat)) +
+  # use custom palette
+  scale_color_manual(values=c("#999999", "#E69F00", "darkblue")) + 
   # x-axis breaks for years from 2010 to 2022
   scale_x_continuous(breaks = 2010:2022) 
+ggplotly(g_old)
 ```
 
 ### Middle Ages
 
 ```{r}
+#| eval: false
+working <- scot_dt[age_cat %in% c("20-24", "25-49", "50-59"), ]
 
-working <- scot_dt[age_cat %in% c("15-44", "45-64"), ]
-ggplot(working, aes(x = year, y = rate_adj)) +
-  geom_line(aes(group = age_cat), color = "grey50") +
-  geom_point(aes(color = age_cat, shape = age_cat)) +
+g_work <- ggplot(working, aes(x = Years, y = rate_adj)) +
+  geom_line(aes(colour = age_cat)) +
+  geom_point(aes(color = age_cat)) +
+  # use brewer colour palettes
+  scale_color_brewer(palette="Dark2") +
   # x-axis breaks for years from 2010 to 2022
   scale_x_continuous(breaks = 2010:2022) 
+ggplotly(g_work)
+```
 
+### Teens
+
+```{r}
+#| eval: false
+teens <- scot_dt[age_cat %in% c("10-14", "15-19")]
+
+g_teen <- ggplot(teens, aes(x = Years, y = rate_adj)) +
+  geom_line(aes(colour = age_cat)) +
+  geom_point(aes(color = age_cat)) +
+  # Use grey scale
+  scale_color_grey() + theme_classic() +
+  # x-axis breaks for years from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2022) 
+ggplotly(g_teen)
 ```
 
 ### Young
 
 ```{r}
+young <- scot_dt[age_cat %in% c("0-4", "5-9")]
 
-young <- scot_dt[age_cat %in% c("0", "1-14")]
-
-ggplot(young, aes(x = year, y = rate_adj)) +
-  geom_line(aes(group = age_cat), color = "grey50") +
-  geom_point(aes(color = age_cat, shape = age_cat)) +
+g_young <- ggplot(young, aes(x = Years, y = rate_adj)) +
+  geom_line(aes(colour = age_cat)) +
+  geom_point(aes(color = age_cat)) +
+  scale_color_brewer(palette="Dark2") +
   # x-axis breaks for years from 2010 to 2022
   scale_x_continuous(breaks = 2010:2022) 
+ggplotly(g_young)
+```
+
+### Total
+
+```{r}
+total <- scot_dt[age_cat == "Total", ]
+
+g_total <- ggplot(total, aes(x = Years, y = rate_adj)) +
+  geom_line(aes(colour = age_cat)) +
+  geom_point(aes(color = age_cat)) +
+  scale_color_brewer(palette="Dark2") +
+  # x-axis breaks for years from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2022) 
+ggplotly(g_total)
 ```

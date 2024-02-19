@@ -5,17 +5,15 @@ format: html
 editor: visual
 ---
 
-## Census and Statistics Service of Scotland
+## Population
 
-### Population
-
-**Scotland's Census**
+### **Scotland's Census -** Census and Statistics Service of Scotland
 
 [Scotland's Census, 2022](https://www.scotlandscensus.gov.uk/2022-results/scotland-s-census-2022-rounded-population-estimates/)
 
 [Scotland's Census, 2011](https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml)
 
-**National Records of Scotland:**
+### **National Records of Scotland:**
 
 [Mid-Year Population Estimates 2021, 2020](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates#lmye)
 
@@ -23,7 +21,7 @@ editor: visual
 
 [Mid-2002 to Mid-2010 Revision](https://webarchive.nrscotland.gov.uk/20210313160229/https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/mid-year-population-estimates/mid-2002-to-mid-2010-revision/additional-detailed-tables-for-population-estimates)
 
-### Mortality
+## Mortality
 
 [National Records of Scotland, Vital Events 2022](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2022/list-of-data-tables#section5)\
 Section 5 contains mortality by age
@@ -31,3 +29,31 @@ Section 5 contains mortality by age
 [Vital Events Reference Tables 2021](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2021)
 
 [Vital Events Archive - Historical data back to 2001](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/archive)
+
+## Vaccinations
+
+### Daily Vaccinations by age group, Jan 2021 - Sept 2022
+
+[Data Dictionary](https://www.opendata.nhs.scot/dataset/covid-19-vaccination-in-scotland/resource/9b99e278-b8d8-47df-8d7a-a8cf98519ac1)
+
+```{r}
+#| eval: false
+
+
+daily_url <- "https://www.opendata.nhs.scot/dataset/6dbdd466-45e3-4348-9ee3-1eac72b5a592/resource/9b99e278-b8d8-47df-8d7a-a8cf98519ac1/download/daily_vacc_age_sex_20220914.csv"
+download.file(url = daily_url, 
+              destfile = "./raw-data/daily_vacc_age_sex_sept_2022.csv")
+```
+
+### Weekly Vaccinations by dose and priority group
+
+[Viral respiratory diseases (including influenza and COVID-19) in Scotland surveillance report](https://www.publichealthscotland.scot/publications/viral-respiratory-diseases-including-influenza-and-covid-19-in-scotland-surveillance-report/viral-respiratory-diseases-including-influenza-and-covid-19-in-scotland-surveillance-report-21-december-2023/ "Report")
+
+```{r}
+#| eval: false
+
+weekly_url <- "https://www.opendata.nhs.scot/dataset/086c153d-0fdc-4f7c-ad51-1e856c094a0e/resource/6978457e-f619-491c-885d-f60e90e81cbd/download/weekly_covid_vacc_scot_20231221.csv"
+
+download.file(url = weekly_url, 
+              destfile = "./raw-data/weekly_covid_vacc_scot_20231221")
+```

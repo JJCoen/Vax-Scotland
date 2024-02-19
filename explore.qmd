@@ -21,10 +21,15 @@ editor: visual
 library(data.table)
 library(kableExtra)
 library(gt)
-library(ggplot2)
+library(tidyverse)
+library(ggpubr)
+library(gridExtra)
+library(grid)
+library(gridtext)   # textGrob
 library(plotly)
 library(janitor)
 library(tidyr)
+library(purrr)
 ```
 
 ### Mortality rate by age category
@@ -95,7 +100,7 @@ ggplot(data=scot_mort_xs, aes(x=age_cat, y=mort_xs,
       caption = "NRS census, popln estimates, and \n Vital Events register",
       x = "age category",
       y = "death rate above average") +
-  annotate(geom = "text", x = "0-4", y = 15,
+  annotate(geom = "text", x = "0-14", y = 15,
              label = "Method 1") +
   theme_minimal() +
   theme(legend.position='top', 
@@ -145,7 +150,7 @@ ggplot(data=scot_20_22, aes(x=age_cat, y=xs_base,
   caption = "NRS census, popln estimates, and \n Vital Events register",
   x = "age category",
   y = "death rate above baseline") +
-    annotate(geom = "text", x = "5-14", y = 10, 
+    annotate(geom = "text", x = "0-14", y = 15, 
              label = "Method 2A") +
   theme_minimal() +
   theme(legend.position='top', 
@@ -153,6 +158,117 @@ ggplot(data=scot_20_22, aes(x=age_cat, y=xs_base,
         legend.direction='horizontal') 
 # ggsave("./figures/method2a-xs_base.jpeg")
 ```
+
+## Method 2C: Difference from linear trend
+
+![](images/method_2C.png)
+
+### Linear Fit of Death Rate for years 2010 to 2019
+
+```{r}
+#| warning: false
+#| fig-height: 12
+
+scot_lin_fit <- scot_dt[ year %in% c(2010:2019), ]
+
+# Visualize changes over time
+g0 <- ggplot(scot_lin_fit[age_cat == "0-14", ], 
+                aes(x = year, y = rate)) + 
+  geom_point(size = 3, shape=10)+
+    geom_smooth(method = lm, se=FALSE) +
+    stat_regline_equation(label.x = 2017, label.y = 40,
+        aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
+  # x-axis breaks for year from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2019) +
+    ggtitle("0 to 14 years")
+
+g15 <- ggplot(scot_lin_fit[age_cat == "15-24", ], 
+                aes(x = year, y = rate)) + 
+  geom_point(size = 3, shape=10)+
+    geom_smooth(method = lm, se=FALSE) +
+    stat_regline_equation(label.x = 2015, label.y = 47,
+        aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
+  # x-axis breaks for year from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2019) +
+    ggtitle("15 to 24 years")
+
+g25 <- ggplot(scot_lin_fit[age_cat == "25-49", ], 
+                aes(x = year, y = rate)) + 
+  geom_point(size = 3, shape=10)+
+    geom_smooth(method = lm, se=FALSE) +
+    stat_regline_equation(label.x = 2010, label.y = 180,
+        aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
+  # x-axis breaks for year from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2019) +
+    ggtitle("25 to 49 years")
+
+g50 <- ggplot(scot_lin_fit[age_cat == "50-59", ], 
+                aes(x = year, y = rate)) + 
+  geom_point(size = 3, shape=10)+
+    geom_smooth(method = lm, se=FALSE) +
+    stat_regline_equation(label.x = 2017, label.y = 540,
+        aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
+  # x-axis breaks for year from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2019) +
+    ggtitle("50 to 59 years")
+
+g60 <- ggplot(scot_lin_fit[age_cat == "60-69", ], 
+                aes(x = year, y = rate)) + 
+  geom_point(size = 3, shape=10)+
+    geom_smooth(method = lm, se=FALSE) +
+    stat_regline_equation(label.x = 2017, label.y = 1300,
+        aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
+  # x-axis breaks for year from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2019) +
+    ggtitle("60 to 69 years")
+
+g70 <- ggplot(scot_lin_fit[age_cat == "70-79", ], 
+                aes(x = year, y = rate)) + 
+  geom_point(size = 3, shape=10)+
+    geom_smooth(method = lm, se=FALSE) +
+    stat_regline_equation(label.x = 2017, label.y = 3400,
+        aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
+  # x-axis breaks for year from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2019) +
+    ggtitle("70 to 79 years")
+
+g80 <- ggplot(scot_lin_fit[age_cat == "80+", ], 
+                aes(x = year, y = rate)) + 
+  geom_point(size = 3, shape=10)+
+    geom_smooth(method = lm, se=FALSE) +
+    stat_regline_equation(label.x = 2010, label.y = 11400,
+        aes(label =  paste(after_stat(rr.label), sep = "~~~~"))) +
+  # x-axis breaks for year from 2010 to 2022
+  scale_x_continuous(breaks = 2010:2019) +
+    ggtitle("80 years and over")
+
+# Remove axis titles from all plots
+g_all <- list(g0,g15, g25, g50, g60, g70, g80) %>% 
+    map(~.x + labs(x=NULL, y=NULL))
+```
+
+[Plot Function](https://community.rstudio.com/t/common-axis-title-in-grid-arrange/96353/2 "source code")
+
+```{r}
+#| fig-height: 12
+#| fig-width: 10
+#| message: false
+
+# plotmath expressions
+yleft <- textGrob(expression(paste("deaths per 100,000")), 
+                  rot = 90, gp = gpar(fontsize = 20))
+
+bottom <- textGrob("years", gp = gpar(fontsize = 20))
+
+# Lay out plots
+uni <- grid.arrange(grobs=g_all, ncol = 3, nrow = 3, 
+                    left = yleft, bottom = bottom)
+#save
+g <- arrangeGrob(g0,g15, g25, g50, g60, g70, g80, nrow=3) #generates g
+# ggsave(file="./figures/linear_fit.jpeg", g) #saves g
+```
+
+Only age categories 0-14 and 70-79 have adequate $r^2$ value.
 
 ## Trend Lines
 
